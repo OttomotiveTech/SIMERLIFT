@@ -1,0 +1,60 @@
+FUNCTION_BLOCK Select_2
+  {
+    In0 {index := 0};
+    S0 {index := 1};
+    In1 {index := 2};
+    S1 {index := 3};
+    i {index := 5};
+    Q {index := 0};
+  }
+
+  VAR_INPUT
+    In0 : WORD := 0;
+    In1 : WORD := 0;
+    S0 : BOOL := 0;
+    S1 : BOOL := 0;
+    i : BYTE := 0;
+  END_VAR
+  VAR_OUTPUT
+    Q : WORD := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    SEL_WORD(G := S0, IN0 := i, IN1 := In0, SEL_WORD => @C(19).SEL_WORD);
+    SEL_WORD(G := S1, IN0 := @C(19).SEL_WORD, IN1 := In1, SEL_WORD => Q);
+
+  *)
+
+  @C(22) : @F(SEL_WORD), @R(420.0, 40.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(19) : @F(SEL_WORD), @R(260.0, 100.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @VF(1) : @E(In0), @R(40.0, 140.0, 140.0, 19.0);
+  @VF(2) : @E(In1), @R(40.0, 80.0, 140.0, 19.0);
+  @VF(10) : @E(S1), @R(40.0, 40.0, 140.0, 19.0);
+  @VF(17) : @E(i), @R(40.0, 120.0, 140.0, 19.0);
+  @VF(9) : @E(S0), @R(40.0, 100.0, 140.0, 19.0);
+  @VF(18) : @E(Q), @R(580.0, 40.0, 140.0, 19.0);
+
+  @G(29) :
+     @L(@VF(10).o, @C(22).G)
+    ;
+  @G(36) :
+     @L(@VF(2).o, @C(22).IN1)
+    ;
+  @G(21) :
+     @L(@VF(1).o, @C(19).IN1)
+    ;
+  @G(20) :
+     @L(@VF(9).o, @C(19).G)
+    ;
+  @G(3) :
+     @L(@VF(17).o, @C(19).IN0)
+    ;
+  @G(4) :
+     @L(@C(19).SEL_WORD, @C(22).IN0)
+    ;
+  @G(5) :
+     @L(@C(22).SEL_WORD, @VF(18).i)
+    ;
+END_FUNCTION_BLOCK

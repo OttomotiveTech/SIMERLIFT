@@ -1,0 +1,5 @@
+TYPE
+    BATTSTACKMODE : UINT( BNULL := 0,
+    	              SHUTDOWN := 1,
+                      ACTIVE := 2);
+END_TYPE

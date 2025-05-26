@@ -1,0 +1,7 @@
+TYPE
+    BAMRETCODE : UINT(BAM_OK := 0,
+    	              BAM_ILLEGAL_INPUT:=1,
+    	              BAM_NO_HW_HANDLE:=2,
+    	              BAM_HW_BUSY:=3,
+    	              BAM_SEND_ERR:=4);
+END_TYPE

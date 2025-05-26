@@ -1,0 +1,21 @@
+;* Copyright (C) logi.cals GmbH. All rights reserved. */
+
+;*
+;* TASK      :: DEF-file for RT-NT-X86
+;* NOTES     ::
+;*
+
+LIBRARY RTSCode
+
+EXPORTS
+
+LCocc_queryEP
+LCocc_queryEPCount
+LCocc_queryTASK
+LCocc_queryTASKCount
+LCocc_queryTimeFreq
+lc_ioacc_getServiceInfoByName
+lc_ioacc_copyInputData
+lc_ioacc_copyOutputData
+lc_get_ris_md_root
+lc_get_application_info

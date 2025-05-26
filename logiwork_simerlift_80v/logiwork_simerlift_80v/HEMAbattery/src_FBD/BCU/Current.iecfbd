@@ -1,0 +1,104 @@
+FUNCTION_BLOCK Current
+  {
+    Current {index := 0};
+    Discharge_Current {index := 0};
+    Charge_Current {index := 1};
+    width := 300;
+    height := 38;
+  }
+
+  VAR_INPUT
+    Current : REAL := 0;
+  END_VAR
+  VAR_OUTPUT
+    Charge_Current : UINT := 0;
+    Discharge_Current : UINT := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    DIV(IN1 := Current, IN2 := 1000, DIV => @C(2).DIV);
+    GE(IN1 := @C(2).DIV, IN2 := 0, GE => @C(11).GE);
+    SEL_REAL(G := @C(11).GE, IN0 := 0, IN1 := @C(2).DIV, SEL_REAL => @C(19).SEL_REAL);
+    TO_UINT(IN := @C(19).SEL_REAL, TO_UINT => Discharge_Current);
+    LT(IN1 := @C(2).DIV, IN2 := 0, LT => @C(15).LT);
+    MUL(IN1 := @C(2).DIV, IN2 := -1, MUL => @C(34).MUL);
+    SEL_REAL(G := @C(15).LT, IN0 := 0, IN1 := @C(34).MUL, SEL_REAL => @C(27).SEL_REAL);
+    TO_UINT(IN := @C(27).SEL_REAL, TO_UINT => Charge_Current);
+
+  *)
+
+  @VF(1) : @E(Current), @R(20.0, 20.0, 220.0, 19.0);
+  @VF(4) : @E(Charge_Current), @R(1100.0, 80.0, 220.0, 19.0);
+  @VF(5) : @E(Discharge_Current), @R(1100.0, 20.0, 220.0, 19.0);
+  @C(11) : @F(GE), @R(550.0, 20.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GE), @R(9.5));
+  @VF(13) : @E(0), @R(360.0, 40.0, 110.0, 19.0), REAL;
+  @C(15) : @F(LT), @R(550.0, 80.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
+  @VF(17) : @E(0), @R(360.0, 100.0, 110.0, 19.0), REAL;
+  @C(19) : @F(SEL_REAL), @R(780.0, 20.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_REAL), @R(9.5));
+  @VF(21) : @E(0), @R(630.0, 40.0, 110.0, 19.0), REAL;
+  @C(24) : @F(TO_UINT), @R(940.0, 20.0, 120.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(27) : @F(SEL_REAL), @R(780.0, 80.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_REAL), @R(9.5));
+  @VF(28) : @E(0), @R(630.0, 100.0, 110.0, 19.0), REAL;
+  @C(31) : @F(TO_UINT), @R(940.0, 80.0, 120.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(34) : @F(MUL), @R(550.0, 120.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(MUL), @R(9.5));
+  @VF(37) : @E(-1), @R(360.0, 140.0, 110.0, 19.0), REAL;
+  @C(2) : @F(DIV), @R(280.0, 20.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV), @R(9.5));
+  @VF(7) : @E(1000), @R(130.0, 40.0, 110.0, 19.0), REAL;
+  @CP(16) : 509.5, 29.5;
+  @CP(23) : 509.5, 69.5;
+  @CP(35) : 509.5, 89.5;
+
+  @G(6) :
+     @L(@CP(16), @C(11).IN1),
+     @L(@CP(16), @CP(23)),
+     @L(@CP(23), @CP(35)),
+     @L(@CP(23), @C(19).IN1),
+     @L(@CP(35), @C(15).IN1),
+     @L(@CP(35), @C(34).IN1),
+     @L(@C(2).DIV, @CP(16))
+    ;
+  @G(14) :
+     @L(@VF(13).o, @C(11).IN2)
+    ;
+  @G(18) :
+     @L(@VF(17).o, @C(15).IN2)
+    ;
+  @G(20) :
+     @L(@C(11).GE, @C(19).G)
+    ;
+  @G(22) :
+     @L(@VF(21).o, @C(19).IN0)
+    ;
+  @G(25) :
+     @L(@C(19).SEL_REAL, @C(24).IN)
+    ;
+  @G(26) :
+     @L(@C(24).TO_UINT, @VF(5).i)
+    ;
+  @G(29) :
+     @L(@VF(28).o, @C(27).IN0)
+    ;
+  @G(30) :
+     @L(@C(15).LT, @C(27).G)
+    ;
+  @G(32) :
+     @L(@C(27).SEL_REAL, @C(31).IN)
+    ;
+  @G(33) :
+     @L(@C(31).TO_UINT, @VF(4).i)
+    ;
+  @G(36) :
+     @L(@C(34).MUL, @C(27).IN1)
+    ;
+  @G(38) :
+     @L(@VF(37).o, @C(34).IN2)
+    ;
+  @G(3) :
+     @L(@VF(1).o, @C(2).IN1)
+    ;
+  @G(8) :
+     @L(@VF(7).o, @C(2).IN2)
+    ;
+END_FUNCTION_BLOCK

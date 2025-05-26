@@ -1,0 +1,10 @@
+# License file
+# Copyright logi.cals 1994-2016. All rights reserved.
+Product RTS/httpd
+Licensee logi.cals
+OperatingSystem Windows/x86/BuiltInPLC
+Date 16-09-09
+Serial builtinplc
+EnableFeature RTS
+EnableFeature MODBUS
+###SIGNATURE###:46895dc41196625bacf60cb2f3a84befdd5fded0###

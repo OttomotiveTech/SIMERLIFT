@@ -1,0 +1,90 @@
+#ifndef LC_PROT_LCDT___HVCUFAULTS__H
+#define LC_PROT_LCDT___HVCUFAULTS__H
+
+#include <LC3CGBase.h>
+
+/*                            Typedefs                         */
+typedef struct _LC_TD_DataType_HVCUFAULTS
+{
+  LC_TD_BOOL LC_VD_BATTERY_PACKET;
+  LC_TD_BOOL LC_VD_BCU_WAKE_UP;
+  LC_TD_BOOL LC_VD_CHARGE;
+  LC_TD_BOOL LC_VD_CHARGE_CONTACTOR;
+  LC_TD_BOOL LC_VD_CHARGE_OVERCURRENT;
+  LC_TD_BOOL LC_VD_CHARGE_OVERCURRENTINSTANT;
+  LC_TD_BOOL LC_VD_CURRENT_SENSOR;
+  LC_TD_BOOL LC_VD_DISCHARGE;
+  LC_TD_BOOL LC_VD_DISCHARGE_OVERCURRENT;
+  LC_TD_BOOL LC_VD_DISCHARGE_OVERCURRENTINSTANT;
+  LC_TD_BOOL LC_VD_HVIL;
+  LC_TD_BOOL LC_VD_ISOLATION;
+  LC_TD_BOOL LC_VD_NEG_CONTACTOR;
+  LC_TD_BOOL LC_VD_NO_BATTERY_PACK_FOUND;
+  LC_TD_BOOL LC_VD_PLUS_CONTACTOR;
+  LC_TD_BOOL LC_VD_PRECHARGE;
+} LCCG_StructAttrib LC_TD_DataType_HVCUFAULTS;
+
+/*                   ColdBoot Initialization Macro             */
+#define LC_INIT_DataType_HVCUFAULTS(p) \
+{ \
+  LC_INIT_BOOL(&((p)->LC_VD_BCU_WAKE_UP)); \
+  LC_INIT_BOOL(&((p)->LC_VD_PLUS_CONTACTOR)); \
+  LC_INIT_BOOL(&((p)->LC_VD_NEG_CONTACTOR)); \
+  LC_INIT_BOOL(&((p)->LC_VD_CHARGE_CONTACTOR)); \
+  LC_INIT_BOOL(&((p)->LC_VD_ISOLATION)); \
+  LC_INIT_BOOL(&((p)->LC_VD_HVIL)); \
+  LC_INIT_BOOL(&((p)->LC_VD_CHARGE_OVERCURRENT)); \
+  LC_INIT_BOOL(&((p)->LC_VD_DISCHARGE_OVERCURRENT)); \
+  LC_INIT_BOOL(&((p)->LC_VD_CHARGE_OVERCURRENTINSTANT)); \
+  LC_INIT_BOOL(&((p)->LC_VD_DISCHARGE_OVERCURRENTINSTANT)); \
+  LC_INIT_BOOL(&((p)->LC_VD_BATTERY_PACKET)); \
+  LC_INIT_BOOL(&((p)->LC_VD_CURRENT_SENSOR)); \
+  LC_INIT_BOOL(&((p)->LC_VD_PRECHARGE)); \
+  LC_INIT_BOOL(&((p)->LC_VD_NO_BATTERY_PACK_FOUND)); \
+  LC_INIT_BOOL(&((p)->LC_VD_DISCHARGE)); \
+  LC_INIT_BOOL(&((p)->LC_VD_CHARGE)); \
+}
+
+/*                   WarmBoot Initialization Macro             */
+#define LC_WINIT_DataType_HVCUFAULTS(p,RF) \
+{ \
+  LC_WINIT_BOOL(&((p)->LC_VD_BCU_WAKE_UP),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_PLUS_CONTACTOR),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_NEG_CONTACTOR),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_CHARGE_CONTACTOR),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_ISOLATION),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_HVIL),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_CHARGE_OVERCURRENT),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_DISCHARGE_OVERCURRENT),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_CHARGE_OVERCURRENTINSTANT),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_DISCHARGE_OVERCURRENTINSTANT),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_BATTERY_PACKET),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_CURRENT_SENSOR),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_PRECHARGE),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_NO_BATTERY_PACK_FOUND),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_DISCHARGE),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_CHARGE),RF); \
+}
+
+/*                ColdBoot Initialization Macro for Arrays            */
+#define LC_INIT_ARRAY_OF_DataType_HVCUFAULTS(p,ARRAYSIZE) \
+{ \
+  LC_TD_DataType_HVCUFAULTS * ptrToElement_ArrayOf_HVCUFAULTS = (LC_TD_DataType_HVCUFAULTS*)(p);\
+  LC_TD_DataType_HVCUFAULTS * arrayEnd = ptrToElement_ArrayOf_HVCUFAULTS+ARRAYSIZE;\
+  for (; ptrToElement_ArrayOf_HVCUFAULTS < arrayEnd; ptrToElement_ArrayOf_HVCUFAULTS++) \
+  { \
+    LC_INIT_DataType_HVCUFAULTS(ptrToElement_ArrayOf_HVCUFAULTS); \
+  } \
+}
+
+/*                WarmBoot Initialization Macro for Arrays            */
+#define LC_WINIT_ARRAY_OF_DataType_HVCUFAULTS(p,ARRAYSIZE,RF) \
+{ \
+  if (RF==0) \
+  { \
+    LC_INIT_ARRAY_OF_DataType_HVCUFAULTS(p,ARRAYSIZE); \
+  } \
+}
+
+
+#endif

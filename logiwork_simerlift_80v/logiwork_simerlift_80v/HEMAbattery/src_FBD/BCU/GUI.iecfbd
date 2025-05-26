@@ -1,0 +1,312 @@
+FUNCTION_BLOCK GUI
+  {
+    SoC {index := 0};
+    SoH {index := 1};
+    Voltage {index := 2};
+    Current {index := 3};
+    Temp {index := 4};
+    Humidity {index := 5};
+    Fault {index := 6};
+    width := 200;
+    height := 138;
+  }
+
+  VAR
+    TP1 : TP;
+    BAMTX2 : BAMTX;
+    BATTSTACKinfo1 : BATTSTACKinfo;
+    CANRECV5 : CANRECV;
+    tauxCells : ARRAY[0..15] OF USINT := [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,4];
+    guiReqCount : UDINT;
+  END_VAR
+  VAR_INPUT
+    Voltage : REAL := 0;
+    Current : REAL := 0;
+    Temp : REAL := 0;
+    Humidity : REAL := 0;
+    Fault : UDINT := 0;
+    SoC : USINT := 0;
+    SoH : USINT := 0;
+    Cycle : UINT;
+    State : USINT;
+    ID : USINT;
+    CH : TMS570_CAN;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    CANRECV5(CH := CH, ID := 16#18EA1EA4, FMT := CAN_FORMAT#EXTENDED, PER := T#1s, ENB := 1);
+    RBIT(start := 0, len := 16, INbit := CANRECV5.DATA, OUTbit => @C(31).OUTbit);
+    TO_UINT(IN := @C(31).OUTbit, TO_UINT => @C(2560).TO_UINT);
+    FROM_BIG_ENDIAN(IN := @C(2560).TO_UINT, FROM_BIG_ENDIAN => @C(774).FROM_BIG_ENDIAN);
+    RBIT(start := 8, len := 8, INbit := CANRECV5.DATA, OUTbit => @C(35).OUTbit);
+    TO_USINT(IN := @C(35).OUTbit, TO_USINT => @C(2558).TO_USINT);
+    RBIT(start := 0, len := 4, INbit := CANRECV5.DATA, OUTbit => @C(36).OUTbit);
+    TO_USINT(IN := @C(36).OUTbit, TO_USINT => @C(2559).TO_USINT);
+    DIV(IN1 := Voltage, IN2 := 1000, DIV => @C(988).DIV);
+    DIV(IN1 := Current, IN2 := 1000, DIV => @C(12).DIV);
+    TO_SINT(IN := Temp, TO_SINT => @C(799).TO_SINT);
+    TO_USINT(IN := Humidity, TO_USINT => @C(820).TO_USINT);
+    RBIT(start := 4, len := 4, INbit := CANRECV5.DATA, OUTbit => @C(29).OUTbit);
+    TO_USINT(IN := @C(29).OUTbit, TO_USINT => @C(27).TO_USINT);
+    EQ(IN1 := @C(27).TO_USINT, IN2 := ID, EQ => @C(789).EQ);
+    NE(IN1 := guiReqCount, IN2 := CANRECV5.CRX, NE => @C(2565).NE);
+    SEL(G := @C(2565).NE, IN0 := guiReqCount, IN1 := CANRECV5.CRX, SEL => guiReqCount);
+    AND(IN1 := @C(2565).NE, IN2 := @C(789).EQ, AND => @C(779).AND);
+    BATTSTACKinfo1(INFO := @C(2558).TO_USINT, BRD := @C(2559).TO_USINT, volt := @C(988).DIV, amp := @C(12).DIV, Cycle := Cycle, State := State, SOC := SoC, SOH := SoH, temp := @C(799).TO_SINT, hum := @C(820).TO_USINT, fault := Fault, NTCBETA := 3950, NTCNOMT_KLV := 298.15, NTCNOMR_OHM := 10000.0, T_CELLS := tAuxCells, R := @C(779).AND);
+    BAMTX2(CH := CH, TPCM := 16#18FFABCD, TPDT := 16#18FFABCE, PGN := @C(774).FROM_BIG_ENDIAN, FRMPER := T#50ms, DATA := BATTSTACKinfo1.DATA, LEN := BATTSTACKinfo1.LEN, R := BATTSTACKinfo1.R_OUT);
+    TP1(IN := BAMTX2.R_END, PT := T#100ms);
+
+  *)
+
+  @C(771) : @FB(TP1), @R(1640.0, 100.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(2566) : @FB(BAMTX2), @R(1290.0, 60.0, 220.0, 158.0), @I(@N(CH), @L(9.5)), @I(@N(TPCM), @L(29.5)), @I(@N(TPDT), @L(49.5)), @I(@N(PGN), @L(69.5)), @I(@N(FRMPER), @L(89.5)), @I(@N(DATA), @L(109.5)), @I(@N(LEN), @L(129.5)), @I(@N(R), @L(149.5)), @O(@N(CTX), @R(9.5)), @O(@N(RC), @R(29.5)), @O(@N(R_END), @R(49.5));
+  @C(774) : @F(FROM_BIG_ENDIAN), @R(1110.0, 120.0, 160.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(FROM_BIG_ENDIAN), @R(9.5));
+  @C(779) : @F(AND), @R(910.0, 460.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(789) : @F(EQ), @R(850.0, 480.0, 40.0, 38.0), USINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
+  @C(799) : @F(TO_SINT), @R(840.0, 320.0, 110.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(TO_SINT), @R(9.5));
+  @C(820) : @F(TO_USINT), @R(840.0, 340.0, 110.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(2564) : @F(SEL), @R(690.0, 40.0, 120.0, 58.0), UDINT, @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL), @R(9.5));
+  @C(2558) : @F(TO_USINT), @R(840.0, 160.0, 110.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(2559) : @F(TO_USINT), @R(840.0, 180.0, 110.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(2560) : @F(TO_UINT), @R(840.0, 120.0, 110.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(2565) : @F(NE), @R(410.0, 40.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @C(2567) : @FB(CANRECV5), @R(210.0, 120.0, 160.0, 98.0), @I(@N(CH), @L(9.5)), @I(@N(ID), @L(29.5)), @I(@N(FMT), @L(49.5)), @I(@N(PER), @L(69.5)), @I(@N(ENB), @L(89.5)), @O(@N(CRX), @R(9.5)), @O(@N(DATA), @R(29.5)), @O(@N(DLC), @R(49.5)), @O(@N(MPER), @R(69.5)), @O(@N(RC), @R(89.5));
+  @VF(791) : @E(T#100ms), @R(1530.0, 120.0, 90.0, 19.0);
+  @VF(2577) : @E(T#50ms), @R(1160.0, 140.0, 110.0, 19.0);
+  @VF(2580) : @E(16#18FFABCE), @R(1050.0, 100.0, 220.0, 19.0), UDINT;
+  @VF(2586) : @E(16#18FFABCD), @R(1050.0, 80.0, 220.0, 19.0), UDINT;
+  @VF(2572) : @E(tAuxCells), @R(840.0, 440.0, 110.0, 19.0);
+  @VF(2573) : @E(298.15), @R(840.0, 400.0, 110.0, 19.0), REAL;
+  @VF(2575) : @E(10000.0), @R(840.0, 420.0, 110.0, 19.0), REAL;
+  @VF(793) : @E(3950), @R(840.0, 380.0, 110.0, 19.0), REAL;
+  @VF(837) : @E(guiReqCount), @R(480.0, 60.0, 110.0, 19.0);
+  @VF(2581) : @E(0), @R(410.0, 100.0, 40.0, 19.0), INT;
+  @VF(2583) : @E(8), @R(410.0, 180.0, 40.0, 19.0), INT;
+  @VF(2582) : @E(8), @R(410.0, 160.0, 40.0, 19.0), INT;
+  @VF(2578) : @E(16), @R(410.0, 120.0, 40.0, 19.0), INT;
+  @VF(2585) : @E(4), @R(410.0, 240.0, 40.0, 19.0), INT;
+  @VF(2584) : @E(0), @R(410.0, 220.0, 40.0, 19.0), INT;
+  @VF(801) : @E(4), @R(410.0, 480.0, 40.0, 19.0), INT;
+  @VF(802) : @E(4), @R(410.0, 500.0, 40.0, 19.0), INT;
+  @VF(798) : @E(guiReqCount), @R(280.0, 40.0, 110.0, 19.0);
+  @VF(2592) : @E(1), @R(80.0, 200.0, 110.0, 19.0), BOOL;
+  @VF(2591) : @E(T#1s), @R(80.0, 180.0, 110.0, 19.0);
+  @VF(2593) : @E(CAN_FORMAT#EXTENDED), @R(20.0, 160.0, 170.0, 19.0);
+  @VF(2589) : @E(16#18EA1EA4), @R(20.0, 140.0, 170.0, 19.0), UDINT;
+  @VF(1) : @E(Fault), @R(840.0, 360.0, 110.0, 19.0);
+  @VF(2) : @E(Humidity), @R(730.0, 340.0, 90.0, 19.0);
+  @VF(3) : @E(Temp), @R(730.0, 320.0, 90.0, 19.0);
+  @VF(4) : @E(Current), @R(20.0, 320.0, 220.0, 19.0);
+  @VF(5) : @E(Voltage), @R(20.0, 280.0, 220.0, 19.0);
+  @VF(6) : @E(SoC), @R(840.0, 280.0, 110.0, 19.0);
+  @VF(7) : @E(SoH), @R(840.0, 300.0, 110.0, 19.0);
+  @C(988) : @F(DIV), @R(280.0, 280.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV), @R(9.5));
+  @VF(981) : @E(1000), @R(130.0, 300.0, 110.0, 19.0), REAL;
+  @C(12) : @F(DIV), @R(280.0, 320.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV), @R(9.5));
+  @VF(16) : @E(1000), @R(130.0, 340.0, 110.0, 19.0), REAL;
+  @VF(21) : @E(Cycle), @R(840.0, 240.0, 110.0, 19.0);
+  @VF(22) : @E(State), @R(840.0, 260.0, 110.0, 19.0);
+  @C(773) : @FB(BATTSTACKinfo1), @R(970.0, 160.0, 300.0, 318.0), @I(@N(INFO), @L(9.5)), @I(@N(BRD), @L(29.5)), @I(@N(volt), @L(49.5)), @I(@N(amp), @L(69.5)), @I(@N(Cycle), @L(89.5)), @I(@N(State), @L(109.5)), @I(@N(SOC), @L(129.5)), @I(@N(SOH), @L(149.5)), @I(@N(temp), @L(169.5)), @I(@N(hum), @L(189.5)), @I(@N(fault), @L(209.5)), @I(@N(NTCBETA), @L(229.5)), @I(@N(NTCNOMT_KLV), @L(249.5)), @I(@N(NTCNOMR_OHM), @L(269.5)), @I(@N(T_CELLS), @L(289.5)), @I(@N(R), @L(309.5)), @O(@N(DATA), @R(9.5)), @O(@N(LEN), @R(29.5)), @O(@N(R_OUT), @R(49.5));
+  @VF(25) : @E(ID), @R(660.0, 500.0, 140.0, 19.0);
+  @C(27) : @F(TO_USINT), @R(670.0, 480.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @VF(32) : @E(CH), @R(10.0, 10.0, 140.0, 19.0);
+  @C(31) : @F(RBIT), @R(470.0, 100.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(35) : @F(RBIT), @R(470.0, 160.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(36) : @F(RBIT), @R(470.0, 220.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(29) : @F(RBIT), @R(470.0, 480.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @CP(804) : 619.5, 49.5;
+  @CP(2595) : 389.5, 149.5;
+  @CP(58) : 389.5, 209.5;
+  @CP(282) : 389.5, 269.5;
+  @CP(333) : 389.5, 89.5;
+  @CP(34) : 189.5, 19.5;
+
+  @G(805) :
+     @L(@VF(791).o, @C(771).PT)
+    ;
+  @G(825) :
+     @L(@C(2566).R_END, @C(771).IN)
+    ;
+  @G(2612) :
+     @L(@VF(2577).o, @C(2566).FRMPER)
+    ;
+  @G(2622) :
+     @L(@VF(2580).o, @C(2566).TPDT)
+    ;
+  @G(2629) :
+     @L(@VF(2586).o, @C(2566).TPCM)
+    ;
+  @G(828) :
+     @L(@C(774).FROM_BIG_ENDIAN, @C(2566).PGN)
+    ;
+  @G(823) :
+     @L(@C(773).DATA, @C(2566).DATA)
+    ;
+  @G(821) :
+     @L(@C(773).LEN, @C(2566).LEN)
+    ;
+  @G(817) :
+     @L(@C(773).R_OUT, @C(2566).R)
+    ;
+  @G(807) :
+     @L(@C(799).TO_SINT, @C(773).temp)
+    ;
+  @G(834) :
+     @L(@C(820).TO_USINT, @C(773).hum)
+    ;
+  @G(813) :
+     @L(@VF(793).o, @C(773).NTCBETA)
+    ;
+  @G(814) :
+     @L(@VF(2573).o, @C(773).NTCNOMT_KLV)
+    ;
+  @G(815) :
+     @L(@VF(2575).o, @C(773).NTCNOMR_OHM)
+    ;
+  @G(816) :
+     @L(@VF(2572).o, @C(773).T_CELLS)
+    ;
+  @G(824) :
+     @L(@C(779).AND, @C(773).R)
+    ;
+  @G(819) :
+     @L(@C(2559).TO_USINT, @C(773).BRD)
+    ;
+  @G(822) :
+     @L(@C(2558).TO_USINT, @C(773).INFO)
+    ;
+  @G(829) :
+     @L(@C(2560).TO_UINT, @C(774).IN)
+    ;
+  @G(2628) :
+     @L(@C(2565).NE, @CP(804)),
+     @L(@CP(804), @C(2564).G),
+     @L(@CP(804), @C(779).IN1)
+    ;
+  @G(838) :
+     @L(@VF(837).o, @C(2564).IN0)
+    ;
+  @G(2618) :
+     @L(@C(2567).CRX, @CP(333)),
+     @L(@CP(333), @C(2565).IN2),
+     @L(@CP(333), @C(2564).IN1)
+    ;
+  @G(2621) :
+     @L(@C(2567).DATA, @CP(2595)),
+     @L(@CP(2595), @CP(58)),
+     @L(@CP(58), @CP(282)),
+     @L(@CP(282), @C(36).INbit),
+     @L(@CP(58), @C(35).INbit),
+     @L(@CP(2595), @C(31).INbit),
+     @L(@CP(282), @C(29).INbit)
+    ;
+  @G(812) :
+     @L(@VF(798).o, @C(2565).IN1)
+    ;
+  @G(836) :
+     @L(@C(2564).SEL, @VF(798).i)
+    ;
+  @G(2633) :
+     @L(@VF(2593).o, @C(2567).FMT)
+    ;
+  @G(2634) :
+     @L(@VF(2589).o, @C(2567).ID)
+    ;
+  @G(2635) :
+     @L(@VF(2591).o, @C(2567).PER)
+    ;
+  @G(2636) :
+     @L(@VF(2592).o, @C(2567).ENB)
+    ;
+  @G(8) :
+     @L(@VF(1).o, @C(773).fault)
+    ;
+  @G(9) :
+     @L(@VF(3).o, @C(799).IN)
+    ;
+  @G(10) :
+     @L(@VF(2).o, @C(820).IN)
+    ;
+  @G(13) :
+     @L(@VF(6).o, @C(773).SOC)
+    ;
+  @G(14) :
+     @L(@VF(7).o, @C(773).SOH)
+    ;
+  @G(15) :
+     @L(@VF(981).o, @C(988).IN2)
+    ;
+  @G(11) :
+     @L(@C(988).DIV, @C(773).volt)
+    ;
+  @G(17) :
+     @L(@VF(16).o, @C(12).IN2)
+    ;
+  @G(18) :
+     @L(@C(12).DIV, @C(773).amp)
+    ;
+  @G(19) :
+     @L(@VF(4).o, @C(12).IN1)
+    ;
+  @G(20) :
+     @L(@VF(5).o, @C(988).IN1)
+    ;
+  @G(23) :
+     @L(@VF(21).o, @C(773).Cycle)
+    ;
+  @G(24) :
+     @L(@VF(22).o, @C(773).State)
+    ;
+  @G(26) :
+     @L(@VF(25).o, @C(789).IN2)
+    ;
+  @G(28) :
+     @L(@C(27).TO_USINT, @C(789).IN1)
+    ;
+  @G(33) :
+     @L(@VF(32).o, @CP(34)),
+     @L(@CP(34), @C(2566).CH),
+     @L(@CP(34), @C(2567).CH)
+    ;
+  @G(30) :
+     @L(@C(789).EQ, @C(779).IN2)
+    ;
+  @G(37) :
+     @L(@VF(2584).o, @C(36).start)
+    ;
+  @G(38) :
+     @L(@VF(2585).o, @C(36).len)
+    ;
+  @G(39) :
+     @L(@VF(2578).o, @C(31).len)
+    ;
+  @G(40) :
+     @L(@VF(2581).o, @C(31).start)
+    ;
+  @G(41) :
+     @L(@VF(2582).o, @C(35).start)
+    ;
+  @G(42) :
+     @L(@VF(2583).o, @C(35).len)
+    ;
+  @G(43) :
+     @L(@C(31).OUTbit, @C(2560).IN)
+    ;
+  @G(44) :
+     @L(@C(35).OUTbit, @C(2558).IN)
+    ;
+  @G(45) :
+     @L(@C(36).OUTbit, @C(2559).IN)
+    ;
+  @G(46) :
+     @L(@VF(801).o, @C(29).start)
+    ;
+  @G(47) :
+     @L(@VF(802).o, @C(29).len)
+    ;
+  @G(48) :
+     @L(@C(29).OUTbit, @C(27).IN)
+    ;
+END_FUNCTION_BLOCK

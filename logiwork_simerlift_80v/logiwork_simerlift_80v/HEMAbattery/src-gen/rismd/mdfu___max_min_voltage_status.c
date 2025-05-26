@@ -1,0 +1,159 @@
+#include <RISMD.h>
+#include <lcfu___max_min_voltage_status.h>
+
+extern RISMDSimpleNumType const risMdType_UDINT;
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_AVERAGE_CELL_VOLTAGE[] = "Average_Cell_Voltage";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_AVERAGE_CELL_VOLTAGE =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_AVERAGE_CELL_VOLTAGE, &risMdType_UDINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_AVERAGE_CELL_VOLTAGE), RISMD_VARIABLE_SECTION_INPUT);
+
+extern RISMDPOUType const lcmd_type_CANSEND;
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CANSEND1[] = "CANSEND1";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_CANSEND1 =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CANSEND1, &lcmd_type_CANSEND, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_CANSEND1));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CAN_CH[] = "CAN_CH";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_CAN_CH =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CAN_CH, &risMdType_UDINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_CAN_CH), RISMD_VARIABLE_SECTION_INPUT);
+
+extern RISMDSimpleNumType const risMdType_BOOL;
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CAN_ERROR[] = "CAN_Error";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_CAN_ERROR =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CAN_ERROR, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_CAN_ERROR), RISMD_VARIABLE_SECTION_OUTPUT);
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CAN_ID[] = "CAN_ID";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_CAN_ID =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_CAN_ID, &risMdType_UDINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_CAN_ID), RISMD_VARIABLE_SECTION_INPUT);
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_ENO[] = "ENO";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_ENO =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_ENO, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_ENO), RISMD_VARIABLE_SECTION_OUTPUT);
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MAX_CELL_VOLTAGE[] = "Max_Cell_Voltage";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_MAX_CELL_VOLTAGE =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MAX_CELL_VOLTAGE, &risMdType_UDINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_MAX_CELL_VOLTAGE), RISMD_VARIABLE_SECTION_INPUT);
+
+extern RISMDSimpleNumType const risMdType_USINT;
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_BMU_LOC[] = "Max_Volt_BMU_Loc";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_BMU_LOC =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_BMU_LOC, &risMdType_USINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_MAX_VOLT_BMU_LOC), RISMD_VARIABLE_SECTION_INPUT);
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_CELL_LOC[] = "Max_Volt_Cell_Loc";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_CELL_LOC =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_CELL_LOC, &risMdType_USINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_MAX_VOLT_CELL_LOC), RISMD_VARIABLE_SECTION_INPUT);
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MIN_CELL_VOLTAGE[] = "Min_Cell_Voltage";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_MIN_CELL_VOLTAGE =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MIN_CELL_VOLTAGE, &risMdType_UDINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_MIN_CELL_VOLTAGE), RISMD_VARIABLE_SECTION_INPUT);
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_BMU_LOC[] = "Min_Volt_BMU_Loc";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_BMU_LOC =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_BMU_LOC, &risMdType_USINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_MIN_VOLT_BMU_LOC), RISMD_VARIABLE_SECTION_INPUT);
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_CELL_LOC[] = "Min_Volt_Cell_Loc";
+static RISMDInterfaceVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_CELL_LOC =
+INIT_RISMDInterfaceVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_CELL_LOC, &risMdType_USINT, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD_MIN_VOLT_CELL_LOC), RISMD_VARIABLE_SECTION_INPUT);
+
+extern RISMDSimpleNumType const risMdType_LWORD;
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___12_OUTBIT[] = "__12_OUTbit";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___12_OUTBIT =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___12_OUTBIT, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___12_OUTBIT));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___13_OUTBIT[] = "__13_OUTbit";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___13_OUTBIT =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___13_OUTBIT, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___13_OUTBIT));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___14_OUTBIT[] = "__14_OUTbit";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___14_OUTBIT =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___14_OUTBIT, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___14_OUTBIT));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___192_OR[] = "__192_OR";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___192_OR =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___192_OR, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___192_OR));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___21_NE[] = "__21_NE";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___21_NE =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___21_NE, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___21_NE));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___27_TO_LWORD[] = "__27_TO_LWORD";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___27_TO_LWORD =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___27_TO_LWORD, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___27_TO_LWORD));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___32_TO_LWORD[] = "__32_TO_LWORD";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___32_TO_LWORD =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___32_TO_LWORD, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___32_TO_LWORD));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___33_TO_LWORD[] = "__33_TO_LWORD";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___33_TO_LWORD =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___33_TO_LWORD, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___33_TO_LWORD));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___34_TO_LWORD[] = "__34_TO_LWORD";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___34_TO_LWORD =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___34_TO_LWORD, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___34_TO_LWORD));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___35_TO_LWORD[] = "__35_TO_LWORD";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___35_TO_LWORD =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___35_TO_LWORD, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___35_TO_LWORD));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___36_TO_LWORD[] = "__36_TO_LWORD";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___36_TO_LWORD =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___36_TO_LWORD, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___36_TO_LWORD));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___37_TO_LWORD[] = "__37_TO_LWORD";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___37_TO_LWORD =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___37_TO_LWORD, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___37_TO_LWORD));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___5_OUTBIT[] = "__5_OUTbit";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___5_OUTBIT =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___5_OUTBIT, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___5_OUTBIT));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___64_NE[] = "__64_NE";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___64_NE =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___64_NE, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___64_NE));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___6_OUTBIT[] = "__6_OUTbit";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___6_OUTBIT =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___6_OUTBIT, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___6_OUTBIT));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___7_OUTBIT[] = "__7_OUTbit";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___7_OUTBIT =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___7_OUTBIT, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___7_OUTBIT));
+
+static char const lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___8_OUTBIT[] = "__8_OUTbit";
+static RISMDStdVariable const lcmd_var_MAX_MIN_VOLTAGE_STATUS___8_OUTBIT =
+INIT_RISMDStdVariable(lcmd_var_name_MAX_MIN_VOLTAGE_STATUS___8_OUTBIT, &risMdType_LWORD, offsetof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS,LC_VD___8_OUTBIT));
+
+static RISMDReference const lcmd_var_list_MAX_MIN_VOLTAGE_STATUS[] =
+{
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_AVERAGE_CELL_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_CANSEND1),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_CAN_CH),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_CAN_ERROR),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_CAN_ID),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_ENO),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_MAX_CELL_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_BMU_LOC),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_MAX_VOLT_CELL_LOC),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_MIN_CELL_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_BMU_LOC),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS_MIN_VOLT_CELL_LOC),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___12_OUTBIT),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___13_OUTBIT),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___14_OUTBIT),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___192_OR),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___21_NE),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___27_TO_LWORD),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___32_TO_LWORD),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___33_TO_LWORD),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___34_TO_LWORD),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___35_TO_LWORD),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___36_TO_LWORD),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___37_TO_LWORD),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___5_OUTBIT),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___64_NE),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___6_OUTBIT),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___7_OUTBIT),
+  INIT_RISMDReference(&lcmd_var_MAX_MIN_VOLTAGE_STATUS___8_OUTBIT),
+};
+
+static char const lcmd_type_name_MAX_MIN_VOLTAGE_STATUS[] = "MAX_MIN_VOLTAGE_STATUS";
+RISMDPOUType const lcmd_type_MAX_MIN_VOLTAGE_STATUS = INIT_RISMDPOUType(lcmd_type_name_MAX_MIN_VOLTAGE_STATUS, sizeof(LC_TD_FunctionBlock_MAX_MIN_VOLTAGE_STATUS), 29, lcmd_var_list_MAX_MIN_VOLTAGE_STATUS);

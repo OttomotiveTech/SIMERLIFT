@@ -1,0 +1,59 @@
+FUNCTION_BLOCK ampMultTempDis {
+    width := 200;
+  }
+
+VAR_INPUT
+temp:REAL;
+END_VAR
+
+VAR_OUTPUT
+mult : REAL;
+END_VAR
+
+VAR
+rstTimer:TON;
+timeout:BOOL;
+lastMult:REAL;
+instantMult:REAL;
+END_VAR
+
+IF temp<-30 THEN
+	mult:=0;
+	instantMult:=0;
+ELSIF temp<-25  THEN
+	instantMult:=0.11;
+ELSIF temp<-20  THEN
+	instantMult:=0.15;
+ELSIF temp<-15  THEN
+	instantMult:=0.2;
+ELSIF temp<-10  THEN
+	instantMult:=0.25;
+ELSIF temp<-5  THEN
+	instantMult:=0.3;
+ELSIF temp<0  THEN
+	instantMult:=0.4;
+ELSIF temp<5  THEN
+	instantMult:=0.5;
+ELSIF temp<10  THEN
+	instantMult:=0.7;
+ELSIF temp<50  THEN
+	instantMult:=1;
+ELSIF temp<55  THEN
+	instantMult:=0.4;
+ELSIF temp<56  THEN
+	instantMult:=0.2;
+ELSE
+	mult:=0;
+	instantMult:=0;
+END_IF;
+
+rstTimer(IN:=instantMult=lastMult, PT:=T#10s, Q=>timeout);
+
+lastMult:=instantMult;
+
+IF timeout THEN
+	mult:=instantMult;
+END_IF;
+
+END_FUNCTION_BLOCK
+

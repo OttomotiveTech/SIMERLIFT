@@ -1,0 +1,6 @@
+TYPE
+    GUICFGCODE : UDINT( CAN1BAUD := 2,
+    	                CAN2BAUD := 3,
+    	                CAN3BAUD := 4,
+    	                CAN4BAUD := 5 );
+END_TYPE

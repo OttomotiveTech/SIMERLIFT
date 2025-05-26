@@ -1,0 +1,47 @@
+#include <RISMD.h>
+#include <lcfu___rmem_byte.h>
+
+extern RISMDSimpleNumType const risMdType_UDINT;
+static char const lcmd_var_name_RMEM_BYTE_ADDR[] = "ADDR";
+static RISMDInterfaceVariable const lcmd_var_RMEM_BYTE_ADDR =
+INIT_RISMDInterfaceVariable(lcmd_var_name_RMEM_BYTE_ADDR, &risMdType_UDINT, offsetof(LC_TD_FunctionBlock_RMEM_BYTE,LC_VD_ADDR), RISMD_VARIABLE_SECTION_INPUT);
+
+extern RISMDSimpleNumType const risMdType_BOOL;
+static char const lcmd_var_name_RMEM_BYTE_ENO[] = "ENO";
+static RISMDInterfaceVariable const lcmd_var_RMEM_BYTE_ENO =
+INIT_RISMDInterfaceVariable(lcmd_var_name_RMEM_BYTE_ENO, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_RMEM_BYTE,LC_VD_ENO), RISMD_VARIABLE_SECTION_OUTPUT);
+
+static char const lcmd_var_name_RMEM_BYTE_NXT[] = "NXT";
+static RISMDInterfaceVariable const lcmd_var_RMEM_BYTE_NXT =
+INIT_RISMDInterfaceVariable(lcmd_var_name_RMEM_BYTE_NXT, &risMdType_UDINT, offsetof(LC_TD_FunctionBlock_RMEM_BYTE,LC_VD_NXT), RISMD_VARIABLE_SECTION_OUTPUT);
+
+static char const lcmd_var_name_RMEM_BYTE_PENDING[] = "PENDING";
+static RISMDStdVariable const lcmd_var_RMEM_BYTE_PENDING =
+INIT_RISMDStdVariable(lcmd_var_name_RMEM_BYTE_PENDING, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_RMEM_BYTE,LC_VD_PENDING));
+
+static char const lcmd_var_name_RMEM_BYTE_R[] = "R";
+static RISMDInterfaceVariable const lcmd_var_RMEM_BYTE_R =
+INIT_RISMDInterfaceVariable(lcmd_var_name_RMEM_BYTE_R, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_RMEM_BYTE,LC_VD_R), RISMD_VARIABLE_SECTION_INPUT);
+
+static char const lcmd_var_name_RMEM_BYTE_R_M[] = "R_M";
+static RISMDStdVariable const lcmd_var_RMEM_BYTE_R_M =
+INIT_RISMDStdVariable(lcmd_var_name_RMEM_BYTE_R_M, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_RMEM_BYTE,LC_VD_R_M));
+
+extern RISMDSimpleNumType const risMdType_BYTE;
+static char const lcmd_var_name_RMEM_BYTE_VAL[] = "VAL";
+static RISMDInterfaceVariable const lcmd_var_RMEM_BYTE_VAL =
+INIT_RISMDInterfaceVariable(lcmd_var_name_RMEM_BYTE_VAL, &risMdType_BYTE, offsetof(LC_TD_FunctionBlock_RMEM_BYTE,LC_VD_VAL), RISMD_VARIABLE_SECTION_OUTPUT);
+
+static RISMDReference const lcmd_var_list_RMEM_BYTE[] =
+{
+  INIT_RISMDReference(&lcmd_var_RMEM_BYTE_ADDR),
+  INIT_RISMDReference(&lcmd_var_RMEM_BYTE_ENO),
+  INIT_RISMDReference(&lcmd_var_RMEM_BYTE_NXT),
+  INIT_RISMDReference(&lcmd_var_RMEM_BYTE_PENDING),
+  INIT_RISMDReference(&lcmd_var_RMEM_BYTE_R),
+  INIT_RISMDReference(&lcmd_var_RMEM_BYTE_R_M),
+  INIT_RISMDReference(&lcmd_var_RMEM_BYTE_VAL),
+};
+
+static char const lcmd_type_name_RMEM_BYTE[] = "RMEM_BYTE";
+RISMDPOUType const lcmd_type_RMEM_BYTE = INIT_RISMDPOUType(lcmd_type_name_RMEM_BYTE, sizeof(LC_TD_FunctionBlock_RMEM_BYTE), 7, lcmd_var_list_RMEM_BYTE);

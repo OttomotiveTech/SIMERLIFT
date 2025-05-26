@@ -1,0 +1,14 @@
+{extern_c}
+
+FUNCTION_BLOCK RPRM  
+  VAR_INPUT
+    start : UINT;
+    len: UINT;
+    ofs: LREAL;
+    res: LREAL;
+    in:LWORD;
+  END_VAR
+  VAR_OUTPUT
+    out : LREAL;
+  END_VAR
+END_FUNCTION_BLOCK

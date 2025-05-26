@@ -1,0 +1,31 @@
+TYPE
+    VCCU_PROXSTATE : UINT( PROXSTATE_unknown						:=  0,
+    	              PROXSTATE_not_connected	:=  1,
+    	              PROXSTATE_connected 			:= 	2,
+    	              PROXSTATE_connected_but_not_latched 	:=  3);
+END_TYPE
+
+TYPE
+    VCCU_CPSTAT : UINT( CPSTAT_unknown						:=  0,
+    	              CPSTAT_A	:=  1,
+    	              CPSTAT_B	:=  2,
+    	              CPSTAT_C	:=  3,
+    	              CPSTAT_D	:=  4,
+    	              CPSTAT_E	:=  5,
+    	              CPSTAT_F	:=  6);
+END_TYPE
+
+
+TYPE
+    VCCU_REQPROGSTAT : UINT( PROGSTAT_default						:=  0,
+    	              PROGSTAT_error	:=  1,
+    	              PROGSTAT_shutoff	:=  2,
+    	              PROGSTAT_cableCheck	:=  3,
+    	              PROGSTAT_preCharge	:=  4,
+    	              PROGSTAT_currentDemand	:=  5,
+    	              PROGSTAT_weldingDetection	:=  6,
+    	              PROGSTAT_standby	:=  7,
+    	              PROGSTAT_stopCharge	:=  8,
+    	              PROGSTAT_sessionStop	:=  9
+    	              );
+END_TYPE

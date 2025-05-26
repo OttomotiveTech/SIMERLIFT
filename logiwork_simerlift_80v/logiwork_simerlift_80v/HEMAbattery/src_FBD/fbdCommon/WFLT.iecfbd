@@ -1,0 +1,107 @@
+FUNCTION WFLT
+  VAR_INPUT
+    start : INT;
+    len : INT;
+    prm : LREAL;
+    ofs : LREAL;
+    res : LREAL;
+  END_VAR
+  VAR_OUTPUT
+    OUTbit : LWORD;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    SHL(IN := 16#FFFFFFFFFFFFFFFF, N := start, SHL => @C(4).SHL);
+    ADD(IN1 := start, IN2 := len, ADD => @C(7).ADD);
+    SUB(IN1 := 64, IN2 := @C(7).ADD, SUB => @C(12).SUB);
+    SHR(IN := 16#FFFFFFFFFFFFFFFF, N := @C(12).SUB, SHR => @C(15).SHR);
+    AND(IN1 := @C(4).SHL, IN2 := @C(15).SHR, AND => @C(19).AND);
+    SUB(IN1 := prm, IN2 := ofs, SUB => @C(29).SUB);
+    DIV(IN1 := @C(29).SUB, IN2 := res, DIV => @C(32).DIV);
+    TO_LWORD(IN := @C(32).DIV, TO_LWORD => @C(36).TO_LWORD);
+    SHL(IN := @C(36).TO_LWORD, N := start, SHL => @C(23).SHL);
+    AND(IN1 := @C(19).AND, IN2 := @C(23).SHL, AND => OUTbit);
+
+  *)
+
+  @C(4) : @F(SHL), @R(670.0, 80.0, 100.0, 38.0), LWORD, @I(@N(IN), @L(9.5)), @I(@N(N), @L(29.5)), @O(@N(SHL), @R(9.5));
+  @C(12) : @F(SUB), @R(930.0, 100.0, 40.0, 38.0), INT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(SUB), @R(9.5));
+  @C(15) : @F(SHR), @R(1030.0, 80.0, 100.0, 38.0), LWORD, @I(@N(IN), @L(9.5)), @I(@N(N), @L(29.5)), @O(@N(SHR), @R(9.5));
+  @C(19) : @F(AND), @R(1190.0, 60.0, 40.0, 38.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(7) : @F(ADD), @R(670.0, 120.0, 40.0, 38.0), INT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(ADD), @R(9.5));
+  @C(22) : @F(AND), @R(1320.0, 140.0, 40.0, 38.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(23) : @F(SHL), @R(670.0, 160.0, 100.0, 38.0), LWORD, @I(@N(IN), @L(9.5)), @I(@N(N), @L(29.5)), @O(@N(SHL), @R(9.5));
+  @VF(8) : @E(16#FFFFFFFFFFFFFFFF), @R(470.0, 80.0, 170.0, 19.0), LWORD;
+  @VF(1) : @E(start), @R(130.0, 100.0, 140.0, 19.0);
+  @VF(11) : @E(64), @R(820.0, 100.0, 70.0, 19.0), INT;
+  @VF(17) : @E(16#FFFFFFFFFFFFFFFF), @R(810.0, 80.0, 170.0, 19.0), LWORD;
+  @VF(2) : @E(len), @R(130.0, 140.0, 140.0, 19.0);
+  @VF(27) : @E(OUTbit), @R(1400.0, 140.0, 140.0, 19.0);
+  @VF(3) : @E(prm), @R(130.0, 160.0, 140.0, 19.0);
+  @VF(24) : @E(ofs), @R(130.0, 180.0, 140.0, 19.0);
+  @C(29) : @F(SUB), @R(320.0, 160.0, 40.0, 38.0), LREAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(SUB), @R(9.5));
+  @C(32) : @F(DIV), @R(400.0, 160.0, 40.0, 38.0), LREAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV), @R(9.5));
+  @VF(34) : @E(res), @R(130.0, 200.0, 140.0, 19.0);
+  @C(36) : @F(TO_LWORD), @R(460.0, 160.0, 120.0, 18.0), LREAL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @CP(10) : 609.5, 109.5;
+
+  @G(5) :
+     @L(@VF(8).o, @C(4).IN)
+    ;
+  @G(6) :
+     @L(@VF(1).o, @CP(10)),
+     @L(@CP(10), @C(4).N),
+     @L(@CP(10), @C(7).IN1),
+     @L(@CP(10), @C(23).N)
+    ;
+  @G(13) :
+     @L(@VF(11).o, @C(12).IN1)
+    ;
+  @G(14) :
+     @L(@C(7).ADD, @C(12).IN2)
+    ;
+  @G(16) :
+     @L(@C(12).SUB, @C(15).N)
+    ;
+  @G(18) :
+     @L(@VF(17).o, @C(15).IN)
+    ;
+  @G(9) :
+     @L(@VF(2).o, @C(7).IN2)
+    ;
+  @G(20) :
+     @L(@C(15).SHR, @C(19).IN2)
+    ;
+  @G(21) :
+     @L(@C(4).SHL, @C(19).IN1)
+    ;
+  @G(25) :
+     @L(@C(19).AND, @C(22).IN1)
+    ;
+  @G(26) :
+     @L(@C(23).SHL, @C(22).IN2)
+    ;
+  @G(28) :
+     @L(@C(22).AND, @VF(27).i)
+    ;
+  @G(30) :
+     @L(@VF(3).o, @C(29).IN1)
+    ;
+  @G(31) :
+     @L(@VF(24).o, @C(29).IN2)
+    ;
+  @G(33) :
+     @L(@C(29).SUB, @C(32).IN1)
+    ;
+  @G(35) :
+     @L(@VF(34).o, @C(32).IN2)
+    ;
+  @G(37) :
+     @L(@C(32).DIV, @C(36).IN)
+    ;
+  @G(38) :
+     @L(@C(36).TO_LWORD, @C(23).IN)
+    ;
+END_FUNCTION

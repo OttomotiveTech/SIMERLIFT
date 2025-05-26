@@ -1,0 +1,244 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 58,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 59,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 33
+      },
+      "st": {
+        "b": 35,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 34,
+        "e": 40
+      },
+      "st": {
+        "b": 60,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 41,
+        "e": 47
+      },
+      "st": {
+        "b": 61,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 48,
+        "e": 54
+      },
+      "st": {
+        "b": 56,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 55,
+        "e": 62
+      },
+      "st": {
+        "b": 62,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 60,
+        "e": 60
+      },
+      "st": {
+        "b": 71,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 63,
+        "e": 70
+      },
+      "st": {
+        "b": 33,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 68,
+        "e": 68
+      },
+      "st": {
+        "b": 69,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 71,
+        "e": 78
+      },
+      "st": {
+        "b": 57,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 76,
+        "e": 76
+      },
+      "st": {
+        "b": 64,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 80,
+        "e": 80
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "Lineer_Function"
+    },
+    "LC_VD___61_SUB": {
+      "v": "__61_SUB",
+      "t": "LREAL"
+    },
+    "lcfu___LINEER_FUNCTION": {
+      "v": "",
+      "t": "Lineer_Function"
+    },
+    "LC_VD_Y2": {
+      "v": "Y2",
+      "t": "LREAL"
+    },
+    "LC_VD_X2": {
+      "v": "X2",
+      "t": "LREAL"
+    },
+    "LC_VD_Y1": {
+      "v": "Y1",
+      "t": "LREAL"
+    },
+    "LC_VD_X1": {
+      "v": "X1",
+      "t": "LREAL"
+    },
+    "LC_VD___33_LIMIT": {
+      "v": "__33_LIMIT",
+      "t": "LREAL"
+    },
+    "LC_VD___35_DIV": {
+      "v": "__35_DIV",
+      "t": "LREAL"
+    },
+    "LC_VD___57_LE": {
+      "v": "__57_LE",
+      "t": "BOOL"
+    },
+    "LC_VD___62_ADD": {
+      "v": "__62_ADD",
+      "t": "LREAL"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD_ERROR": {
+      "v": "Error",
+      "t": "BOOL"
+    },
+    "LC_VD_OUTPUT": {
+      "v": "Output",
+      "t": "LREAL"
+    },
+    "LC_VD___56_MUL": {
+      "v": "__56_MUL",
+      "t": "LREAL"
+    },
+    "LC_VD___59_SUB": {
+      "v": "__59_SUB",
+      "t": "LREAL"
+    },
+    "LC_VD_INPUT": {
+      "v": "Input",
+      "t": "LREAL"
+    },
+    "LC_VD___60_MUL": {
+      "v": "__60_MUL",
+      "t": "LREAL"
+    },
+    "LC_VD___58_SUB": {
+      "v": "__58_SUB",
+      "t": "LREAL"
+    },
+    "LC_VD_LIM_OUTPUT": {
+      "v": "Lim_Output",
+      "t": "LREAL"
+    }
+  },
+  "stCodeFile": "src_FBD/fbdCommon/Library/Lineer_Function.iecfbd",
+  "cCodeFile": "src-gen/lcfu___lineer_function.c"
+}

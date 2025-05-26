@@ -1,0 +1,196 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 2,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 11,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 33
+      },
+      "st": {
+        "b": 19,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 34,
+        "e": 41
+      },
+      "st": {
+        "b": 24,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 39,
+        "e": 39
+      },
+      "st": {
+        "b": 5,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 42,
+        "e": 48
+      },
+      "st": {
+        "b": 15,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 49,
+        "e": 55
+      },
+      "st": {
+        "b": 34,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 56,
+        "e": 62
+      },
+      "st": {
+        "b": 27,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 63,
+        "e": 70
+      },
+      "st": {
+        "b": 31,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 68,
+        "e": 68
+      },
+      "st": {
+        "b": 4,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 72,
+        "e": 72
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "Current"
+    },
+    "LC_VD___19_SEL_REAL": {
+      "v": "__19_SEL_REAL",
+      "t": "REAL"
+    },
+    "lcfu___CURRENT": {
+      "v": "",
+      "t": "Current"
+    },
+    "LC_VD___31_TO_UINT": {
+      "v": "__31_TO_UINT",
+      "t": "UINT"
+    },
+    "LC_VD___2_DIV": {
+      "v": "__2_DIV",
+      "t": "REAL"
+    },
+    "LC_VD_CURRENT": {
+      "v": "Current",
+      "t": "REAL"
+    },
+    "LC_VD_DISCHARGE_CURRENT": {
+      "v": "Discharge_Current",
+      "t": "UINT"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD___27_SEL_REAL": {
+      "v": "__27_SEL_REAL",
+      "t": "REAL"
+    },
+    "LC_VD_CHARGE_CURRENT": {
+      "v": "Charge_Current",
+      "t": "UINT"
+    },
+    "LC_VD___15_LT": {
+      "v": "__15_LT",
+      "t": "BOOL"
+    },
+    "LC_VD___24_TO_UINT": {
+      "v": "__24_TO_UINT",
+      "t": "UINT"
+    },
+    "LC_VD___11_GE": {
+      "v": "__11_GE",
+      "t": "BOOL"
+    },
+    "LC_VD___34_MUL": {
+      "v": "__34_MUL",
+      "t": "REAL"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/Current.iecfbd",
+  "cCodeFile": "src-gen/lcfu___current.c"
+}

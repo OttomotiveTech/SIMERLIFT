@@ -1,0 +1,20 @@
+{extern_c}
+
+FUNCTION_BLOCK ISABELinit  {
+    width := 200;
+    bgColor := "cadetblue";
+  }
+  VAR_INPUT
+    CH : TMS570_CAN;
+    ENB : BOOL;
+  END_VAR
+  VAR_OUTPUT
+    ERR:INT;
+  END_VAR
+  
+  VAR
+  STAT: UINT;
+  TRY: UINT;
+  END_VAR
+  
+END_FUNCTION_BLOCK

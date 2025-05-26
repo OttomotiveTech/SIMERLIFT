@@ -1,0 +1,6 @@
+#ifndef LC_PROT_LC3GLOBALSDMA_MD__H
+#define LC_PROT_LC3GLOBALSDMA_MD__H
+/* METADATA MACROS for GLOBAL VARIABLES (with DMA attribute) */
+
+
+#endif

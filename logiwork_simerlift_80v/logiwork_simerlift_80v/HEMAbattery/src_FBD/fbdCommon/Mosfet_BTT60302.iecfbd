@@ -1,0 +1,246 @@
+FUNCTION_BLOCK Mosfet_BTT60302
+  {
+    OUT2_Diag {index := 7};
+    OUT2 {index := 5};
+    OUT1_Diag {loc := "right", index := 4};
+    OUT1 {index := 2};
+    DSEL {index := 1};
+    Imin2 {loc := "left", index := 7};
+    Imin1 {index := 5};
+    Imax2 {index := 6};
+    Imax1 {index := 4};
+    Iout1 {index := 3};
+    Iout2 {index := 6};
+    width := 310;
+    height := 168;
+  }
+
+  VAR
+    FLASH1 : FLASH;
+    CTU1 : CTU;
+    R_TRIG1 : R_TRIG;
+    BTTdiag1 : BTTdiag;
+    BTTdiag2 : BTTdiag;
+  END_VAR
+  VAR_INPUT
+    IN1 : BOOL;
+    IN2 : BOOL;
+    Isens : REAL;
+    Imax1 : UINT;
+    Imax2 : UINT;
+    Imin1 : UINT;
+    Imin2 : UINT;
+  END_VAR
+  VAR_OUTPUT
+    DEN : BOOL;
+    DSEL : BOOL := 0;
+    OUT1 : BOOL;
+    OUT2 : BOOL;
+    OUT1_Diag : BYTE;
+    OUT2_Diag : BYTE;
+    Iout1 : UINT;
+    Iout2 : UINT;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    OUT1 := IN1;
+
+    // Network 2:
+    OUT2 := IN2;
+
+    // Network 3:
+    DEN := 1;
+
+    // Network 4:
+    FLASH1(IN := 1, PER := T#20ms);
+    MUL(IN1 := Isens, IN2 := 2240, MUL => @C(18).MUL);
+    TO_UINT(IN := @C(18).MUL, TO_UINT => @C(29).TO_UINT);
+    CTU1(CU := FLASH1.OUT, R := CTU1.Q, PV := 4);
+    IAND(IN1 := CTU1.CV, IN2 := 16#01, IAND => @C(106).IAND);
+    TO_BOOL(IN := @C(106).IAND, TO_BOOL => @C(92).TO_BOOL);
+    R_TRIG1(CLK := @C(92).TO_BOOL);
+    XOR(IN1 := R_TRIG1.Q, IN2 := DSEL, XOR => DSEL);
+    EQ(IN1 := CTU1.CV, IN2 := 0, EQ => @C(19).EQ);
+    SEL(G := @C(19).EQ, IN0 := Iout1, IN1 := @C(29).TO_UINT, SEL => Iout1);
+    EQ(IN1 := CTU1.CV, IN2 := 2, EQ => @C(25).EQ);
+    SEL(G := @C(25).EQ, IN0 := Iout2, IN1 := @C(29).TO_UINT, SEL => Iout2);
+
+    // Network 5:
+    BTTdiag1(IN := IN1, Iout := Iout1, Imin := Imin1, Imax := Imax1, DIAG => OUT1_Diag);
+
+    // Network 6:
+    BTTdiag2(IN := IN2, Iout := Iout2, Imin := Imin2, Imax := Imax2, DIAG => OUT2_Diag);
+
+  *)
+
+  @VF(1) : @E(IN1), @R(240.0, 50.0, 140.0, 19.0);
+  @VF(2) : @E(OUT1), @R(780.0, 50.0, 140.0, 19.0);
+  @VF(4) : @E(IN2), @R(240.0, 100.0, 140.0, 19.0);
+  @VF(5) : @E(OUT2), @R(780.0, 100.0, 140.0, 19.0);
+  @VF(7) : @E(DEN), @R(780.0, 150.0, 140.0, 19.0);
+  @VF(8) : @E(1), @R(540.0, 150.0, 60.0, 19.0), BOOL;
+  @C(44) : @FB(FLASH1), @R(410.0, 220.0, 120.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PER), @L(29.5)), @O(@N(OUT), @R(9.5));
+  @VF(50) : @E(1), @R(220.0, 220.0, 140.0, 19.0), BOOL;
+  @VF(48) : @E(T#20ms), @R(220.0, 240.0, 140.0, 19.0);
+  @C(13) : @F(SEL), @R(1070.0, 330.0, 120.0, 58.0), UINT, @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL), @R(9.5));
+  @C(19) : @F(EQ), @R(840.0, 330.0, 40.0, 38.0), INT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
+  @VF(21) : @E(0), @R(740.0, 350.0, 70.0, 19.0), INT;
+  @C(25) : @F(EQ), @R(840.0, 420.0, 40.0, 38.0), INT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
+  @C(26) : @F(SEL), @R(1070.0, 420.0, 120.0, 58.0), UINT, @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL), @R(9.5));
+  @VF(28) : @E(2), @R(740.0, 440.0, 70.0, 19.0), INT;
+  @C(87) : @FB(CTU1), @R(600.0, 220.0, 100.0, 58.0), @I(@N(CU), @L(9.5)), @I(@N(R), @L(29.5)), @I(@N(PV), @L(49.5)), @O(@N(Q), @R(9.5)), @O(@N(CV), @R(49.5));
+  @VF(89) : @E(4), @R(470.0, 260.0, 60.0, 19.0), INT;
+  @C(10) : @F(XOR), @R(1130.0, 260.0, 50.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(XOR), @R(9.5));
+  @C(88) : @FB(R_TRIG1), @R(960.0, 260.0, 140.0, 18.0), @I(@N(CLK), @L(9.5)), @O(@N(Q), @R(9.5));
+  @VF(102) : @E(DSEL), @R(1230.0, 260.0, 140.0, 19.0);
+  @VF(104) : @E(DSEL), @R(960.0, 280.0, 140.0, 19.0);
+  @C(106) : @F(IAND), @R(750.0, 260.0, 40.0, 38.0), INT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(IAND), @R(9.5));
+  @VF(27) : @E(16#01), @R(620.0, 280.0, 70.0, 19.0), INT;
+  @C(92) : @F(TO_BOOL), @R(820.0, 260.0, 120.0, 18.0), INT, @I(@N(IN), @L(9.5)), @O(@N(TO_BOOL), @R(9.5));
+  @CF(96) : @R(1450.0, 730.0, 200.0, 99.0), @T("Diagnostic $N0-Normal operation$N1-No load / No current$N2-Over current / Fault$N3-chip error$N");
+  @CF(97) : @R(400.0, 280.0, 200.0, 99.0), @T("            4 phases$N0-out1 measurement$N1-channel switch to 2$N2-out2 measurement$N3-channel switch to 1$N");
+  @CF(98) : @R(880.0, 480.0, 200.0, 19.0), @T("Iload = Isense x 2240$N");
+  @C(18) : @F(MUL), @R(820.0, 470.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(MUL), @R(9.5));
+  @VF(17) : @E(Isens), @R(720.0, 470.0, 70.0, 19.0);
+  @VF(100) : @E(2240), @R(720.0, 490.0, 70.0, 19.0), REAL;
+  @C(29) : @F(TO_UINT), @R(910.0, 460.0, 120.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @VF(110) : @E(Iout1), @R(1230.0, 330.0, 140.0, 19.0);
+  @VF(113) : @E(Iout2), @R(1230.0, 420.0, 140.0, 19.0);
+  @VF(23) : @E(Iout1), @R(890.0, 350.0, 140.0, 19.0);
+  @VF(30) : @E(Iout2), @R(890.0, 440.0, 140.0, 19.0);
+  @C(118) : @FB(BTTdiag1), @R(920.0, 600.0, 200.0, 78.0), @I(@N(IN), @L(9.5)), @I(@N(Iout), @L(29.5)), @I(@N(Imin), @L(49.5)), @I(@N(Imax), @L(69.5)), @O(@N(DIAG), @R(9.5));
+  @VF(119) : @E(IN1), @R(700.0, 600.0, 140.0, 19.0);
+  @VF(121) : @E(Iout1), @R(700.0, 620.0, 140.0, 19.0);
+  @VF(123) : @E(Imin1), @R(700.0, 640.0, 140.0, 19.0);
+  @VF(125) : @E(Imax1), @R(700.0, 660.0, 140.0, 19.0);
+  @VF(127) : @E(OUT1_Diag), @R(1210.0, 600.0, 140.0, 19.0);
+  @C(129) : @FB(BTTdiag2), @R(920.0, 730.0, 200.0, 78.0), @I(@N(IN), @L(9.5)), @I(@N(Iout), @L(29.5)), @I(@N(Imin), @L(49.5)), @I(@N(Imax), @L(69.5)), @O(@N(DIAG), @R(9.5));
+  @VF(130) : @E(IN2), @R(700.0, 730.0, 140.0, 19.0);
+  @VF(131) : @E(Iout2), @R(700.0, 750.0, 140.0, 19.0);
+  @VF(132) : @E(Imin2), @R(700.0, 770.0, 140.0, 19.0);
+  @VF(133) : @E(Imax2), @R(700.0, 790.0, 140.0, 19.0);
+  @VF(134) : @E(OUT2_Diag), @R(1210.0, 730.0, 140.0, 19.0);
+  @CP(12) : 719.5, 269.5;
+  @CP(20) : 819.5, 339.5;
+  @CP(109) : 1039.5, 469.5;
+
+  @G(3) :
+     @L(@VF(1).o, @VF(2).i)
+    ;
+  @G(6) :
+     @L(@VF(4).o, @VF(5).i)
+    ;
+  @G(9) :
+     @L(@VF(8).o, @VF(7).i)
+    ;
+  @G(49) :
+     @L(@VF(48).o, @C(44).PER)
+    ;
+  @G(54) :
+     @L(@VF(50).o, @C(44).IN)
+    ;
+  @G(11) :
+     @L(@C(44).OUT, @C(87).CU)
+    ;
+  @G(14) :
+     @L(@C(19).EQ, @C(13).G)
+    ;
+  @G(22) :
+     @L(@VF(21).o, @C(19).IN2)
+    ;
+  @G(33) :
+     @L(@VF(28).o, @C(25).IN2)
+    ;
+  @G(34) :
+     @L(@C(25).EQ, @C(26).G)
+    ;
+  @G(90) :
+     @L(@VF(89).o, @C(87).PV)
+    ;
+  @G(101) :
+     @L(@C(88).Q, @C(10).IN1)
+    ;
+  @G(103) :
+     @L(@C(10).XOR, @VF(102).i)
+    ;
+  @G(105) :
+     @L(@VF(104).o, @C(10).IN2)
+    ;
+  @G(32) :
+     @L(@VF(27).o, @C(106).IN2)
+    ;
+  @G(93) :
+     @L(@C(92).TO_BOOL, @C(88).CLK)
+    ;
+  @G(94) :
+     @L(@C(106).IAND, @C(92).IN)
+    ;
+  @G(95) :
+     @L(@C(87).CV, @CP(12)),
+     @L(@CP(12), @C(106).IN1),
+     @L(@CP(12), @CP(20)),
+     @L(@CP(20), @C(19).IN1),
+     @L(@CP(20), @C(25).IN1)
+    ;
+  @G(91) :
+     @L(@C(87).Q, @C(87).R)
+    ;
+  @G(76) :
+     @L(@VF(17).o, @C(18).IN1)
+    ;
+  @G(107) :
+     @L(@VF(100).o, @C(18).IN2)
+    ;
+  @G(35) :
+     @L(@C(29).TO_UINT, @CP(109)),
+     @L(@CP(109), @C(26).IN1),
+     @L(@CP(109), @C(13).IN1)
+    ;
+  @G(108) :
+     @L(@C(18).MUL, @C(29).IN)
+    ;
+  @G(15) :
+     @L(@C(13).SEL, @VF(110).i)
+    ;
+  @G(16) :
+     @L(@C(26).SEL, @VF(113).i)
+    ;
+  @G(24) :
+     @L(@VF(23).o, @C(13).IN0)
+    ;
+  @G(31) :
+     @L(@VF(30).o, @C(26).IN0)
+    ;
+  @G(120) :
+     @L(@VF(119).o, @C(118).IN)
+    ;
+  @G(122) :
+     @L(@VF(121).o, @C(118).Iout)
+    ;
+  @G(124) :
+     @L(@VF(123).o, @C(118).Imin)
+    ;
+  @G(126) :
+     @L(@VF(125).o, @C(118).Imax)
+    ;
+  @G(128) :
+     @L(@C(118).DIAG, @VF(127).i)
+    ;
+  @G(135) :
+     @L(@VF(130).o, @C(129).IN)
+    ;
+  @G(136) :
+     @L(@VF(131).o, @C(129).Iout)
+    ;
+  @G(137) :
+     @L(@VF(132).o, @C(129).Imin)
+    ;
+  @G(138) :
+     @L(@VF(133).o, @C(129).Imax)
+    ;
+  @G(139) :
+     @L(@C(129).DIAG, @VF(134).i)
+    ;
+END_FUNCTION_BLOCK

@@ -1,0 +1,36 @@
+{extern_c}
+
+FUNCTION_BLOCK BATTSTACKinfo  {
+    width := 300;
+  }
+  VAR_INPUT
+    INFO:USINT;
+    BRD:USINT;
+    volt:REAL;
+    amp:REAL;
+    Cycle:UINT;
+    State:USINT;
+    SOC:USINT;
+    SOH:USINT;
+    temp:SINT;
+    hum:USINT;
+    fault:UDINT;
+    NTCBETA:REAL;
+    NTCNOMT_KLV:REAL;
+    NTCNOMR_OHM:REAL;
+    T_CELLS:ARRAY[0..15]OF USINT; 
+    //BUF:REF_TO BYTE;
+    //MAX:UDINT;
+    R:BOOL;
+  END_VAR
+  VAR_OUTPUT
+    DATA:REF_TO BYTE;
+    LEN:UINT;
+    R_OUT:BOOL;
+  END_VAR
+  VAR
+    BUF:ARRAY[0..63]OF USINT; 
+    R_M:BOOL;
+    PENDING:BOOL;
+  END_VAR
+END_FUNCTION_BLOCK

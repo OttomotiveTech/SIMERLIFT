@@ -1,0 +1,74 @@
+FUNCTION_BLOCK  ampMultVoltDisc  {
+    width := 200;
+  }
+
+VAR_INPUT
+    discOn:BOOL;
+    minCell:UDINT;
+END_VAR
+
+VAR_OUTPUT
+	mult:REAL;
+END_VAR
+
+
+VAR
+state:USINT;
+
+END_VAR
+
+ IF NOT discOn THEN
+    state:=0;
+ END_IF;
+ 
+ 
+ CASE state OF
+	0:
+	mult:=1;
+	IF minCell<3150 THEN
+		state:=state+1;
+	END_IF;
+	
+	1:
+	mult:=0.7;
+	IF minCell<3120 THEN
+		state:=state+1;
+	END_IF;
+	
+	2:
+	mult:=0.6;
+	IF minCell<3100 THEN
+		state:=state+1;
+	END_IF;
+	
+	3:
+	mult:=0.5;
+	IF minCell<3050 THEN
+		state:=state+1;
+	END_IF;
+	
+	4:
+	mult:=0.35;
+	IF minCell<3020 THEN
+		state:=state+1;
+	END_IF;
+	
+	5:
+	mult:=0.25;
+	IF minCell<3000 THEN
+		state:=state+1;
+	END_IF;
+	
+	6:
+	mult:=0.2;
+	IF minCell<2400 THEN
+		state:=state+1;
+		
+	END_IF;
+ 
+ 	7:
+	mult:=0;
+	
+END_CASE;
+ 
+ END_FUNCTION_BLOCK

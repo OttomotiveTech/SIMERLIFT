@@ -1,0 +1,56 @@
+FUNCTION_BLOCK FLASH
+  VAR
+    TON2 : TON;
+    TON1 : TON;
+  END_VAR
+  VAR_INPUT
+    IN : BOOL := 0;
+    PER : TIME := T#0s;
+  END_VAR
+  VAR_OUTPUT
+    OUT : BOOL := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    TON2(IN := TON1.Q, PT := PER);
+    NOT(IN := TON2.Q, NOT => @C(5).NOT);
+    AND(IN1 := IN, IN2 := @C(5).NOT, AND => @C(4).AND);
+    TON1(IN := @C(4).AND, PT := PER, Q => OUT);
+
+  *)
+
+  @C(2) : @FB(TON2), @R(910.0, 290.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(5) : @F(NOT), @R(450.0, 190.0, 60.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(NOT), @R(9.5));
+  @C(1) : @FB(TON1), @R(730.0, 170.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(4) : @F(AND), @R(570.0, 170.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @VF(11) : @E(OUT), @R(990.0, 170.0, 140.0, 19.0);
+  @VF(9) : @E(IN), @R(290.0, 170.0, 140.0, 19.0);
+  @VF(13) : @E(PER), @R(260.0, 310.0, 140.0, 19.0);
+  @CP(15) : 669.5, 319.5;
+  @CP(12) : 869.5, 179.5;
+
+  @G(14) :
+     @L(@VF(13).o, @CP(15)),
+     @L(@CP(15), @C(1).PT),
+     @L(@CP(15), @C(2).PT)
+    ;
+  @G(6) :
+     @L(@C(5).NOT, @C(4).IN2)
+    ;
+  @G(7) :
+     @L(@C(2).Q, @C(5).IN)
+    ;
+  @G(3) :
+     @L(@C(1).Q, @CP(12)),
+     @L(@CP(12), @C(2).IN),
+     @L(@CP(12), @VF(11).i)
+    ;
+  @G(8) :
+     @L(@C(4).AND, @C(1).IN)
+    ;
+  @G(10) :
+     @L(@VF(9).o, @C(4).IN1)
+    ;
+END_FUNCTION_BLOCK

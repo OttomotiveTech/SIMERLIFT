@@ -1,0 +1,84 @@
+FUNCTION RFLT
+  VAR_INPUT
+    start : INT;
+    len : INT;
+    ofs : LREAL;
+    res : LREAL;
+    INbits : LWORD;
+  END_VAR
+  VAR_OUTPUT
+    out : LREAL;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    SHR(IN := INbits, N := start, SHR => @C(16).SHR);
+    SUB(IN1 := 64, IN2 := len, SUB => @C(7).SUB);
+    SHR(IN := 16#FFFFFFFFFFFFFFFF, N := @C(7).SUB, SHR => @C(10).SHR);
+    AND(IN1 := @C(16).SHR, IN2 := @C(10).SHR, AND => @C(14).AND);
+    TO_LREAL(IN := @C(14).AND, TO_LREAL => @C(22).TO_LREAL);
+    MUL(IN1 := res, IN2 := @C(22).TO_LREAL, MUL => @C(21).MUL);
+    ADD(IN1 := ofs, IN2 := @C(21).MUL, ADD => out);
+
+  *)
+
+  @VF(1) : @E(start), @R(110.0, 160.0, 140.0, 19.0);
+  @VF(2) : @E(len), @R(110.0, 220.0, 140.0, 19.0);
+  @VF(3) : @E(ofs), @R(110.0, 100.0, 140.0, 19.0);
+  @VF(4) : @E(res), @R(110.0, 120.0, 140.0, 19.0);
+  @VF(5) : @E(INbits), @R(110.0, 140.0, 140.0, 19.0);
+  @VF(6) : @E(64), @R(290.0, 200.0, 60.0, 19.0), INT;
+  @C(7) : @F(SUB), @R(420.0, 200.0, 40.0, 38.0), INT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(SUB), @R(9.5));
+  @C(10) : @F(SHR), @R(490.0, 180.0, 100.0, 38.0), LWORD, @I(@N(IN), @L(9.5)), @I(@N(N), @L(29.5)), @O(@N(SHR), @R(9.5));
+  @VF(12) : @E(16#FFFFFFFFFFFFFFFF), @R(290.0, 180.0, 170.0, 19.0), LWORD;
+  @C(14) : @F(AND), @R(640.0, 140.0, 40.0, 38.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(16) : @F(SHR), @R(490.0, 140.0, 100.0, 38.0), LWORD, @I(@N(IN), @L(9.5)), @I(@N(N), @L(29.5)), @O(@N(SHR), @R(9.5));
+  @VF(20) : @E(out), @R(1040.0, 100.0, 140.0, 19.0);
+  @C(21) : @F(MUL), @R(890.0, 120.0, 40.0, 38.0), LREAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(MUL), @R(9.5));
+  @C(22) : @F(TO_LREAL), @R(720.0, 140.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_LREAL), @R(9.5));
+  @C(26) : @F(ADD), @R(960.0, 100.0, 40.0, 38.0), LREAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(ADD), @R(9.5));
+
+  @G(8) :
+     @L(@VF(6).o, @C(7).IN1)
+    ;
+  @G(9) :
+     @L(@VF(2).o, @C(7).IN2)
+    ;
+  @G(11) :
+     @L(@C(7).SUB, @C(10).N)
+    ;
+  @G(13) :
+     @L(@VF(12).o, @C(10).IN)
+    ;
+  @G(15) :
+     @L(@C(10).SHR, @C(14).IN2)
+    ;
+  @G(17) :
+     @L(@VF(5).o, @C(16).IN)
+    ;
+  @G(18) :
+     @L(@VF(1).o, @C(16).N)
+    ;
+  @G(19) :
+     @L(@C(16).SHR, @C(14).IN1)
+    ;
+  @G(23) :
+     @L(@C(14).AND, @C(22).IN)
+    ;
+  @G(24) :
+     @L(@C(22).TO_LREAL, @C(21).IN2)
+    ;
+  @G(25) :
+     @L(@VF(4).o, @C(21).IN1)
+    ;
+  @G(27) :
+     @L(@C(21).MUL, @C(26).IN2)
+    ;
+  @G(28) :
+     @L(@VF(3).o, @C(26).IN1)
+    ;
+  @G(29) :
+     @L(@C(26).ADD, @VF(20).i)
+    ;
+END_FUNCTION

@@ -1,0 +1,27 @@
+{extern_c}
+
+FUNCTION_BLOCK SOCukf  {
+    TEMP {index := 0};
+    AMP {index := 1};
+    VOLT {index := 2};
+    SOC {index := 0};
+    width := 200;
+  }
+
+  VAR_INPUT 
+  	//WMEM:BOOL;
+    ENB:BOOL;
+    AMP : REAL;
+    VOLT: REAL;
+    TEMP: REAL;
+  END_VAR
+  
+  VAR_OUTPUT
+    SOC:REAL;
+  END_VAR
+  
+  VAR
+  //WMEM_M:BOOL;
+  END_VAR
+  
+END_FUNCTION_BLOCK

@@ -1,0 +1,340 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 19,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 22,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 33
+      },
+      "st": {
+        "b": 24,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 34,
+        "e": 40
+      },
+      "st": {
+        "b": 26,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 41,
+        "e": 47
+      },
+      "st": {
+        "b": 25,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 48,
+        "e": 54
+      },
+      "st": {
+        "b": 28,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 55,
+        "e": 61
+      },
+      "st": {
+        "b": 27,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 62,
+        "e": 68
+      },
+      "st": {
+        "b": 23,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 69,
+        "e": 75
+      },
+      "st": {
+        "b": 54,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 76,
+        "e": 82
+      },
+      "st": {
+        "b": 53,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 83,
+        "e": 89
+      },
+      "st": {
+        "b": 52,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 90,
+        "e": 97
+      },
+      "st": {
+        "b": 51,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 95,
+        "e": 95
+      },
+      "st": {
+        "b": 58,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 99,
+        "e": 99
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "Select_12"
+    },
+    "LC_VD_S00": {
+      "v": "S00",
+      "t": "BOOL"
+    },
+    "LC_VD_S01": {
+      "v": "S01",
+      "t": "BOOL"
+    },
+    "LC_VD___22_SEL_WORD": {
+      "v": "__22_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_S04": {
+      "v": "S04",
+      "t": "BOOL"
+    },
+    "LC_VD_S05": {
+      "v": "S05",
+      "t": "BOOL"
+    },
+    "LC_VD___54_SEL_WORD": {
+      "v": "__54_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_S02": {
+      "v": "S02",
+      "t": "BOOL"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD_S03": {
+      "v": "S03",
+      "t": "BOOL"
+    },
+    "LC_VD___24_SEL_WORD": {
+      "v": "__24_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_S09": {
+      "v": "S09",
+      "t": "BOOL"
+    },
+    "LC_VD_S08": {
+      "v": "S08",
+      "t": "BOOL"
+    },
+    "LC_VD_S07": {
+      "v": "S07",
+      "t": "BOOL"
+    },
+    "LC_VD___25_SEL_WORD": {
+      "v": "__25_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_S06": {
+      "v": "S06",
+      "t": "BOOL"
+    },
+    "LC_VD_IN11": {
+      "v": "In11",
+      "t": "WORD"
+    },
+    "LC_VD_IN10": {
+      "v": "In10",
+      "t": "WORD"
+    },
+    "lcfu___SELECT_12": {
+      "v": "",
+      "t": "Select_12"
+    },
+    "LC_VD___27_SEL_WORD": {
+      "v": "__27_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD___53_SEL_WORD": {
+      "v": "__53_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_Q": {
+      "v": "Q",
+      "t": "WORD"
+    },
+    "LC_VD___52_SEL_WORD": {
+      "v": "__52_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_IN03": {
+      "v": "In03",
+      "t": "WORD"
+    },
+    "LC_VD_IN02": {
+      "v": "In02",
+      "t": "WORD"
+    },
+    "LC_VD_S10": {
+      "v": "S10",
+      "t": "BOOL"
+    },
+    "LC_VD___51_SEL_WORD": {
+      "v": "__51_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_IN05": {
+      "v": "In05",
+      "t": "WORD"
+    },
+    "LC_VD_S11": {
+      "v": "S11",
+      "t": "BOOL"
+    },
+    "LC_VD_IN04": {
+      "v": "In04",
+      "t": "WORD"
+    },
+    "LC_VD_IN07": {
+      "v": "In07",
+      "t": "WORD"
+    },
+    "LC_VD_I": {
+      "v": "i",
+      "t": "BYTE"
+    },
+    "LC_VD___23_SEL_WORD": {
+      "v": "__23_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_IN06": {
+      "v": "In06",
+      "t": "WORD"
+    },
+    "LC_VD_IN09": {
+      "v": "In09",
+      "t": "WORD"
+    },
+    "LC_VD_IN08": {
+      "v": "In08",
+      "t": "WORD"
+    },
+    "LC_VD___19_SEL_WORD": {
+      "v": "__19_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_IN00": {
+      "v": "In00",
+      "t": "WORD"
+    },
+    "LC_VD___28_SEL_WORD": {
+      "v": "__28_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_IN01": {
+      "v": "In01",
+      "t": "WORD"
+    },
+    "LC_VD___26_SEL_WORD": {
+      "v": "__26_SEL_WORD",
+      "t": "WORD"
+    }
+  },
+  "stCodeFile": "src_FBD/fbdCommon/Library/Select_12.iecfbd",
+  "cCodeFile": "src-gen/lcfu___select_12.c"
+}

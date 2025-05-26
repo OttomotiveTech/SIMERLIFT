@@ -1,0 +1,28 @@
+FUNCTION fMaxSint  {
+    width := 200;
+  }
+
+VAR_INPUT
+	arr:ARRAY[0..15] OF SINT;
+	sizeof:USINT;
+END_VAR
+
+VAR_OUTPUT
+	max : SINT;
+END_VAR
+
+
+VAR
+i:USINT;
+
+END_VAR
+
+max:=-128;
+
+FOR i:=1 TO sizeof By 1 DO
+	IF max<arr[i-1] THEN
+		max:=arr[i-1];
+	END_IF;
+END_FOR;
+
+END_FUNCTION

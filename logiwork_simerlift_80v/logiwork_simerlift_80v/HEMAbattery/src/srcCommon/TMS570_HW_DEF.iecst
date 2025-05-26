@@ -1,0 +1,30 @@
+TYPE
+    TMS570_GIO : UDINT(A := 16#FFF7BC34,
+    	                    B := 16#FFF7BC54,
+    	                    HET1 := 16#FFF7B84C,
+    	                    HET2 := 16#FFF7B94C,
+    	                    SPI1 := 16#FFF7F418,
+    	                    SPI2 := 16#FFF7F618,
+    	                    SPI3 := 16#FFF7F818);
+END_TYPE
+
+TYPE
+    TMS570_CAN : UDINT( LNULL := 16#00000000,
+    	             L1 := 16#FFF7DC00,
+    	             L2 := 16#FFF7DE00,
+    	             L3 := 16#FFF7E000,
+    	             L4 := 16#FFF7E200);
+END_TYPE
+
+
+
+TYPE
+    TMSADC : UDINT( A1 := 16#FFF7C000,
+    	            A2 := 16#FFF7C200);
+END_TYPE
+
+TYPE
+    TMSADCGRP : USINT( EVENT := 0,
+    	               G1 := 1,
+    	               G2 := 2);
+END_TYPE

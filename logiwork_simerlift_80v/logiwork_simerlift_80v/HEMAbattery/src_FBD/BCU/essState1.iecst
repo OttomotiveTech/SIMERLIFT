@@ -1,0 +1,222 @@
+FUNCTION_BLOCK  essState1  {
+    fault {index := 12};
+    shutdownComplete {index := 11};
+    chargeProtect {index := 9};
+    dischargeProtect {index := 8};
+    contactFbkNeg {loc := "left", index := 6};
+    contactFbk {loc := "left", index := 5};
+    prechargeOk {loc := "left", index := 4};
+    contactNeg {loc := "right", index := 4};
+    contact {loc := "right", index := 3};
+    prechargeOn {loc := "right", index := 2};
+    width := 400;
+    bgColor := "mediumseagreen";
+    height := 258;
+  }
+
+VAR_INPUT
+	discharge:BOOL;
+	charge:BOOL;
+	shutdown:BOOL;
+	
+	prechargeOk:BOOL;
+	contactFbk:BOOL;
+	contactFbkNeg:BOOL;
+	
+	dischargeProtect:BOOL;
+	chargeProtect:BOOL;
+	
+	shutdownComplete:BOOL;
+	fault:BOOL;
+END_VAR
+
+VAR_OUTPUT
+	STATE : BATTSTATE;
+	
+	prechargeOn:BOOL;
+	contact:BOOL;
+	contactNeg:BOOL;
+END_VAR
+
+
+VAR
+
+BATTERYSTATE:BATTSTATE:=BATTSTATE#STANDBY;
+PREVSTATE:BATTSTATE:=BATTSTATE#STANDBY;
+
+BATTIMER:TON;
+BATSTATEINTERVAL:TIME:=T#10s;
+BATSTATETIMEOUT:BOOL;
+BATSTATEELAPSEDTIME:TIME;
+STANDBYINTERVAL:TIME:=T#2s;
+END_VAR
+
+BATTIMER(IN:=BATTERYSTATE=PREVSTATE, PT:=BATSTATEINTERVAL, Q=>BATSTATETIMEOUT, ET=>BATSTATEELAPSEDTIME);
+
+PREVSTATE:=BATTERYSTATE;
+
+
+CASE BATTERYSTATE OF
+	
+	BATTSTATE#STANDBY:  // standby
+		STATE:=BATTSTATE#STANDBY;
+		BATSTATEINTERVAL:=T#12s;
+
+		contact:=0;
+		contactNeg:=0;
+		prechargeOn:=0;
+		
+        IF BATSTATEELAPSEDTIME>STANDBYINTERVAL THEN
+        	STANDBYINTERVAL:=T#500ms;
+        	IF fault THEN
+				BATTERYSTATE:=BATTSTATE#FAULT;
+			ELSIF shutdown THEN
+				BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+			ELSIF discharge OR (charge AND NOT chargeProtect) THEN
+				BATTERYSTATE:=BATTSTATE#PRECHARGE;
+			END_IF;	
+        END_IF;
+
+
+		
+	BATTSTATE#PRECHARGE:  //discharge
+		STATE:=BATTSTATE#PRECHARGE;
+		BATSTATEINTERVAL:=T#5s;
+		
+		contactNeg:=1;
+
+		IF BATSTATEELAPSEDTIME>T#50ms AND contactFbkNeg THEN
+			prechargeOn:=1;
+		END_IF;
+		
+		IF prechargeOk THEN
+			contact:=1;
+		END_IF;
+		
+		IF fault OR NOT(discharge OR charge) OR shutdown OR BATSTATETIMEOUT THEN
+			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+		ELSIF prechargeOk AND contactFbk AND contactFbkNeg THEN
+			IF charge THEN
+				BATTERYSTATE:=BATTSTATE#CHARGE;
+			ELSE 
+				BATTERYSTATE:=BATTSTATE#DISCHARGE;
+			END_IF;
+		END_IF;
+		
+		
+	BATTSTATE#DISCHARGE:  //discharge
+		STATE:=BATTSTATE#DISCHARGE;
+		BATSTATEINTERVAL:=T#120s;
+		
+		prechargeOn:=0;
+		contact:=1;
+		contactNeg:=1;
+
+		IF fault OR shutdown OR NOT contactFbk OR NOT contactFbkNeg THEN
+			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+		ELSIF NOT discharge THEN
+			IF charge AND NOT chargeProtect THEN
+				BATTERYSTATE:=BATTSTATE#CHARGE;
+			ELSE
+				BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+			END_IF;
+		END_IF;
+		
+		
+	BATTSTATE#CHARGE:  // charge
+		STATE:=BATTSTATE#CHARGE;
+		BATSTATEINTERVAL:=T#120s;
+		
+		prechargeOn:=0;
+		contact:=1;
+		contactNeg:=1;
+
+		IF fault OR shutdown OR NOT contactFbk OR NOT contactFbkNeg THEN
+			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+		ELSIF NOT charge THEN
+			IF discharge THEN
+				BATTERYSTATE:=BATTSTATE#DISCHARGE;
+			ELSE
+				BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+			END_IF;
+		END_IF;
+		
+		
+	BATTSTATE#SHUTDOWN:  // shutdown
+		STATE:=BATTSTATE#SHUTDOWN;
+		BATSTATEINTERVAL:=T#5000ms; 
+		
+		prechargeOn:=0;
+		
+		IF shutdown OR BATSTATEELAPSEDTIME>T#2000ms OR (shutdownComplete AND (BATSTATEELAPSEDTIME>T#500ms))  THEN
+			contact:=0;
+			contactNeg:=0;
+			IF fault THEN
+				BATTERYSTATE:=BATTSTATE#FAULT;
+			ELSIF shutdown THEN
+				BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+			ELSIF NOT contactFbk AND NOT contactFbkNeg THEN
+				IF dischargeProtect THEN
+					BATTERYSTATE:=BATTSTATE#DISCHARGECOMPLETE;
+				ELSIF chargeProtect THEN
+					BATTERYSTATE:=BATTSTATE#CHARGECOMPLETE;
+				ELSIF BATSTATETIMEOUT OR charge OR discharge THEN
+					BATTERYSTATE:=BATTSTATE#STANDBY;
+				END_IF;
+			END_IF;
+		END_IF;
+		
+		
+	BATTSTATE#FAULT:  //fault
+		STATE:=BATTSTATE#FAULT;
+		BATSTATEINTERVAL:=T#10s;
+		
+		contact:=0;
+		contactNeg:=0;
+		prechargeOn:=0;
+		
+		IF NOT fault AND BATSTATETIMEOUT THEN
+			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+		END_IF;
+
+		
+	BATTSTATE#CHARGECOMPLETE: 
+		STATE:=BATTSTATE#CHARGECOMPLETE;
+		BATSTATEINTERVAL:=T#5s;
+		
+		prechargeOn:=0;
+		contact:=0;
+		contactNeg:=0;
+		
+		IF fault THEN
+			BATTERYSTATE:=BATTSTATE#FAULT;
+		ELSIF shutdown THEN
+			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+		ELSIF BATSTATETIMEOUT AND discharge THEN
+			BATTERYSTATE:=BATTSTATE#STANDBY;
+		END_IF;
+		
+		
+	BATTSTATE#DISCHARGECOMPLETE:
+		STATE:=BATTSTATE#DISCHARGECOMPLETE;
+		BATSTATEINTERVAL:=T#5s;
+		
+		prechargeOn:=0;
+		contact:=0;
+		contactNeg:=0;
+		
+		IF fault THEN
+			BATTERYSTATE:=BATTSTATE#FAULT;
+		ELSIF shutdown THEN
+			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
+		ELSIF BATSTATETIMEOUT AND charge THEN
+			BATTERYSTATE:=BATTSTATE#STANDBY;
+		END_IF;
+
+			
+END_CASE;
+
+END_FUNCTION_BLOCK
+
+
+

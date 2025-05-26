@@ -1,0 +1,116 @@
+FUNCTION_BLOCK Timer
+  {
+    T_L {index := 2};
+    T_H {index := 1};
+    T_Q {index := 1};
+    Enable {index := 0};
+    Pulse {index := 3};
+    P_Q {index := 3};
+    width := 120;
+    height := 38;
+  }
+
+  VAR
+    TON4 : TON;
+    TON3 : TON;
+    TON5 : TON;
+    TON6 : TON;
+  END_VAR
+  VAR_INPUT
+    T_H : TIME := T#100ms;
+    T_L : TIME := T#100ms;
+    Enable : BOOL := 0;
+    Pulse : TIME := T#100ms;
+  END_VAR
+  VAR_OUTPUT
+    T_Q : BOOL;
+    P_Q : BOOL := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    DIV_TIME(IN1 := Pulse, IN2 := 2, DIV_TIME => @C(64).DIV_TIME);
+    TON4(IN := TON3.Q, PT := T_H);
+    NOT(IN := TON4.Q, NOT => @C(33).NOT);
+    AND(IN1 := Enable, IN2 := @C(33).NOT, AND => @C(34).AND);
+    TON3(IN := @C(34).AND, PT := T_L, Q => T_Q);
+    TON6(IN := TON5.Q, PT := @C(64).DIV_TIME);
+    NOT(IN := TON6.Q, NOT => @C(62).NOT);
+    AND(IN1 := Enable, IN2 := @C(62).NOT, AND => @C(63).AND);
+    TON5(IN := @C(63).AND, PT := @C(64).DIV_TIME, Q => P_Q);
+
+  *)
+
+  @C(29) : @FB(TON4), @R(560.0, 100.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(33) : @F(NOT), @R(160.0, 60.0, 60.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(NOT), @R(9.5));
+  @C(34) : @F(AND), @R(260.0, 40.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(37) : @FB(TON3), @R(380.0, 40.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @VF(57) : @E(Enable), @R(20.0, 40.0, 200.0, 19.0);
+  @VF(59) : @E(P_Q), @R(560.0, 160.0, 200.0, 19.0);
+  @C(62) : @F(NOT), @R(160.0, 180.0, 60.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(NOT), @R(9.5));
+  @C(63) : @F(AND), @R(260.0, 160.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(64) : @F(DIV_TIME), @R(160.0, 240.0, 40.0, 38.0), USINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV_TIME), @R(9.5));
+  @C(65) : @FB(TON5), @R(380.0, 160.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(66) : @FB(TON6), @R(560.0, 220.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @VF(67) : @E(Pulse), @R(20.0, 240.0, 100.0, 19.0);
+  @VF(68) : @E(2), @R(20.0, 260.0, 100.0, 19.0), USINT;
+  @VF(79) : @E(T_Q), @R(560.0, 40.0, 200.0, 19.0);
+  @VF(25) : @E(T_H), @R(20.0, 120.0, 100.0, 19.0);
+  @VF(39) : @E(T_L), @R(20.0, 100.0, 100.0, 19.0);
+  @CP(43) : 519.5, 49.5;
+  @CP(70) : 519.5, 169.5;
+  @CP(58) : 239.5, 49.5;
+  @CP(9) : 339.5, 249.5;
+
+  @G(51) :
+     @L(@C(33).NOT, @C(34).IN2)
+    ;
+  @G(54) :
+     @L(@C(29).Q, @C(33).IN)
+    ;
+  @G(55) :
+     @L(@C(34).AND, @C(37).IN)
+    ;
+  @G(56) :
+     @L(@C(37).Q, @CP(43)),
+     @L(@CP(43), @C(29).IN),
+     @L(@CP(43), @VF(79).i)
+    ;
+  @G(71) :
+     @L(@C(62).NOT, @C(63).IN2)
+    ;
+  @G(72) :
+     @L(@C(63).AND, @C(65).IN)
+    ;
+  @G(74) :
+     @L(@VF(67).o, @C(64).IN1)
+    ;
+  @G(75) :
+     @L(@VF(68).o, @C(64).IN2)
+    ;
+  @G(76) :
+     @L(@C(65).Q, @CP(70)),
+     @L(@CP(70), @C(66).IN),
+     @L(@CP(70), @VF(59).i)
+    ;
+  @G(77) :
+     @L(@C(66).Q, @C(62).IN)
+    ;
+  @G(42) :
+     @L(@VF(25).o, @C(29).PT)
+    ;
+  @G(45) :
+     @L(@VF(39).o, @C(37).PT)
+    ;
+  @G(50) :
+     @L(@VF(57).o, @CP(58)),
+     @L(@CP(58), @C(34).IN1),
+     @L(@CP(58), @C(63).IN1)
+    ;
+  @G(4) :
+     @L(@C(64).DIV_TIME, @CP(9)),
+     @L(@CP(9), @C(66).PT),
+     @L(@CP(9), @C(65).PT)
+    ;
+END_FUNCTION_BLOCK

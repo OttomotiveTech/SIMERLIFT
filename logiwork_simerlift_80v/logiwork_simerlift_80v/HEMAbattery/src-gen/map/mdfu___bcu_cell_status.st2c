@@ -1,0 +1,300 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 7,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 14,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 33
+      },
+      "st": {
+        "b": 64,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 34,
+        "e": 40
+      },
+      "st": {
+        "b": 44,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 41,
+        "e": 47
+      },
+      "st": {
+        "b": 15,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 48,
+        "e": 54
+      },
+      "st": {
+        "b": 47,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 55,
+        "e": 61
+      },
+      "st": {
+        "b": 16,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 62,
+        "e": 68
+      },
+      "st": {
+        "b": 48,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 69,
+        "e": 75
+      },
+      "st": {
+        "b": 17,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 76,
+        "e": 82
+      },
+      "st": {
+        "b": 20,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 83,
+        "e": 89
+      },
+      "st": {
+        "b": 226,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 90,
+        "e": 100
+      },
+      "st": {
+        "b": 158,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 92,
+        "e": 99
+      },
+      "st": {
+        "b": 158,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 101,
+        "e": 108
+      },
+      "st": {
+        "b": 95,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 106,
+        "e": 106
+      },
+      "st": {
+        "b": 114,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 110,
+        "e": 110
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "BCU_Cell_Status"
+    },
+    "LC_VD___14_OUTBIT": {
+      "v": "__14_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_CANSEND3": {
+      "v": "CANSEND3",
+      "t": "CANSEND"
+    },
+    "LC_VD___47_TO_LWORD": {
+      "v": "__47_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_CAN_ID": {
+      "v": "CAN_ID",
+      "t": "UDINT"
+    },
+    "LC_VD___44_TO_LWORD": {
+      "v": "__44_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_CAN_CH": {
+      "v": "CAN_CH",
+      "t": "UDINT"
+    },
+    "LC_VD___48_TO_LWORD": {
+      "v": "__48_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD___20_OUTBIT": {
+      "v": "__20_OUTbit",
+      "t": "LWORD"
+    },
+    "lcfu___BCU_CELL_STATUS": {
+      "v": "",
+      "t": "BCU_Cell_Status"
+    },
+    "LC_VD_INSTANT_CURRENT": {
+      "v": "Instant_Current",
+      "t": "REAL"
+    },
+    "LC_VD___17_OUTBIT": {
+      "v": "__17_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_TOTAL_VOLTAGE": {
+      "v": "Total_Voltage",
+      "t": "REAL"
+    },
+    "LC_VD___64_NE": {
+      "v": "__64_NE",
+      "t": "BOOL"
+    },
+    "LC_VD_CAN_ERROR": {
+      "v": "CAN_Error",
+      "t": "BOOL"
+    },
+    "LC_VD_CELL_TEMP": {
+      "v": "Cell_Temp",
+      "t": "REAL"
+    },
+    "LC_VD___15_OUTBIT": {
+      "v": "__15_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___95_NE": {
+      "v": "__95_NE",
+      "t": "BOOL"
+    },
+    "LC_VD_SELECTED_BMU_LOC": {
+      "v": "Selected_BMU_Loc",
+      "t": "USINT"
+    },
+    "LC_VD_CELL_VOLTAGE": {
+      "v": "Cell_Voltage",
+      "t": "UDINT"
+    },
+    "LC_VD___16_OUTBIT": {
+      "v": "__16_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___226_OR": {
+      "v": "__226_OR",
+      "t": "LWORD"
+    },
+    "LC_VD_SELECTED_CELL_LOC": {
+      "v": "Selected_Cell_Loc",
+      "t": "USINT"
+    },
+    "LC_VD___7_OUTBIT": {
+      "v": "__7_OUTbit",
+      "t": "LWORD"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/CAN/BCU/BCU_Cell_Status.iecfbd",
+  "cCodeFile": "src-gen/lcfu___bcu_cell_status.c"
+}

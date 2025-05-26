@@ -1,0 +1,6 @@
+TYPE
+
+    CAN_FORMAT : UINT( FNULL := 16#00,
+    	              STANDARD := 16#01,
+                      EXTENDED := 16#02);
+END_TYPE

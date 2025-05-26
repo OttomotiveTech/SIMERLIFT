@@ -1,0 +1,25 @@
+{extern_c}
+
+FUNCTION_BLOCK fMemW_REAL  {
+    height := 58;
+    width := 250;
+    bgColor := "navy";
+  }
+  VAR_INPUT
+    ADDR: UDINT;
+    VAL: REAL;
+    R: BOOL;
+  END_VAR
+  VAR_OUTPUT
+    OK: BOOL;
+    RET: UDINT;
+    NXT: UDINT;
+  END_VAR
+  VAR
+    STARTT:TIME;
+	STATE: UINT;
+	ID: UINT;
+    R_M: BOOL;
+    PENDING: BOOL;
+  END_VAR
+END_FUNCTION_BLOCK

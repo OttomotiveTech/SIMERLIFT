@@ -1,0 +1,222 @@
+FUNCTION_BLOCK HVCU_Status
+  {
+    HVCU_SoC {index := 0};
+    HVCU_SoH {index := 1};
+    HVCU_Full_SoC {index := 2};
+    HVCU_Bulk_SoC {index := 3};
+    HVCU_DMDC {index := 4};
+    HVCU_DMCC {index := 5};
+    CAN_Error {index := 7};
+    CAN_CH {index := 0};
+    CAN_ID {index := 1};
+    width := 500;
+    bgColor := "cornflowerblue";
+    height := 148;
+  }
+
+  VAR
+    CANRECV1 : CANRECV;
+    RBITS1 : RBITS;
+    RBITS2 : RBITS;
+    RBITS3 : RBITS;
+    RBITS4 : RBITS;
+    RBITS5 : RBITS;
+    RBITS6 : RBITS;
+  END_VAR
+  VAR_INPUT
+    CAN_ID : UDINT := 0;
+    CAN_CH : UDINT := 0;
+  END_VAR
+  VAR_OUTPUT
+    HVCU_SoC : USINT := 0;
+    HVCU_SoH : USINT := 0;
+    HVCU_Full_SoC : USINT := 0;
+    HVCU_Bulk_SoC : USINT := 0;
+    HVCU_DMDC : UINT := 0;
+    HVCU_DMCC : UINT := 0;
+    CAN_Error : BOOL := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    NE(IN1 := CAN_ID, IN2 := 0, NE => @C(64).NE);
+    CANRECV1(CH := CAN_CH, ID := CAN_ID, FMT := CAN_FORMAT#EXTENDED, PER := T#100ms, ENB := @C(64).NE);
+    RBITS1(start := 0, len := 8, in := CANRECV1.DATA);
+    TO_USINT(IN := RBITS1.out, TO_USINT => HVCU_SoC);
+    RBITS2(start := 8, len := 8, in := CANRECV1.DATA);
+    TO_USINT(IN := RBITS2.out, TO_USINT => HVCU_SoH);
+    NE(IN1 := CANRECV1.RC, IN2 := 0, NE => CAN_Error);
+    RBITS3(start := 16, len := 8, in := CANRECV1.DATA);
+    TO_USINT(IN := RBITS3.out, TO_USINT => HVCU_Full_SoC);
+    RBITS4(start := 24, len := 8, in := CANRECV1.DATA);
+    TO_USINT(IN := RBITS4.out, TO_USINT => HVCU_Bulk_SoC);
+    RBITS5(start := 32, len := 16, in := CANRECV1.DATA);
+    TO_UINT(IN := RBITS5.out, TO_UINT => HVCU_DMDC);
+    RBITS6(start := 48, len := 16, in := CANRECV1.DATA);
+    TO_UINT(IN := RBITS6.out, TO_UINT => HVCU_DMCC);
+
+  *)
+
+  @C(1) : @FB(CANRECV1), @R(420.0, 90.0, 120.0, 98.0), @I(@N(CH), @L(9.5)), @I(@N(ID), @L(29.5)), @I(@N(FMT), @L(49.5)), @I(@N(PER), @L(69.5)), @I(@N(ENB), @L(89.5)), @O(@N(CRX), @R(9.5)), @O(@N(DATA), @R(29.5)), @O(@N(DLC), @R(49.5)), @O(@N(MPER), @R(69.5)), @O(@N(RC), @R(89.5));
+  @C(9) : @FB(RBITS1), @R(1000.0, 70.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(in), @L(49.5)), @O(@N(out), @R(9.5));
+  @C(10) : @FB(RBITS2), @R(1000.0, 130.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(in), @L(49.5)), @O(@N(out), @R(9.5));
+  @C(64) : @F(NE), @R(340.0, 170.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @C(21) : @FB(RBITS3), @R(1000.0, 190.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(in), @L(49.5)), @O(@N(out), @R(9.5));
+  @C(76) : @F(TO_USINT), @R(1160.0, 130.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(77) : @F(TO_USINT), @R(1160.0, 190.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(78) : @F(TO_USINT), @R(1160.0, 250.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(73) : @F(TO_USINT), @R(1160.0, 70.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(23) : @FB(RBITS4), @R(1000.0, 250.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(in), @L(49.5)), @O(@N(out), @R(9.5));
+  @C(34) : @FB(RBITS5), @R(1000.0, 310.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(in), @L(49.5)), @O(@N(out), @R(9.5));
+  @C(35) : @FB(RBITS6), @R(1000.0, 370.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(in), @L(49.5)), @O(@N(out), @R(9.5));
+  @VF(20) : @E(CAN_FORMAT#EXTENDED), @R(40.0, 130.0, 220.0, 19.0);
+  @VF(58) : @E(CAN_ID), @R(40.0, 110.0, 220.0, 19.0);
+  @VF(18) : @E(T#100ms), @R(150.0, 150.0, 110.0, 19.0);
+  @VF(15) : @E(8), @R(850.0, 130.0, 110.0, 19.0), UINT;
+  @VF(16) : @E(8), @R(850.0, 150.0, 110.0, 19.0), UINT;
+  @VF(29) : @E(8), @R(850.0, 90.0, 110.0, 19.0), UINT;
+  @VF(30) : @E(0), @R(850.0, 70.0, 110.0, 19.0), UINT;
+  @VF(25) : @E(8), @R(850.0, 210.0, 110.0, 19.0), UINT;
+  @VF(24) : @E(16), @R(850.0, 190.0, 110.0, 19.0), UINT;
+  @VF(66) : @E(0), @R(150.0, 190.0, 110.0, 19.0), UDINT;
+  @VF(26) : @E(24), @R(850.0, 250.0, 110.0, 19.0), UINT;
+  @VF(27) : @E(8), @R(850.0, 270.0, 110.0, 19.0), UINT;
+  @VF(36) : @E(32), @R(850.0, 310.0, 110.0, 19.0), UINT;
+  @VF(37) : @E(16), @R(850.0, 330.0, 110.0, 19.0), UINT;
+  @VF(38) : @E(48), @R(850.0, 370.0, 110.0, 19.0), UINT;
+  @VF(39) : @E(16), @R(850.0, 390.0, 110.0, 19.0), UINT;
+  @C(44) : @F(TO_UINT), @R(1160.0, 310.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(45) : @F(TO_UINT), @R(1160.0, 370.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @VF(48) : @E(HVCU_SoC), @R(1320.0, 70.0, 220.0, 19.0);
+  @VF(49) : @E(HVCU_SoH), @R(1320.0, 130.0, 220.0, 19.0);
+  @VF(50) : @E(HVCU_Full_SoC), @R(1320.0, 190.0, 220.0, 19.0);
+  @VF(51) : @E(HVCU_Bulk_SoC), @R(1320.0, 250.0, 220.0, 19.0);
+  @VF(52) : @E(HVCU_DMDC), @R(1320.0, 310.0, 220.0, 19.0);
+  @VF(53) : @E(HVCU_DMCC), @R(1320.0, 370.0, 220.0, 19.0);
+  @VF(69) : @E(0), @R(430.0, 190.0, 110.0, 19.0), UINT;
+  @VF(71) : @E(CAN_Error), @R(660.0, 170.0, 110.0, 19.0);
+  @VF(22) : @E(CAN_CH), @R(40.0, 90.0, 220.0, 19.0);
+  @C(75) : @F(NE), @R(580.0, 170.0, 40.0, 38.0), UINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @CP(8) : 299.5, 119.5;
+  @CP(12) : 809.5, 119.5;
+  @CP(55) : 809.5, 179.5;
+  @CP(59) : 809.5, 239.5;
+  @CP(60) : 809.5, 299.5;
+  @CP(63) : 809.5, 359.5;
+
+  @G(6) :
+     @L(@VF(58).o, @CP(8)),
+     @L(@CP(8), @C(1).ID),
+     @L(@CP(8), @C(64).IN1)
+    ;
+  @G(5) :
+     @L(@VF(20).o, @C(1).FMT)
+    ;
+  @G(3) :
+     @L(@VF(18).o, @C(1).PER)
+    ;
+  @G(11) :
+     @L(@C(1).DATA, @CP(12)),
+     @L(@CP(12), @C(9).in),
+     @L(@CP(12), @CP(55)),
+     @L(@CP(55), @C(10).in),
+     @L(@CP(55), @CP(59)),
+     @L(@CP(59), @C(21).in),
+     @L(@CP(59), @CP(60)),
+     @L(@CP(60), @C(23).in),
+     @L(@CP(60), @CP(63)),
+     @L(@CP(63), @C(34).in),
+     @L(@CP(63), @C(35).in)
+    ;
+  @G(4) :
+     @L(@C(64).NE, @C(1).ENB)
+    ;
+  @G(13) :
+     @L(@VF(30).o, @C(9).start)
+    ;
+  @G(14) :
+     @L(@VF(29).o, @C(9).len)
+    ;
+  @G(17) :
+     @L(@VF(15).o, @C(10).start)
+    ;
+  @G(19) :
+     @L(@VF(16).o, @C(10).len)
+    ;
+  @G(2) :
+     @L(@VF(66).o, @C(64).IN2)
+    ;
+  @G(28) :
+     @L(@VF(24).o, @C(21).start)
+    ;
+  @G(31) :
+     @L(@VF(25).o, @C(21).len)
+    ;
+  @G(74) :
+     @L(@C(9).out, @C(73).IN)
+    ;
+  @G(86) :
+     @L(@C(10).out, @C(76).IN)
+    ;
+  @G(87) :
+     @L(@C(21).out, @C(77).IN)
+    ;
+  @G(32) :
+     @L(@VF(26).o, @C(23).start)
+    ;
+  @G(88) :
+     @L(@C(23).out, @C(78).IN)
+    ;
+  @G(33) :
+     @L(@VF(27).o, @C(23).len)
+    ;
+  @G(40) :
+     @L(@VF(36).o, @C(34).start)
+    ;
+  @G(41) :
+     @L(@VF(37).o, @C(34).len)
+    ;
+  @G(42) :
+     @L(@VF(38).o, @C(35).start)
+    ;
+  @G(43) :
+     @L(@VF(39).o, @C(35).len)
+    ;
+  @G(46) :
+     @L(@C(35).out, @C(45).IN)
+    ;
+  @G(47) :
+     @L(@C(34).out, @C(44).IN)
+    ;
+  @G(54) :
+     @L(@C(73).TO_USINT, @VF(48).i)
+    ;
+  @G(56) :
+     @L(@C(76).TO_USINT, @VF(49).i)
+    ;
+  @G(57) :
+     @L(@C(77).TO_USINT, @VF(50).i)
+    ;
+  @G(61) :
+     @L(@C(78).TO_USINT, @VF(51).i)
+    ;
+  @G(62) :
+     @L(@C(44).TO_UINT, @VF(52).i)
+    ;
+  @G(65) :
+     @L(@C(45).TO_UINT, @VF(53).i)
+    ;
+  @G(7) :
+     @L(@VF(22).o, @C(1).CH)
+    ;
+  @G(67) :
+     @L(@C(1).RC, @C(75).IN1)
+    ;
+  @G(68) :
+     @L(@C(75).NE, @VF(71).i)
+    ;
+  @G(70) :
+     @L(@VF(69).o, @C(75).IN2)
+    ;
+END_FUNCTION_BLOCK

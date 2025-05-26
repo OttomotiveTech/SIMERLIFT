@@ -1,0 +1,67 @@
+TYPE   
+	bessAlarms: STRUCT
+    	cellUV:BOOL;
+    	cellOV:BOOL;
+    	chargeOT:BOOL;
+    	chargeUT:BOOL;
+    	dischargeOT:BOOL;
+    	dischargeUT:BOOL;
+    	dischargeOC:BOOL;
+    	chargeOC:BOOL;
+    	totalOV:BOOL;
+    	totalUV:BOOL;
+    	SOClow:BOOL;
+    	cellVimbalance:BOOL;
+    	posBatVimbalance:BOOL;
+    	negBatVimbalance:BOOL;
+    	BMUcomIntr:BOOL;
+    	cellOVprotection:BOOL;
+    	cellUVprotection1:BOOL;
+    	cellUVprotection2:BOOL;
+    	chargeOTprotection:BOOL;
+    	chargeUTprotection:BOOL;
+    	dischargeOTprotection:BOOL;
+    	dischargeUTprotection:BOOL;
+    	dischargeOCprotection1:BOOL;
+    	dischargeOCprotection2:BOOL;
+    	chargeOCprotection1:BOOL;
+    	chargeOCprotection2:BOOL;
+    	chargeOCprotection3:BOOL;
+    	totalOVprotection:BOOL;
+    	totalUVprotection:BOOL;
+    	chargeContactFault:BOOL;
+    	dischargeContactFault:BOOL;
+    	EPOshutdown:BOOL;
+    	fireProtection:BOOL;
+    	parallelComException:BOOL;
+    	parallelAddrConflict:BOOL;
+	END_STRUCT;
+	
+	
+	bessSystemStatus:USINT(
+		bessPOWERON:=0,
+		bessSTART:=1,
+		bessSTAND:=2,
+		bessCHARGE:=3,
+		bessDISCHARGE:=4,
+		bessCHARGEWAITING:=5,
+		bessDISCHARGEWAITING:=6,
+		bessLOCK:=7
+	);
+	
+	
+	bessWorkMode:USINT(
+		bessWorkingNULL:=0,
+		bessWorkingPOWERON:=1,
+		bessWorkingPOWEROFF:=2
+	);
+	
+	
+	bessOprStatus:USINT(
+		bessOperatingNULL:=0,
+		bessOperatingNormal:=1,
+		bessOperatingAlarm:=2,
+		bessOperatingFault:=3
+	);
+
+END_TYPE

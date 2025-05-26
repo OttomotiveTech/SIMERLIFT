@@ -1,0 +1,59 @@
+FUNCTION RBIT
+  VAR_INPUT
+    start : INT;
+    len : INT;
+    INbit : LWORD;
+  END_VAR
+  VAR_OUTPUT
+    OUTbit : LWORD;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    SHR(IN := INbit, N := start, SHR => @C(12).SHR);
+    SUB(IN1 := 64, IN2 := len, SUB => @C(2).SUB);
+    SHR(IN := 16#FFFFFFFFFFFFFFFF, N := @C(2).SUB, SHR => @C(6).SHR);
+    AND(IN1 := @C(12).SHR, IN2 := @C(6).SHR, AND => OUTbit);
+
+  *)
+
+  @VF(1) : @E(64), @R(460.0, 160.0, 80.0, 19.0), INT;
+  @C(2) : @F(SUB), @R(590.0, 160.0, 40.0, 38.0), INT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(SUB), @R(9.5));
+  @VF(3) : @E(len), @R(230.0, 180.0, 140.0, 19.0);
+  @C(6) : @F(SHR), @R(670.0, 140.0, 100.0, 38.0), LWORD, @I(@N(IN), @L(9.5)), @I(@N(N), @L(29.5)), @O(@N(SHR), @R(9.5));
+  @VF(8) : @E(16#FFFFFFFFFFFFFFFF), @R(460.0, 140.0, 170.0, 19.0), LWORD;
+  @VF(10) : @E(INbit), @R(230.0, 100.0, 140.0, 19.0);
+  @VF(11) : @E(start), @R(230.0, 120.0, 140.0, 19.0);
+  @C(12) : @F(SHR), @R(670.0, 100.0, 100.0, 38.0), LWORD, @I(@N(IN), @L(9.5)), @I(@N(N), @L(29.5)), @O(@N(SHR), @R(9.5));
+  @C(15) : @F(AND), @R(830.0, 100.0, 40.0, 38.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @VF(18) : @E(OUTbit), @R(1000.0, 100.0, 140.0, 19.0);
+
+  @G(4) :
+     @L(@VF(3).o, @C(2).IN2)
+    ;
+  @G(5) :
+     @L(@VF(1).o, @C(2).IN1)
+    ;
+  @G(7) :
+     @L(@C(2).SUB, @C(6).N)
+    ;
+  @G(9) :
+     @L(@VF(8).o, @C(6).IN)
+    ;
+  @G(13) :
+     @L(@VF(10).o, @C(12).IN)
+    ;
+  @G(14) :
+     @L(@VF(11).o, @C(12).N)
+    ;
+  @G(16) :
+     @L(@C(12).SHR, @C(15).IN1)
+    ;
+  @G(17) :
+     @L(@C(6).SHR, @C(15).IN2)
+    ;
+  @G(19) :
+     @L(@C(15).AND, @VF(18).i)
+    ;
+END_FUNCTION

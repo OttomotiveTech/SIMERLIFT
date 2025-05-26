@@ -1,0 +1,12 @@
+TYPE
+    BATTSTATE : USINT( STANDBY := 101,
+    				  STARTUP := 102,
+    				  PRECHARGE := 103,
+    	              DISCHARGE := 104,
+                      CHARGE := 105,
+                      SHUTDOWN := 106,
+                      FAULT := 107,
+                      CHARGECOMPLETE := 108,
+                      DISCHARGECOMPLETE := 109,
+                      PRECHARGE4charge := 110);
+END_TYPE

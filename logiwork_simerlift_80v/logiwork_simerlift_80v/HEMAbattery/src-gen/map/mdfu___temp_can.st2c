@@ -1,0 +1,96 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 21
+      },
+      "st": {
+        "b": 99,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 15,
+        "e": 20
+      },
+      "st": {
+        "b": 99,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 22,
+        "e": 29
+      },
+      "st": {
+        "b": 2,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 27
+      },
+      "st": {
+        "b": 9,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 31,
+        "e": 31
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "lcfu___TEMP_CAN": {
+      "v": "",
+      "t": "Temp_CAN"
+    },
+    "LC_VD_LINEER_FUNCTION1": {
+      "v": "Lineer_Function1",
+      "t": "Lineer_Function"
+    },
+    "LC_this": {
+      "v": "",
+      "t": "Temp_CAN"
+    },
+    "LC_VD_TEMP": {
+      "v": "Temp",
+      "t": "REAL"
+    },
+    "LC_VD_CAN": {
+      "v": "CAN",
+      "t": "USINT"
+    },
+    "LC_VD___2_TO_USINT": {
+      "v": "__2_TO_USINT",
+      "t": "USINT"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/fbdCommon/Library/Temp_CAN.iecfbd",
+  "cCodeFile": "src-gen/lcfu___temp_can.c"
+}

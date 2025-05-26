@@ -1,0 +1,12 @@
+SETLOCAL
+
+@SET BINDIR=%~dp0
+@SET BASEDIR=%BINDIR%..\
+
+@CD /d "%BASEDIR%"
+
+@TITLE logi.RTS
+@CALL %BINDIR%\config.bat
+@"%BINDIR%RTSLoader.exe" -b "%BASEDIR%PLC"
+
+ENDLOCAL

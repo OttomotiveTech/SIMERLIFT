@@ -1,0 +1,234 @@
+FUNCTION_BLOCK BCU_Cell_Status
+  {
+    Cell_Temp {loc := "left", index := 7};
+    Cell_Voltage {loc := "left", index := 6};
+    Selected_Cell_Loc {loc := "left", index := 5};
+    Selected_BMU_Loc {loc := "left", index := 4};
+    CAN_CH {index := 0};
+    CAN_ID {index := 1};
+    CAN_Error {index := 7};
+    Total_Voltage {index := 2};
+    Instant_Current {index := 3};
+    width := 500;
+    height := 158;
+    bgColor := "cadetblue";
+  }
+
+  VAR
+    CANSEND3 : CANSEND;
+  END_VAR
+  VAR_INPUT
+    Selected_BMU_Loc : USINT := 0;
+    Selected_Cell_Loc : USINT := 0;
+    Cell_Voltage : UDINT := 0;
+    Cell_Temp : REAL := 0;
+    CAN_ID : UDINT := 0;
+    CAN_CH : UDINT := 0;
+    Total_Voltage : REAL := 0;
+    Instant_Current : REAL := 0;
+  END_VAR
+  VAR_OUTPUT
+    CAN_Error : BOOL := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    WFLT(start := 0, len := 16, prm := Total_Voltage, ofs := 0, res := 0.1, OUTbit => @C(7).OUTbit);
+    WFLT(start := 16, len := 16, prm := Instant_Current, ofs := -1000, res := 0.1, OUTbit => @C(14).OUTbit);
+    NE(IN1 := CAN_ID, IN2 := 0, NE => @C(64).NE);
+    TO_LWORD(IN := Selected_BMU_Loc, TO_LWORD => @C(44).TO_LWORD);
+    WBIT(start := 32, len := 4, INbit := @C(44).TO_LWORD, OUTbit => @C(15).OUTbit);
+    TO_LWORD(IN := Selected_Cell_Loc, TO_LWORD => @C(47).TO_LWORD);
+    WBIT(start := 36, len := 4, INbit := @C(47).TO_LWORD, OUTbit => @C(16).OUTbit);
+    TO_LWORD(IN := Cell_Voltage, TO_LWORD => @C(48).TO_LWORD);
+    WBIT(start := 40, len := 16, INbit := @C(48).TO_LWORD, OUTbit => @C(17).OUTbit);
+    WFLT(start := 56, len := 8, prm := Cell_Temp, ofs := -40, res := 1, OUTbit => @C(20).OUTbit);
+    OR(IN1 := @C(7).OUTbit, IN2 := @C(14).OUTbit, IN3 := @C(15).OUTbit, IN4 := @C(16).OUTbit, IN5 := @C(17).OUTbit, IN6 := @C(20).OUTbit, OR => @C(226).OR);
+    CANSEND3(CH := CAN_CH, ID := CAN_ID, FMT := CAN_FORMAT#EXTENDED, DATA := @C(226).OR, DLC := 8, PER := T#100ms, ENB := @C(64).NE);
+    NE(IN1 := CANSEND3.RC, IN2 := 0, NE => CAN_Error);
+
+  *)
+
+  @C(226) : @F(OR), @R(730.0, 40.0, 40.0, 118.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @I(@N(IN3), @L(49.5)), @I(@N(IN4), @L(69.5)), @I(@N(IN5), @L(89.5)), @I(@N(IN6), @L(109.5)), @O(@N(OR), @R(9.5));
+  @VF(259) : @E(8), @R(920.0, 120.0, 110.0, 19.0), UDINT;
+  @VF(258) : @E(T#100ms), @R(920.0, 140.0, 110.0, 19.0);
+  @VF(262) : @E(CAN_FORMAT#EXTENDED), @R(810.0, 100.0, 220.0, 19.0);
+  @VF(230) : @E(32), @R(380.0, 240.0, 110.0, 19.0), INT;
+  @VF(231) : @E(4), @R(380.0, 260.0, 110.0, 19.0), INT;
+  @VF(232) : @E(36), @R(380.0, 300.0, 110.0, 19.0), INT;
+  @VF(233) : @E(4), @R(380.0, 320.0, 110.0, 19.0), INT;
+  @VF(234) : @E(40), @R(380.0, 360.0, 110.0, 19.0), INT;
+  @VF(235) : @E(16), @R(380.0, 380.0, 110.0, 19.0), INT;
+  @VF(236) : @E(56), @R(380.0, 420.0, 110.0, 19.0), INT;
+  @VF(237) : @E(8), @R(380.0, 440.0, 110.0, 19.0), INT;
+  @VF(228) : @E(-40), @R(380.0, 480.0, 110.0, 19.0), LREAL;
+  @VF(250) : @E(1), @R(380.0, 500.0, 110.0, 19.0), LREAL;
+  @VF(3) : @E(Selected_BMU_Loc), @R(40.0, 280.0, 220.0, 19.0);
+  @VF(4) : @E(Selected_Cell_Loc), @R(40.0, 340.0, 220.0, 19.0);
+  @VF(5) : @E(Cell_Voltage), @R(40.0, 400.0, 220.0, 19.0);
+  @VF(6) : @E(Cell_Temp), @R(40.0, 460.0, 220.0, 19.0);
+  @VF(1) : @E(CAN_ID), @R(810.0, 80.0, 220.0, 19.0);
+  @C(64) : @F(NE), @R(1110.0, 160.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @VF(66) : @E(0), @R(920.0, 180.0, 110.0, 19.0), UDINT;
+  @VF(18) : @E(CAN_CH), @R(810.0, 60.0, 220.0, 19.0);
+  @C(95) : @F(NE), @R(1330.0, 160.0, 40.0, 38.0), UINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @VF(114) : @E(CAN_Error), @R(1390.0, 160.0, 110.0, 19.0);
+  @VF(115) : @E(0), @R(1200.0, 180.0, 110.0, 19.0), UINT;
+  @VF(36) : @E(16), @R(380.0, 160.0, 110.0, 19.0), INT;
+  @VF(37) : @E(16), @R(380.0, 140.0, 110.0, 19.0), INT;
+  @VF(38) : @E(16), @R(380.0, 60.0, 110.0, 19.0), INT;
+  @VF(39) : @E(0), @R(380.0, 40.0, 110.0, 19.0), INT;
+  @VF(166) : @E(0.1), @R(380.0, 220.0, 110.0, 19.0), LREAL;
+  @VF(165) : @E(-1000), @R(380.0, 200.0, 110.0, 19.0), LREAL;
+  @VF(40) : @E(Total_Voltage), @R(40.0, 80.0, 220.0, 19.0);
+  @VF(41) : @E(Instant_Current), @R(40.0, 180.0, 220.0, 19.0);
+  @VF(45) : @E(0), @R(380.0, 100.0, 110.0, 19.0), LREAL;
+  @VF(46) : @E(0.1), @R(380.0, 120.0, 110.0, 19.0), LREAL;
+  @C(158) : @FB(CANSEND3), @R(1190.0, 40.0, 120.0, 138.0), @I(@N(CH), @L(29.5)), @I(@N(ID), @L(49.5)), @I(@N(FMT), @L(69.5)), @I(@N(DATA), @L(9.5)), @I(@N(DLC), @L(89.5)), @I(@N(PER), @L(109.5)), @I(@N(ENB), @L(129.5)), @O(@N(CTX), @R(9.5)), @O(@N(RC), @R(129.5));
+  @C(7) : @F(WFLT), @R(540.0, 40.0, 120.0, 98.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(prm), @L(49.5)), @I(@N(ofs), @L(69.5)), @I(@N(res), @L(89.5)), @O(@N(OUTbit), @R(9.5));
+  @C(14) : @F(WFLT), @R(540.0, 140.0, 120.0, 98.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(prm), @L(49.5)), @I(@N(ofs), @L(69.5)), @I(@N(res), @L(89.5)), @O(@N(OUTbit), @R(9.5));
+  @C(15) : @F(WBIT), @R(540.0, 240.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(16) : @F(WBIT), @R(540.0, 300.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(17) : @F(WBIT), @R(540.0, 360.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(20) : @F(WFLT), @R(540.0, 420.0, 120.0, 98.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(prm), @L(49.5)), @I(@N(ofs), @L(69.5)), @I(@N(res), @L(89.5)), @O(@N(OUTbit), @R(9.5));
+  @C(44) : @F(TO_LWORD), @R(370.0, 280.0, 120.0, 18.0), USINT, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(47) : @F(TO_LWORD), @R(370.0, 340.0, 120.0, 18.0), USINT, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(48) : @F(TO_LWORD), @R(370.0, 400.0, 120.0, 18.0), UDINT, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @CP(12) : 1069.5, 89.5;
+
+  @G(239) :
+     @L(@VF(262).o, @C(158).FMT)
+    ;
+  @G(253) :
+     @L(@VF(259).o, @C(158).DLC)
+    ;
+  @G(254) :
+     @L(@VF(258).o, @C(158).PER)
+    ;
+  @G(161) :
+     @L(@C(226).OR, @C(158).DATA)
+    ;
+  @G(2) :
+     @L(@VF(1).o, @CP(12)),
+     @L(@CP(12), @C(158).ID),
+     @L(@CP(12), @C(64).IN1)
+    ;
+  @G(67) :
+     @L(@VF(66).o, @C(64).IN2)
+    ;
+  @G(11) :
+     @L(@C(64).NE, @C(158).ENB)
+    ;
+  @G(13) :
+     @L(@VF(18).o, @C(158).CH)
+    ;
+  @G(98) :
+     @L(@VF(115).o, @C(95).IN2)
+    ;
+  @G(97) :
+     @L(@C(95).NE, @VF(114).i)
+    ;
+  @G(19) :
+     @L(@C(158).RC, @C(95).IN1)
+    ;
+  @G(9) :
+     @L(@VF(45).o, @C(7).ofs)
+    ;
+  @G(10) :
+     @L(@VF(46).o, @C(7).res)
+    ;
+  @G(23) :
+     @L(@VF(39).o, @C(7).start)
+    ;
+  @G(30) :
+     @L(@VF(38).o, @C(7).len)
+    ;
+  @G(31) :
+     @L(@VF(37).o, @C(14).start)
+    ;
+  @G(32) :
+     @L(@VF(36).o, @C(14).len)
+    ;
+  @G(34) :
+     @L(@VF(165).o, @C(14).ofs)
+    ;
+  @G(35) :
+     @L(@VF(166).o, @C(14).res)
+    ;
+  @G(42) :
+     @L(@VF(230).o, @C(15).start)
+    ;
+  @G(43) :
+     @L(@VF(231).o, @C(15).len)
+    ;
+  @G(49) :
+     @L(@C(44).TO_LWORD, @C(15).INbit)
+    ;
+  @G(50) :
+     @L(@VF(232).o, @C(16).start)
+    ;
+  @G(51) :
+     @L(@VF(233).o, @C(16).len)
+    ;
+  @G(52) :
+     @L(@C(47).TO_LWORD, @C(16).INbit)
+    ;
+  @G(53) :
+     @L(@VF(234).o, @C(17).start)
+    ;
+  @G(54) :
+     @L(@VF(235).o, @C(17).len)
+    ;
+  @G(55) :
+     @L(@C(48).TO_LWORD, @C(17).INbit)
+    ;
+  @G(56) :
+     @L(@VF(236).o, @C(20).start)
+    ;
+  @G(57) :
+     @L(@VF(237).o, @C(20).len)
+    ;
+  @G(58) :
+     @L(@VF(6).o, @C(20).prm)
+    ;
+  @G(59) :
+     @L(@VF(228).o, @C(20).ofs)
+    ;
+  @G(60) :
+     @L(@VF(250).o, @C(20).res)
+    ;
+  @G(61) :
+     @L(@VF(5).o, @C(48).IN)
+    ;
+  @G(62) :
+     @L(@VF(4).o, @C(47).IN)
+    ;
+  @G(63) :
+     @L(@VF(3).o, @C(44).IN)
+    ;
+  @G(65) :
+     @L(@C(7).OUTbit, @C(226).IN1)
+    ;
+  @G(68) :
+     @L(@C(14).OUTbit, @C(226).IN2)
+    ;
+  @G(69) :
+     @L(@C(15).OUTbit, @C(226).IN3)
+    ;
+  @G(70) :
+     @L(@C(16).OUTbit, @C(226).IN4)
+    ;
+  @G(71) :
+     @L(@C(17).OUTbit, @C(226).IN5)
+    ;
+  @G(72) :
+     @L(@C(20).OUTbit, @C(226).IN6)
+    ;
+  @G(8) :
+     @L(@VF(40).o, @C(7).prm)
+    ;
+  @G(21) :
+     @L(@VF(41).o, @C(14).prm)
+    ;
+END_FUNCTION_BLOCK

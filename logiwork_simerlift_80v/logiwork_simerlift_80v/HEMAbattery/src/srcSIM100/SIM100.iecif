@@ -1,0 +1,35 @@
+{extern_c}
+
+FUNCTION_BLOCK SIM100can  {
+    isoOff {loc := "left", index := 6};
+    VBATmax {index := 3};
+    height := 138;
+    width := 280;
+  }
+ 
+  VAR_INPUT
+    CH : TMS570_CAN;
+    isoOff: BOOL;
+    VBATmax: UINT;
+  END_VAR
+  
+  VAR_OUTPUT
+  	isoStat:USINT;
+  	OhmPerV:UINT;
+  	isoRp:UDINT;
+  	isoRn:UDINT;
+  	
+  	lowVoltage:BOOL;
+  	deviceErr:BOOL;
+  	noDevice:BOOL;
+  	errCode:BYTE;
+  END_VAR
+  
+  VAR
+  STATE:USINT;
+  R_M:BOOL;
+  BOX:UDINT;
+
+  END_VAR
+  
+END_FUNCTION_BLOCK

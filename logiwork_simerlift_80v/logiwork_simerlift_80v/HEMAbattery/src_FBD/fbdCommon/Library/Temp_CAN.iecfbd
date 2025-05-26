@@ -1,0 +1,57 @@
+FUNCTION_BLOCK Temp_CAN
+  {
+    Temp {index := 0};
+    CAN {index := 0};
+    width := 200;
+    height := 18;
+  }
+
+  VAR
+    Lineer_Function1 : Lineer_Function;
+  END_VAR
+  VAR_INPUT
+    Temp : REAL := 0;
+  END_VAR
+  VAR_OUTPUT
+    CAN : USINT := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    Lineer_Function1(Input := Temp, X1 := -40, X2 := 210, Y1 := 0, Y2 := 250);
+    TO_USINT(IN := Lineer_Function1.Lim_Output, TO_USINT => CAN);
+
+  *)
+
+  @VF(1) : @E(Temp), @R(20.0, 40.0, 220.0, 19.0);
+  @C(2) : @F(TO_USINT), @R(670.0, 60.0, 120.0, 18.0), LREAL, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
+  @C(99) : @FB(Lineer_Function1), @R(430.0, 40.0, 200.0, 118.0), @I(@N(Input), @L(9.5)), @I(@N(X1), @L(29.5)), @I(@N(X2), @L(49.5)), @I(@N(Y1), @L(89.5)), @I(@N(Y2), @L(109.5)), @O(@N(Output), @R(9.5)), @O(@N(Error), @R(109.5)), @O(@N(Lim_Output), @R(29.5));
+  @VF(186) : @E(0), @R(280.0, 120.0, 110.0, 19.0), LREAL;
+  @VF(188) : @E(250), @R(280.0, 140.0, 110.0, 19.0), LREAL;
+  @VF(5) : @E(-40), @R(280.0, 60.0, 110.0, 19.0), LREAL;
+  @VF(6) : @E(210), @R(280.0, 80.0, 110.0, 19.0), LREAL;
+  @VF(9) : @E(CAN), @R(830.0, 60.0, 220.0, 19.0);
+
+  @G(179) :
+     @L(@VF(186).o, @C(99).Y1)
+    ;
+  @G(187) :
+     @L(@VF(188).o, @C(99).Y2)
+    ;
+  @G(3) :
+     @L(@C(99).Lim_Output, @C(2).IN)
+    ;
+  @G(4) :
+     @L(@VF(1).o, @C(99).Input)
+    ;
+  @G(7) :
+     @L(@VF(5).o, @C(99).X1)
+    ;
+  @G(8) :
+     @L(@VF(6).o, @C(99).X2)
+    ;
+  @G(10) :
+     @L(@C(2).TO_USINT, @VF(9).i)
+    ;
+END_FUNCTION_BLOCK

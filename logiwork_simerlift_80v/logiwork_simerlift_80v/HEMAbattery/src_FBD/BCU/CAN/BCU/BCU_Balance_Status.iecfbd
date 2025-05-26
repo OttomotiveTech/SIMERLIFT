@@ -1,0 +1,100 @@
+FUNCTION_BLOCK BCU_Balance_Status
+  {
+    Balance_Register {loc := "left", index := 2};
+    CAN_CH {index := 0};
+    CAN_ID {index := 1};
+    CAN_Error {index := 2};
+    width := 500;
+    height := 58;
+    bgColor := "cadetblue";
+  }
+
+  { ImplementationProperties (
+    expandable;
+  )}
+
+  VAR
+    CANSEND4 : CANSEND;
+    WBITS19 : WBITS;
+  END_VAR
+  VAR_INPUT
+    CAN_ID : UDINT := 0;
+    Balance_Register : UINT := 0;
+    CAN_CH : UDINT := 0;
+  END_VAR
+  VAR_OUTPUT
+    CAN_Error : BOOL := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    WBITS19(start := 0, len := 16, prm := Balance_Register);
+    NE(IN1 := CAN_ID, IN2 := 0, NE => @C(64).NE);
+    CANSEND4(CH := CAN_CH, ID := CAN_ID, FMT := CAN_FORMAT#EXTENDED, DATA := WBITS19.out, DLC := 8, PER := T#100ms, ENB := @C(64).NE);
+    NE(IN1 := CANSEND4.RC, IN2 := 0, NE => CAN_Error);
+
+  *)
+
+  @C(215) : @FB(WBITS19), @R(300.0, 120.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(prm), @L(49.5)), @O(@N(out), @R(9.5));
+  @VF(228) : @E(CAN_FORMAT#EXTENDED), @R(460.0, 180.0, 220.0, 19.0);
+  @VF(226) : @E(T#100ms), @R(570.0, 220.0, 110.0, 19.0);
+  @VF(225) : @E(8), @R(570.0, 200.0, 110.0, 19.0), UDINT;
+  @VF(220) : @E(0), @R(150.0, 120.0, 110.0, 19.0), UINT;
+  @VF(221) : @E(16), @R(150.0, 140.0, 110.0, 19.0), UINT;
+  @C(64) : @F(NE), @R(760.0, 240.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @VF(66) : @E(0), @R(570.0, 260.0, 110.0, 19.0), UDINT;
+  @VF(1) : @E(CAN_ID), @R(460.0, 160.0, 220.0, 19.0);
+  @VF(5) : @E(Balance_Register), @R(40.0, 160.0, 220.0, 19.0);
+  @VF(8) : @E(CAN_CH), @R(460.0, 140.0, 220.0, 19.0);
+  @C(219) : @FB(CANSEND4), @R(840.0, 120.0, 120.0, 138.0), @I(@N(CH), @L(29.5)), @I(@N(ID), @L(49.5)), @I(@N(FMT), @L(69.5)), @I(@N(DATA), @L(9.5)), @I(@N(DLC), @L(89.5)), @I(@N(PER), @L(109.5)), @I(@N(ENB), @L(129.5)), @O(@N(CTX), @R(9.5)), @O(@N(RC), @R(129.5));
+  @C(95) : @F(NE), @R(1000.0, 240.0, 40.0, 38.0), UINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @VF(114) : @E(CAN_Error), @R(1070.0, 240.0, 110.0, 19.0);
+  @VF(115) : @E(0), @R(850.0, 260.0, 110.0, 19.0), UINT;
+  @CP(4) : 719.5, 169.5;
+
+  @G(237) :
+     @L(@VF(226).o, @C(219).PER)
+    ;
+  @G(238) :
+     @L(@VF(225).o, @C(219).DLC)
+    ;
+  @G(240) :
+     @L(@VF(228).o, @C(219).FMT)
+    ;
+  @G(216) :
+     @L(@C(215).out, @C(219).DATA)
+    ;
+  @G(231) :
+     @L(@VF(220).o, @C(215).start)
+    ;
+  @G(233) :
+     @L(@VF(221).o, @C(215).len)
+    ;
+  @G(67) :
+     @L(@VF(66).o, @C(64).IN2)
+    ;
+  @G(2) :
+     @L(@VF(1).o, @CP(4)),
+     @L(@CP(4), @C(219).ID),
+     @L(@CP(4), @C(64).IN1)
+    ;
+  @G(3) :
+     @L(@C(64).NE, @C(219).ENB)
+    ;
+  @G(6) :
+     @L(@VF(5).o, @C(215).prm)
+    ;
+  @G(7) :
+     @L(@VF(8).o, @C(219).CH)
+    ;
+  @G(98) :
+     @L(@VF(115).o, @C(95).IN2)
+    ;
+  @G(97) :
+     @L(@C(95).NE, @VF(114).i)
+    ;
+  @G(9) :
+     @L(@C(219).RC, @C(95).IN1)
+    ;
+END_FUNCTION_BLOCK

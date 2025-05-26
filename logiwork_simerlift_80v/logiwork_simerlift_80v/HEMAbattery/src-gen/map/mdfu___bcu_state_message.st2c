@@ -1,0 +1,552 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 16,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 2,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 33
+      },
+      "st": {
+        "b": 17,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 34,
+        "e": 40
+      },
+      "st": {
+        "b": 9,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 41,
+        "e": 47
+      },
+      "st": {
+        "b": 64,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 48,
+        "e": 54
+      },
+      "st": {
+        "b": 86,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 55,
+        "e": 61
+      },
+      "st": {
+        "b": 87,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 62,
+        "e": 68
+      },
+      "st": {
+        "b": 79,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 69,
+        "e": 75
+      },
+      "st": {
+        "b": 81,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 76,
+        "e": 82
+      },
+      "st": {
+        "b": 104,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 83,
+        "e": 89
+      },
+      "st": {
+        "b": 105,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 90,
+        "e": 96
+      },
+      "st": {
+        "b": 120,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 97,
+        "e": 103
+      },
+      "st": {
+        "b": 121,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 104,
+        "e": 110
+      },
+      "st": {
+        "b": 129,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 111,
+        "e": 117
+      },
+      "st": {
+        "b": 130,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 118,
+        "e": 124
+      },
+      "st": {
+        "b": 13,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 125,
+        "e": 131
+      },
+      "st": {
+        "b": 3,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 132,
+        "e": 138
+      },
+      "st": {
+        "b": 138,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 139,
+        "e": 145
+      },
+      "st": {
+        "b": 139,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 146,
+        "e": 152
+      },
+      "st": {
+        "b": 147,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 153,
+        "e": 159
+      },
+      "st": {
+        "b": 148,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 160,
+        "e": 166
+      },
+      "st": {
+        "b": 10,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 167,
+        "e": 173
+      },
+      "st": {
+        "b": 15,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 174,
+        "e": 180
+      },
+      "st": {
+        "b": 14,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 181,
+        "e": 187
+      },
+      "st": {
+        "b": 12,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 188,
+        "e": 198
+      },
+      "st": {
+        "b": 11,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 190,
+        "e": 197
+      },
+      "st": {
+        "b": 11,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 199,
+        "e": 206
+      },
+      "st": {
+        "b": 95,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 204,
+        "e": 204
+      },
+      "st": {
+        "b": 114,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 208,
+        "e": 208
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "BCU_State_Message"
+    },
+    "LC_VD___138_TO_LWORD": {
+      "v": "__138_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD___14_OUTBIT": {
+      "v": "__14_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___10_OUTBIT": {
+      "v": "__10_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___79_TO_LWORD": {
+      "v": "__79_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD___121_OUTBIT": {
+      "v": "__121_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_CANSEND4": {
+      "v": "CANSEND4",
+      "t": "CANSEND"
+    },
+    "LC_VD___87_OUTBIT": {
+      "v": "__87_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_CAN_ID": {
+      "v": "CAN_ID",
+      "t": "UDINT"
+    },
+    "LC_VD_CAN_CH": {
+      "v": "CAN_CH",
+      "t": "UDINT"
+    },
+    "LC_VD___105_OUTBIT": {
+      "v": "__105_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_DISCHARGECOMPLETE": {
+      "v": "dischargeComplete",
+      "t": "BOOL"
+    },
+    "LC_VD___9_OUTBIT": {
+      "v": "__9_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___139_OUTBIT": {
+      "v": "__139_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD___86_TO_LWORD": {
+      "v": "__86_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_IN1STATUS": {
+      "v": "in1Status",
+      "t": "USINT"
+    },
+    "LC_VD_STATE": {
+      "v": "State",
+      "t": "USINT"
+    },
+    "LC_VD_NEGCONTACT": {
+      "v": "NegContact",
+      "t": "BOOL"
+    },
+    "LC_VD___81_OUTBIT": {
+      "v": "__81_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___148_OUTBIT": {
+      "v": "__148_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_DMCC": {
+      "v": "DMCC",
+      "t": "UINT"
+    },
+    "LC_VD_ISOLATIONSTATUS": {
+      "v": "isolationStatus",
+      "t": "USINT"
+    },
+    "LC_VD___130_OUTBIT": {
+      "v": "__130_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___17_TO_LWORD": {
+      "v": "__17_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_CHARGECOMPLETE": {
+      "v": "chargeComplete",
+      "t": "BOOL"
+    },
+    "LC_VD___12_OR": {
+      "v": "__12_OR",
+      "t": "LWORD"
+    },
+    "LC_VD___64_NE": {
+      "v": "__64_NE",
+      "t": "BOOL"
+    },
+    "LC_VD___3_OUTBIT": {
+      "v": "__3_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___120_TO_LWORD": {
+      "v": "__120_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD___129_TO_LWORD": {
+      "v": "__129_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_IN2STATUS": {
+      "v": "in2Status",
+      "t": "USINT"
+    },
+    "LC_VD_CAN_ERROR": {
+      "v": "CAN_Error",
+      "t": "BOOL"
+    },
+    "LC_VD___16_TO_LWORD": {
+      "v": "__16_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_CHARGECONTACT": {
+      "v": "ChargeContact",
+      "t": "BOOL"
+    },
+    "LC_VD___15_OUTBIT": {
+      "v": "__15_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_AMBIENT_TEMP": {
+      "v": "Ambient_Temp",
+      "t": "REAL"
+    },
+    "LC_VD___13_TO_LWORD": {
+      "v": "__13_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD___95_NE": {
+      "v": "__95_NE",
+      "t": "BOOL"
+    },
+    "lcfu___BCU_STATE_MESSAGE": {
+      "v": "",
+      "t": "BCU_State_Message"
+    },
+    "LC_VD___104_TO_LWORD": {
+      "v": "__104_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD___2_OUTBIT": {
+      "v": "__2_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_DMDC": {
+      "v": "DMDC",
+      "t": "UINT"
+    },
+    "LC_VD_EMERGENCYBUTTON": {
+      "v": "emergencyButton",
+      "t": "BOOL"
+    },
+    "LC_VD_CONTACTOR_STATUS": {
+      "v": "Contactor_Status",
+      "t": "BOOL"
+    },
+    "LC_VD___147_TO_LWORD": {
+      "v": "__147_TO_LWORD",
+      "t": "LWORD"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/CAN/BCU/BCU_State_Message.iecfbd",
+  "cCodeFile": "src-gen/lcfu___bcu_state_message.c"
+}

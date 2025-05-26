@@ -1,0 +1,102 @@
+FUNCTION_BLOCK CounTimR
+  {
+    CD {index := 1};
+    R {loc := "left", index := 5};
+    PV {loc := "left", index := 4};
+    DECper {loc := "left", index := 3};
+    ACCper {loc := "left", index := 2};
+    width := 250;
+    height := 118;
+  }
+
+  VAR
+    FLASH7 : FLASH;
+    FLASH8 : FLASH;
+    CTUD3 : CTUD;
+  END_VAR
+  VAR_INPUT
+    CU : BOOL;
+    ACCper : TIME;
+    DECper : TIME;
+    CD : BOOL;
+    PV : INT;
+    R : BOOL;
+  END_VAR
+  VAR_OUTPUT
+    CV : INT;
+    QD : BOOL;
+    QU : BOOL;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    AND(IN1 := NOT CTUD3.QU, IN2 := CU, AND => @C(66).AND);
+    FLASH7(IN := @C(66).AND, PER := ACCper);
+    AND(IN1 := CD, IN2 := NOT CTUD3.QD, AND => @C(68).AND);
+    FLASH8(IN := @C(68).AND, PER := DECper);
+    CTUD3(CU := FLASH7.OUT, CD := FLASH8.OUT, R := R, PV := PV, QU => QU, QD => QD, CV => CV);
+
+  *)
+
+  @C(66) : @F(AND), @R(420.0, 110.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5), @NEG), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(68) : @F(AND), @R(420.0, 210.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5), @NEG), @O(@N(AND), @R(9.5));
+  @C(39) : @FB(FLASH7), @R(560.0, 130.0, 120.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PER), @L(29.5)), @O(@N(OUT), @R(9.5));
+  @C(40) : @FB(FLASH8), @R(560.0, 170.0, 120.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PER), @L(29.5)), @O(@N(OUT), @R(9.5));
+  @C(41) : @FB(CTUD3), @R(790.0, 130.0, 100.0, 98.0), @I(@N(CU), @L(9.5)), @I(@N(CD), @L(29.5)), @I(@N(R), @L(49.5)), @I(@N(LD), @L(69.5)), @I(@N(PV), @L(89.5)), @O(@N(QU), @R(9.5)), @O(@N(QD), @R(29.5)), @O(@N(CV), @R(89.5));
+  @VF(1) : @E(CU), @R(130.0, 130.0, 140.0, 19.0);
+  @VF(3) : @E(ACCper), @R(130.0, 150.0, 140.0, 19.0);
+  @VF(6) : @E(DECper), @R(130.0, 190.0, 140.0, 19.0);
+  @VF(8) : @E(CD), @R(130.0, 210.0, 140.0, 19.0);
+  @VF(12) : @E(CV), @R(990.0, 210.0, 140.0, 19.0);
+  @VF(14) : @E(QD), @R(990.0, 150.0, 140.0, 19.0);
+  @VF(15) : @E(QU), @R(990.0, 130.0, 140.0, 19.0);
+  @VF(10) : @E(PV), @R(130.0, 260.0, 140.0, 19.0);
+  @VF(19) : @E(R), @R(560.0, 70.0, 140.0, 19.0);
+  @CP(17) : 939.5, 139.5;
+  @CP(18) : 939.5, 159.5;
+
+  @G(2) :
+     @L(@VF(1).o, @C(66).IN2)
+    ;
+  @G(9) :
+     @L(@VF(8).o, @C(68).IN1)
+    ;
+  @G(67) :
+     @L(@C(66).AND, @C(39).IN)
+    ;
+  @G(69) :
+     @L(@C(68).AND, @C(40).IN)
+    ;
+  @G(4) :
+     @L(@VF(3).o, @C(39).PER)
+    ;
+  @G(7) :
+     @L(@VF(6).o, @C(40).PER)
+    ;
+  @G(46) :
+     @L(@C(39).OUT, @C(41).CU)
+    ;
+  @G(47) :
+     @L(@C(40).OUT, @C(41).CD)
+    ;
+  @G(5) :
+     @L(@C(41).QD, @CP(18)),
+     @L(@CP(18), @VF(14).i),
+     @L(@CP(18), @C(68).IN2)
+    ;
+  @G(16) :
+     @L(@C(41).QU, @CP(17)),
+     @L(@CP(17), @VF(15).i),
+     @L(@CP(17), @C(66).IN1)
+    ;
+  @G(13) :
+     @L(@C(41).CV, @VF(12).i)
+    ;
+  @G(11) :
+     @L(@VF(10).o, @C(41).PV)
+    ;
+  @G(20) :
+     @L(@VF(19).o, @C(41).R)
+    ;
+END_FUNCTION_BLOCK

@@ -1,0 +1,92 @@
+{extern_c}
+
+FUNCTION_BLOCK chargeMax  {
+    width := 200;
+    bgColor := "darkseagreen";
+  }
+  VAR_INPUT
+    SOC: REAL;
+    TEMP: REAL;
+  END_VAR
+  VAR_OUTPUT
+    A:REAL;
+  END_VAR
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK regenMax  {
+    width := 200;
+    bgColor := "darkseagreen";
+  }
+  VAR_INPUT
+    SOC: REAL;
+    TEMP: REAL;
+  END_VAR
+  VAR_OUTPUT
+    A:REAL;
+  END_VAR
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK regenMax30s  {
+    width := 200;
+    bgColor := "darkseagreen";
+  }
+  VAR_INPUT
+    SOC: REAL;
+    TEMP: REAL;
+  END_VAR
+  VAR_OUTPUT
+    A:REAL;
+  END_VAR
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK regenMax10s  {
+    width := 200;
+    bgColor := "darkseagreen";
+  }
+  VAR_INPUT
+    SOC: REAL;
+    TEMP: REAL;
+  END_VAR
+  VAR_OUTPUT
+    A:REAL;
+  END_VAR
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK disChargeMax  {
+    width := 200;
+    bgColor := "darkseagreen";
+  }
+  VAR_INPUT
+    SOC: REAL;
+    TEMP: REAL;
+  END_VAR
+  VAR_OUTPUT
+    A:REAL;
+  END_VAR
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK disChargeMax30s  {
+    width := 200;
+    bgColor := "darkseagreen";
+  }
+  VAR_INPUT
+    SOC: REAL;
+    TEMP: REAL;
+  END_VAR
+  VAR_OUTPUT
+    A:REAL;
+  END_VAR
+END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK disChargeMax10s  {
+    width := 200;
+    bgColor := "darkseagreen";
+  }
+  VAR_INPUT
+    SOC: REAL;
+    TEMP: REAL;
+  END_VAR
+  VAR_OUTPUT
+    A:REAL;
+  END_VAR
+END_FUNCTION_BLOCK

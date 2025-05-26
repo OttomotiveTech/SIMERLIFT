@@ -1,0 +1,215 @@
+FUNCTION_BLOCK Balance_isz
+  {
+    Charge_Status {index := 0};
+    Avarage_Cell_Voltage {index := 3};
+    Balance_Threshold {index := 4};
+    Difference_Tolerance {index := 5};
+    Ballance_Interval {index := 6};
+    Min_Cell_Voltage {index := 2};
+    Max_Cell_Voltage {index := 1};
+    Measure_Aux {index := 3};
+    Measure_All {index := 2};
+    width := 460;
+    height := 138;
+  }
+
+  VAR
+    RS3 : RS;
+    TP3 : TP;
+    TON4 : TON;
+    R_TRIG5 : R_TRIG;
+    Meas_Period : TIME := T#48ms;
+    Ballance_Pending : BOOL := 0;
+    maxVolt : UDINT;
+    minVolt : UDINT;
+    FLASH1 : FLASH;
+    FLASH2 : FLASH;
+  END_VAR
+  VAR_INPUT
+    Max_Cell_Voltage : UDINT := 0;
+    Min_Cell_Voltage : UDINT := 0;
+    Avarage_Cell_Voltage : UDINT := 0;
+    Charge_Status : BOOL := 0;
+    Ballance_Interval : TIME := T#30s;
+    Difference_Tolerance : UDINT := 0;
+    Balance_Threshold : UDINT := 0;
+  END_VAR
+  VAR_OUTPUT
+    Balance_Enable : BOOL := 0;
+    Measure_All : BOOL := 0;
+    Measure_Aux : BOOL := 0;
+    Ballance_Voltage : UDINT := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    ADD(IN1 := Avarage_Cell_Voltage, IN2 := 1, ADD => @C(4).ADD);
+    GE(IN1 := @C(4).ADD, IN2 := Balance_Threshold, GE => @C(29).GE);
+    SEL(G := @C(29).GE, IN0 := Balance_Threshold, IN1 := @C(4).ADD, SEL => Ballance_Voltage);
+
+    // Network 2:
+    GE(IN1 := Max_Cell_Voltage, IN2 := Balance_Threshold, GE => @C(41).GE);
+    SUB(IN1 := Max_Cell_Voltage, IN2 := Min_Cell_Voltage, SUB => @C(20).SUB);
+    GT(IN1 := @C(20).SUB, IN2 := Difference_Tolerance, GT => @C(45).GT);
+    AND(IN1 := @C(41).GE, IN2 := @C(45).GT, AND => Ballance_Pending);
+
+    // Network 3:
+    MUL_TIME(IN1 := Meas_Period, IN2 := 20, MUL_TIME => @C(50).MUL_TIME);
+    ADD(IN1 := @C(50).MUL_TIME, IN2 := Ballance_Interval, ADD => @C(54).ADD);
+    TP3(IN := RS3.Q1, PT := Ballance_Interval);
+    AND(IN1 := Charge_Status, IN2 := TP3.Q, AND => (@C(11).AND, Balance_Enable));
+    FLASH1(IN := NOT @C(11).AND, PER := Meas_Period, OUT => Measure_All);
+    TON4(IN := RS3.Q1, PT := @C(54).ADD);
+    R_TRIG5(CLK := TON4.Q);
+    RS3(S := Ballance_Pending, R1 := R_TRIG5.Q);
+    FLASH2(IN := @C(11).AND, PER := T#1s, OUT => Measure_Aux);
+
+  *)
+
+  @C(4) : @F(ADD), @R(280.0, 20.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(ADD), @R(9.5));
+  @C(8) : @F(AND), @R(520.0, 120.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(11) : @F(AND), @R(1140.0, 250.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(20) : @F(SUB), @R(280.0, 160.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(SUB), @R(9.5));
+  @C(25) : @FB(RS3), @R(800.0, 290.0, 80.0, 38.0), @I(@N(S), @L(9.5)), @I(@N(R1), @L(29.5)), @O(@N(Q1), @R(9.5));
+  @C(24) : @FB(TP3), @R(960.0, 290.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(27) : @FB(TON4), @R(480.0, 310.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(26) : @FB(R_TRIG5), @R(620.0, 310.0, 140.0, 18.0), @I(@N(CLK), @L(9.5)), @O(@N(Q), @R(9.5));
+  @C(29) : @F(GE), @R(440.0, 20.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GE), @R(9.5));
+  @C(33) : @F(SEL), @R(560.0, 40.0, 120.0, 58.0), UDINT, @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL), @R(9.5));
+  @C(41) : @F(GE), @R(400.0, 120.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GE), @R(9.5));
+  @C(45) : @F(GT), @R(400.0, 160.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GT), @R(9.5));
+  @C(50) : @F(MUL_TIME), @R(280.0, 330.0, 40.0, 38.0), USINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(MUL_TIME), @R(9.5));
+  @C(54) : @F(ADD), @R(400.0, 330.0, 40.0, 38.0), TIME, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(ADD), @R(9.5));
+  @VF(69) : @E(Meas_Period), @R(1340.0, 320.0, 110.0, 19.0);
+  @VF(3) : @E(Avarage_Cell_Voltage), @R(20.0, 20.0, 180.0, 19.0);
+  @VF(6) : @E(1), @R(110.0, 40.0, 90.0, 19.0), UDINT;
+  @VF(7) : @E(Balance_Enable), @R(1640.0, 250.0, 180.0, 19.0);
+  @VF(10) : @E(Charge_Status), @R(20.0, 250.0, 180.0, 19.0);
+  @VF(78) : @E(Ballance_Interval), @R(20.0, 370.0, 180.0, 19.0);
+  @VF(72) : @E(Measure_All), @R(1650.0, 300.0, 180.0, 19.0);
+  @VF(18) : @E(Difference_Tolerance), @R(20.0, 200.0, 180.0, 19.0);
+  @VF(31) : @E(Balance_Threshold), @R(20.0, 60.0, 180.0, 19.0);
+  @VF(239) : @E(Meas_Period), @R(20.0, 330.0, 180.0, 19.0);
+  @VF(37) : @E(Ballance_Voltage), @R(750.0, 40.0, 180.0, 19.0);
+  @VF(42) : @E(Balance_Threshold), @R(20.0, 140.0, 180.0, 19.0);
+  @VF(48) : @E(Ballance_Pending), @R(750.0, 120.0, 180.0, 19.0);
+  @VF(52) : @E(20), @R(110.0, 350.0, 90.0, 19.0), USINT;
+  @VF(58) : @E(Ballance_Pending), @R(20.0, 290.0, 180.0, 19.0);
+  @C(23) : @FB(FLASH1), @R(1480.0, 300.0, 120.0, 38.0), @I(@N(IN), @L(9.5), @NEG), @I(@N(PER), @L(29.5)), @O(@N(OUT), @R(9.5));
+  @VF(74) : @E(Max_Cell_Voltage), @R(30.0, 160.0, 160.0, 19.0);
+  @VF(83) : @E(Min_Cell_Voltage), @R(30.0, 180.0, 160.0, 19.0);
+  @C(14) : @FB(FLASH2), @R(1480.0, 340.0, 120.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PER), @L(29.5)), @O(@N(OUT), @R(9.5));
+  @VF(15) : @E(T#1s), @R(1340.0, 360.0, 110.0, 19.0);
+  @VF(16) : @E(Measure_Aux), @R(1650.0, 340.0, 180.0, 19.0);
+  @CP(35) : 399.5, 69.5;
+  @CP(36) : 359.5, 29.5;
+  @CP(44) : 239.5, 169.5;
+  @CP(64) : 359.5, 379.5;
+  @CP(66) : 919.5, 299.5;
+  @CP(2) : 1289.5, 259.5;
+
+  @G(13) :
+     @L(@C(11).AND, @CP(2)),
+     @L(@CP(2), @VF(7).i),
+     @L(@CP(2), @C(23).IN),
+     @L(@CP(2), @C(14).IN)
+    ;
+  @G(5) :
+     @L(@VF(3).o, @C(4).IN1)
+    ;
+  @G(28) :
+     @L(@VF(6).o, @C(4).IN2)
+    ;
+  @G(30) :
+     @L(@C(4).ADD, @CP(36)),
+     @L(@CP(36), @C(29).IN1),
+     @L(@CP(36), @C(33).IN1)
+    ;
+  @G(32) :
+     @L(@VF(31).o, @CP(35)),
+     @L(@CP(35), @C(29).IN2),
+     @L(@CP(35), @C(33).IN0)
+    ;
+  @G(34) :
+     @L(@C(29).GE, @C(33).G)
+    ;
+  @G(38) :
+     @L(@C(33).SEL, @VF(37).i)
+    ;
+  @G(39) :
+     @L(@CP(44), @C(20).IN1),
+     @L(@CP(44), @C(41).IN1),
+     @L(@VF(74).o, @CP(44))
+    ;
+  @G(46) :
+     @L(@C(20).SUB, @C(45).IN1)
+    ;
+  @G(19) :
+     @L(@VF(18).o, @C(45).IN2)
+    ;
+  @G(49) :
+     @L(@C(8).AND, @VF(48).i)
+    ;
+  @G(51) :
+     @L(@VF(239).o, @C(50).IN1)
+    ;
+  @G(53) :
+     @L(@VF(52).o, @C(50).IN2)
+    ;
+  @G(56) :
+     @L(@CP(64), @C(54).IN2),
+     @L(@CP(64), @C(24).PT),
+     @L(@VF(78).o, @CP(64))
+    ;
+  @G(57) :
+     @L(@C(50).MUL_TIME, @C(54).IN1)
+    ;
+  @G(59) :
+     @L(@VF(58).o, @C(25).S)
+    ;
+  @G(60) :
+     @L(@C(26).Q, @C(25).R1)
+    ;
+  @G(61) :
+     @L(@C(54).ADD, @C(27).PT)
+    ;
+  @G(62) :
+     @L(@C(27).Q, @C(26).CLK)
+    ;
+  @G(63) :
+     @L(@C(25).Q1, @CP(66)),
+     @L(@CP(66), @C(24).IN),
+     @L(@CP(66), @C(27).IN)
+    ;
+  @G(65) :
+     @L(@C(24).Q, @C(11).IN2)
+    ;
+  @G(9) :
+     @L(@C(41).GE, @C(8).IN1)
+    ;
+  @G(21) :
+     @L(@C(45).GT, @C(8).IN2)
+    ;
+  @G(22) :
+     @L(@VF(42).o, @C(41).IN2)
+    ;
+  @G(12) :
+     @L(@VF(10).o, @C(11).IN1)
+    ;
+  @G(43) :
+     @L(@VF(69).o, @C(23).PER)
+    ;
+  @G(75) :
+     @L(@C(23).OUT, @VF(72).i)
+    ;
+  @G(1) :
+     @L(@VF(83).o, @C(20).IN2)
+    ;
+  @G(17) :
+     @L(@VF(15).o, @C(14).PER)
+    ;
+  @G(40) :
+     @L(@C(14).OUT, @VF(16).i)
+    ;
+END_FUNCTION_BLOCK

@@ -1,0 +1,32 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 11,
+        "e": 11
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "BMU_Cell_Temp"
+    },
+    "lcfu___BMU_CELL_TEMP": {
+      "v": "",
+      "t": "BMU_Cell_Temp"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/CAN/BCU/BMU_Cell_Temp.iecfbd",
+  "cCodeFile": "src-gen/lcfu___bmu_cell_temp.c"
+}

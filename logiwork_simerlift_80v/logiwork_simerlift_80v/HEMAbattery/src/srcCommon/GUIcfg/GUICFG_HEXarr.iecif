@@ -1,0 +1,19 @@
+{extern_c}
+
+FUNCTION_BLOCK GUICFG_HEXarr  {
+    width := 200;
+  }
+  VAR_INPUT
+    CODE:GUICFGCODE;
+    BUF:REF_TO BYTE;
+    MAX:UDINT;
+    R:BOOL;
+  END_VAR
+  VAR_OUTPUT
+    ARR:REF_TO BYTE;
+    LEN:UDINT;
+  END_VAR
+  VAR
+    R_M:BOOL;
+  END_VAR
+END_FUNCTION_BLOCK

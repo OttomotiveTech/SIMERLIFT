@@ -1,0 +1,112 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 18
+      },
+      "st": {
+        "b": 4,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 15,
+        "e": 17
+      },
+      "st": {
+        "b": 4,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 19,
+        "e": 25
+      },
+      "st": {
+        "b": 3,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 21,
+        "e": 24
+      },
+      "st": {
+        "b": 3,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 24,
+        "e": 24
+      },
+      "st": {
+        "b": 2,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 256
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 27
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "lcfu___TBUFFER": {
+      "v": "",
+      "t": "Tbuffer"
+    },
+    "LC_VD_D": {
+      "v": "D",
+      "t": "TIME"
+    },
+    "LC_this": {
+      "v": "",
+      "t": "Tbuffer"
+    },
+    "LC_VD_TOF1": {
+      "v": "TOF1",
+      "t": "TOF"
+    },
+    "LC_VD_O": {
+      "v": "O",
+      "t": "BOOL"
+    },
+    "LC_VD_I": {
+      "v": "I",
+      "t": "BOOL"
+    },
+    "LC_VD_TON1": {
+      "v": "TON1",
+      "t": "TON"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/fbdCommon/Tbuffer.iecfbd",
+  "cCodeFile": "src-gen/lcfu___tbuffer.c"
+}

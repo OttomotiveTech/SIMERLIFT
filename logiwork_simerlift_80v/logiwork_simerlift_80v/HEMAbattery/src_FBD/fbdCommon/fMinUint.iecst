@@ -1,0 +1,28 @@
+FUNCTION fMinUint  {
+    width := 200;
+  }
+
+VAR_INPUT
+	arr:ARRAY[0..15] OF UINT;
+	sizeof:USINT;
+END_VAR
+
+VAR_OUTPUT
+	min : UINT;
+END_VAR
+
+
+VAR
+i:USINT;
+
+END_VAR
+
+min:=16#FFFF;
+
+FOR i:=1 TO sizeof By 1 DO
+	IF min>arr[i-1] THEN
+		min:=arr[i-1];
+	END_IF;
+END_FOR;
+
+END_FUNCTION

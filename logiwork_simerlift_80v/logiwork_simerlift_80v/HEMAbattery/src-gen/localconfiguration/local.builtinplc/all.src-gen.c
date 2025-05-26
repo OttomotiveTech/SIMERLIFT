@@ -1,0 +1,35 @@
+/**
+*** logi.CAD3 generated Source include file
+*** This file has been generated automatically and will be overwritten. Do not edit!
+**/
+
+#include "src-gen/lcfu___ampmulttemp.c"
+#include "src-gen/lcfu___ampmulttempdis.c"
+#include "src-gen/lcfu___ampmultvoltchar.c"
+#include "src-gen/lcfu___ampmultvoltdisc.c"
+#include "src-gen/lcfu___balance_isz.c"
+#include "src-gen/lcfu___bcu_battery_status.c"
+#include "src-gen/lcfu___bcu_cell_status.c"
+#include "src-gen/lcfu___bcu_fault_codes.c"
+#include "src-gen/lcfu___bcu_id.c"
+#include "src-gen/lcfu___bcu_state_message.c"
+#include "src-gen/lcfu___bcu_status2.c"
+#include "src-gen/lcfu___buffer.c"
+#include "src-gen/lcfu___can_test.c"
+#include "src-gen/lcfu___chargestate.c"
+#include "src-gen/lcfu___cms_ivt.c"
+#include "src-gen/lcfu___dgtin.c"
+#include "src-gen/lcfu___essstate1.c"
+#include "src-gen/lcfu___flash.c"
+#include "src-gen/lcfu___gui.c"
+#include "src-gen/lcfu___hvcu_config.c"
+#include "src-gen/lcfu___hvcu_control_state.c"
+#include "src-gen/lcfu___max_min_voltage_status.c"
+#include "src-gen/lcfu___numofcells.c"
+#include "src-gen/lcfu___rbit.c"
+#include "src-gen/lcfu___socisz.c"
+#include "src-gen/lcfu___socstate.c"
+#include "src-gen/lcfu___tbuffer.c"
+#include "src-gen/lcfu___wbit.c"
+#include "src-gen/lcfu___wflt.c"
+

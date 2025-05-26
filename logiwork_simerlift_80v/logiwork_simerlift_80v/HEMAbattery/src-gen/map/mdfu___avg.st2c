@@ -1,0 +1,116 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 4,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 9,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 35
+      },
+      "st": {
+        "b": 6,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 32,
+        "e": 32
+      },
+      "st": {
+        "b": 2,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 33,
+        "e": 33
+      },
+      "st": {
+        "b": 12,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 37,
+        "e": 37
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "AVG"
+    },
+    "LC_VD_OUT": {
+      "v": "Out",
+      "t": "LREAL"
+    },
+    "LC_VD___9_MUL": {
+      "v": "__9_MUL",
+      "t": "LREAL"
+    },
+    "LC_VD_OUT_BUFF": {
+      "v": "Out_Buff",
+      "t": "LREAL"
+    },
+    "LC_VD___6_ADD": {
+      "v": "__6_ADD",
+      "t": "LREAL"
+    },
+    "LC_VD_IN": {
+      "v": "In",
+      "t": "LREAL"
+    },
+    "lcfu___AVG": {
+      "v": "",
+      "t": "AVG"
+    },
+    "LC_VD___4_MUL": {
+      "v": "__4_MUL",
+      "t": "LREAL"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/fbdCommon/AVG.iecfbd",
+  "cCodeFile": "src-gen/lcfu___avg.c"
+}

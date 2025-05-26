@@ -1,0 +1,356 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 64,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 28
+      },
+      "st": {
+        "b": 1,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 22,
+        "e": 27
+      },
+      "st": {
+        "b": 1,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 29,
+        "e": 35
+      },
+      "st": {
+        "b": 9,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 36,
+        "e": 43
+      },
+      "st": {
+        "b": 73,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 41,
+        "e": 41
+      },
+      "st": {
+        "b": 69,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 44,
+        "e": 50
+      },
+      "st": {
+        "b": 10,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 51,
+        "e": 58
+      },
+      "st": {
+        "b": 76,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 56,
+        "e": 56
+      },
+      "st": {
+        "b": 70,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 59,
+        "e": 66
+      },
+      "st": {
+        "b": 95,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 64,
+        "e": 64
+      },
+      "st": {
+        "b": 75,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 67,
+        "e": 73
+      },
+      "st": {
+        "b": 13,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 74,
+        "e": 81
+      },
+      "st": {
+        "b": 92,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 79,
+        "e": 79
+      },
+      "st": {
+        "b": 71,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 82,
+        "e": 88
+      },
+      "st": {
+        "b": 14,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 89,
+        "e": 96
+      },
+      "st": {
+        "b": 56,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 94,
+        "e": 94
+      },
+      "st": {
+        "b": 72,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 97,
+        "e": 103
+      },
+      "st": {
+        "b": 17,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 104,
+        "e": 111
+      },
+      "st": {
+        "b": 32,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 109,
+        "e": 109
+      },
+      "st": {
+        "b": 78,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 113,
+        "e": 113
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "HVCU_Control_State"
+    },
+    "LC_VD___14_OUTBIT": {
+      "v": "__14_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___10_OUTBIT": {
+      "v": "__10_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___64_NE": {
+      "v": "__64_NE",
+      "t": "BOOL"
+    },
+    "LC_VD___76_TO_USINT": {
+      "v": "__76_TO_USINT",
+      "t": "USINT"
+    },
+    "LC_VD_CAN_ERROR": {
+      "v": "CAN_Error",
+      "t": "BOOL"
+    },
+    "LC_VD___73_TO_USINT": {
+      "v": "__73_TO_USINT",
+      "t": "USINT"
+    },
+    "LC_VD_CAN_ID": {
+      "v": "CAN_ID",
+      "t": "UDINT"
+    },
+    "LC_VD_CAN_CH": {
+      "v": "CAN_CH",
+      "t": "UDINT"
+    },
+    "LC_VD___92_TO_USINT": {
+      "v": "__92_TO_USINT",
+      "t": "USINT"
+    },
+    "LC_VD___9_OUTBIT": {
+      "v": "__9_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___13_OUTBIT": {
+      "v": "__13_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD_CANRECV1": {
+      "v": "CANRECV1",
+      "t": "CANRECV"
+    },
+    "LC_VD___95_NE": {
+      "v": "__95_NE",
+      "t": "BOOL"
+    },
+    "LC_VD_IMDCTRL_BCU0": {
+      "v": "IMDCtrl_BCU0",
+      "t": "BOOL"
+    },
+    "lcfu___HVCU_CONTROL_STATE": {
+      "v": "",
+      "t": "HVCU_Control_State"
+    },
+    "LC_VD___56_TO_USINT": {
+      "v": "__56_TO_USINT",
+      "t": "USINT"
+    },
+    "LC_VD___17_OUTBIT": {
+      "v": "__17_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___32_TO_BOOL": {
+      "v": "__32_TO_BOOL",
+      "t": "BOOL"
+    },
+    "LC_VD_BATTEY_STATE_BCU_03": {
+      "v": "Battey_State_BCU_03",
+      "t": "USINT"
+    },
+    "LC_VD_BATTEY_STATE_BCU_02": {
+      "v": "Battey_State_BCU_02",
+      "t": "USINT"
+    },
+    "LC_VD_BATTEY_STATE_BCU_01": {
+      "v": "Battey_State_BCU_01",
+      "t": "USINT"
+    },
+    "LC_VD_BATTEY_STATE_BCU_00": {
+      "v": "Battey_State_BCU_00",
+      "t": "USINT"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/CAN/HVCU/HVCU_Control_State.iecfbd",
+  "cCodeFile": "src-gen/lcfu___hvcu_control_state.c"
+}

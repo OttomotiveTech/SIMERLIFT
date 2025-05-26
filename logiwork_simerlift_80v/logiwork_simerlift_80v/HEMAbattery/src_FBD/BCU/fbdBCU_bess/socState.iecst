@@ -1,0 +1,117 @@
+FUNCTION_BLOCK  socState  {
+    width := 400;
+  }
+
+VAR_INPUT
+    whCap:REAL;
+	whInstant:REAL;
+    whMem:REAL;
+    chargeComplete:BOOL;
+    memWr:BOOL;
+END_VAR
+
+VAR_OUTPUT
+	SOC : REAL;
+	whRem:REAL;
+	wrWh:BOOL;
+	rdWh:BOOL;
+	socState:USINT;
+END_VAR
+
+
+VAR
+whRef:REAL;
+whChange:REAL;
+
+whRemLast:REAL;
+
+compareValue:REAL;
+trigChargeComplete : R_TRIG;
+trigMemWr: R_TRIG;
+
+chargeCompleteTRIG:BOOL;
+memWrTRIG:BOOL;
+
+PREVSTATE:USINT:=0;
+state:USINT;
+socTIMER:TON;
+socInterval:TIME:=T#1s;
+socSTATETIMEOUT:BOOL;
+socSTATEELAPSEDTIME:TIME;
+END_VAR
+
+socTIMER(IN:=state=PREVSTATE, PT:=socInterval, Q=>socSTATETIMEOUT, ET=>socSTATEELAPSEDTIME);
+PREVSTATE:=state;
+
+trigChargeComplete(CLK := chargeComplete, Q => chargeCompleteTRIG);
+trigMemWr(CLK := memWr, Q => memWrTRIG);
+
+
+CASE state OF
+
+	0: //init
+	socInterval:=T#2200ms;
+	SOC:=0;
+	rdWh:=1;
+	wrWh:=0;
+	
+	IF socSTATETIMEOUT THEN
+	
+		whRemLast:=whMem;
+		whRef:=whInstant;
+		whRem:=whMem;
+		IF whRem>whCap THEN
+			whRem:=whCap;
+		END_IF;
+				/* 
+			whRem:=whCap*0.20;
+			whRemLast:=whRem;
+			wrWh:=1;
+			state:=2;
+			*/
+		rdWh:=0;
+		state:=1;
+	END_IF;
+	
+	
+	1: //
+	socInterval:=T#3600s;
+	wrWh:=0;
+	whChange:=whInstant-whRef;
+	whRem:=whRem-whChange;
+	whRef:=whInstant;
+	compareValue:=whCap+10;
+	
+	IF chargeCompleteTRIG THEN
+		whRem:=compareValue;
+	ELSIF whRem>compareValue THEN
+		whRem:=compareValue;
+	ELSIF whRem<0 THEN
+		whRem:=0;
+	END_IF;
+	
+	SOC:=(whRem/whCap)*100;
+	
+	IF SOC>100 THEN
+	 	SOC:=100;
+	END_IF;
+	
+	IF ABS(whRem-whRemLast)>100 OR memWrTRIG OR chargeCompleteTRIG THEN
+	    whRemLast:=whRem;
+		wrWh:=1;
+		state:=2;
+	END_IF;
+	
+	2:  //wait write
+	socInterval:=T#3s;
+	
+	IF socSTATETIMEOUT THEN
+		wrWh:=0;
+		state:=1;
+	END_IF;
+	
+END_CASE;
+
+socState:=state;
+
+END_FUNCTION_BLOCK

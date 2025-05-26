@@ -1,0 +1,27 @@
+FUNCTION_BLOCK numOfCells  {
+    width := 300;
+  }
+
+VAR_INPUT
+    numofBMU:USINT;
+	cellMap:ARRAY[0..15] OF USINT;
+END_VAR
+
+VAR_OUTPUT
+	numofCell : UINT;
+END_VAR
+
+
+VAR
+i:USINT;
+
+END_VAR
+
+numofCell:=0;
+
+FOR i:=1 TO numofBMU By 1 DO
+	numofCell:=numofCell+cellMap[i-1];
+END_FOR;
+
+END_FUNCTION_BLOCK
+

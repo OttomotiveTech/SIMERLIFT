@@ -1,0 +1,36 @@
+{extern_c}
+
+FUNCTION_BLOCK ESSdisplay  {
+    width := 290;
+  }
+  
+   VAR_INPUT
+  
+    SOC:USINT;
+    WATT:REAL;
+    volt:REAL;
+    ampr:REAL;
+    state:USINT;
+
+    maxT:DINT;
+    minT:DINT;
+    maxV:UDINT;
+    minV:UDINT;
+    
+    installedCap:REAL;
+    remainingCap:REAL;
+    dutyCycle:UINT;
+    alarms:LWORD;
+    
+    emergStat:BOOL;
+    stopStat:BOOL;
+    
+  END_VAR
+  
+  
+  VAR_OUTPUT
+
+  END_VAR
+  
+
+END_FUNCTION_BLOCK

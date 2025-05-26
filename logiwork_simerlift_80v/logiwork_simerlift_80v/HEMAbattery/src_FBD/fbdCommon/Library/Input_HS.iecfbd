@@ -1,0 +1,53 @@
+FUNCTION_BLOCK Input_HS
+  {
+    O {index := 0};
+    CH {index := 0};
+    bgColor := "darkgray";
+    width := 120;
+  }
+
+  VAR
+    ANLG1 : ANLG;
+  END_VAR
+  VAR_INPUT
+    CH : USINT := 0;
+  END_VAR
+  VAR_OUTPUT
+    O : BOOL := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    ANLG1(ADC := TMSADC#A1, GRP := TMSADCGRP#G2, CH := CH);
+    GE(IN1 := ANLG1.VAL, IN2 := 3000, GE => O);
+
+  *)
+
+  @C(416) : @FB(ANLG1), @R(300.0, 40.0, 120.0, 58.0), @I(@N(ADC), @L(9.5)), @I(@N(GRP), @L(29.5)), @I(@N(CH), @L(49.5)), @O(@N(VAL), @R(9.5));
+  @C(5) : @F(GE), @R(610.0, 40.0, 40.0, 38.0), UINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GE), @R(9.5));
+  @VF(1) : @E(CH), @R(40.0, 80.0, 220.0, 19.0);
+  @VF(417) : @E(TMSADC#A1), @R(40.0, 40.0, 220.0, 19.0);
+  @VF(418) : @E(TMSADCGRP#G2), @R(40.0, 60.0, 220.0, 19.0);
+  @VF(447) : @E(3000), @R(460.0, 60.0, 110.0, 19.0), UINT;
+  @VF(6) : @E(O), @R(690.0, 40.0, 220.0, 19.0);
+
+  @G(2) :
+     @L(@VF(417).o, @C(416).ADC)
+    ;
+  @G(3) :
+     @L(@VF(418).o, @C(416).GRP)
+    ;
+  @G(4) :
+     @L(@VF(1).o, @C(416).CH)
+    ;
+  @G(7) :
+     @L(@C(416).VAL, @C(5).IN1)
+    ;
+  @G(9) :
+     @L(@VF(447).o, @C(5).IN2)
+    ;
+  @G(8) :
+     @L(@C(5).GE, @VF(6).i)
+    ;
+END_FUNCTION_BLOCK

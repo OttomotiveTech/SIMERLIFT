@@ -1,0 +1,172 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 16,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 5,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 33
+      },
+      "st": {
+        "b": 18,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 34,
+        "e": 40
+      },
+      "st": {
+        "b": 6,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 41,
+        "e": 47
+      },
+      "st": {
+        "b": 542,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 48,
+        "e": 54
+      },
+      "st": {
+        "b": 64,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 55,
+        "e": 65
+      },
+      "st": {
+        "b": 158,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 57,
+        "e": 64
+      },
+      "st": {
+        "b": 158,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 67,
+        "e": 67
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "CAN_Test_2"
+    },
+    "LC_VD___542_OR": {
+      "v": "__542_OR",
+      "t": "LWORD"
+    },
+    "LC_VD___5_OUTBIT": {
+      "v": "__5_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD___64_NE": {
+      "v": "__64_NE",
+      "t": "BOOL"
+    },
+    "LC_VD_CANSEND3": {
+      "v": "CANSEND3",
+      "t": "CANSEND"
+    },
+    "LC_VD___18_TO_LWORD": {
+      "v": "__18_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD___6_OUTBIT": {
+      "v": "__6_OUTbit",
+      "t": "LWORD"
+    },
+    "LC_VD_CAN_ID": {
+      "v": "CAN_ID",
+      "t": "UDINT"
+    },
+    "LC_VD___16_TO_LWORD": {
+      "v": "__16_TO_LWORD",
+      "t": "LWORD"
+    },
+    "LC_VD_CAN_CH": {
+      "v": "CAN_CH",
+      "t": "UDINT"
+    },
+    "lcfu___CAN_TEST_2": {
+      "v": "",
+      "t": "CAN_Test_2"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD_IN_1": {
+      "v": "IN_1",
+      "t": "UDINT"
+    },
+    "LC_VD_IN_2": {
+      "v": "IN_2",
+      "t": "UDINT"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/CAN/CAN_Test_2.iecfbd",
+  "cCodeFile": "src-gen/lcfu___can_test_2.c"
+}

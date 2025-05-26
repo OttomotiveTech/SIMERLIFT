@@ -1,0 +1,41 @@
+{extern_c}
+
+FUNCTION_BLOCK CANSEND  {
+    DATA {index := 0};
+    CH {index := 1};
+    FMT {index := 3};
+    DLC {index := 4};
+    PER {index := 5};
+    ENB {index := 6};
+    ID {index := 2};
+    CTX {index := 0};
+    RC {index := 6};
+    height := 138;
+    width := 120;
+  }
+
+  VAR_INPUT
+    CH : TMS570_CAN;
+    ID: UDINT;
+    FMT: CAN_FORMAT;
+    DATA:LWORD;
+    DLC:UDINT;
+    PER:TIME;
+    ENB:BOOL;
+  END_VAR
+  
+  VAR_OUTPUT
+    CTX:UDINT;
+    RC:CAN_RETCODE;
+  END_VAR
+  
+  VAR
+  BOX:UDINT;
+  ID_M:UDINT;
+  CH_M: TMS570_CAN;
+  FMT_M: CAN_FORMAT;
+  STATE:UINT;
+  STARTT:TIME;
+  END_VAR
+  
+END_FUNCTION_BLOCK

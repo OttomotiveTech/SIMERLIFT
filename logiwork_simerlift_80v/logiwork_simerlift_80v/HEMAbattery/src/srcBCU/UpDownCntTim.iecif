@@ -1,0 +1,28 @@
+{extern_c}
+
+FUNCTION_BLOCK UpDownCntTim  {
+    width := 300;
+  }
+  VAR_INPUT
+    CU:BOOL;
+    CD:BOOL;
+
+    uPer:TIME;
+    dPer:TIME;
+    PV:INT;
+
+    RST:BOOL;
+  END_VAR
+  
+  VAR_OUTPUT
+    CV:INT; 
+    QD:BOOL; 
+    QU:BOOL; 
+  END_VAR
+  
+ VAR
+  lastCU:BOOL;
+  lastCD:BOOL;
+  TICK:UDINT;
+ END_VAR
+END_FUNCTION_BLOCK

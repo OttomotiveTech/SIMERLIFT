@@ -1,0 +1,74 @@
+FUNCTION_BLOCK  ampMultVoltChar  {
+    width := 200;
+  }
+
+VAR_INPUT
+    chargeOn:BOOL;
+    maxCell:UDINT;
+END_VAR
+
+VAR_OUTPUT
+	mult:REAL;
+END_VAR
+
+VAR
+state:USINT;
+
+END_VAR
+
+ IF NOT chargeOn THEN
+    state:=0;
+ END_IF;
+ 
+ 
+ CASE state OF
+	0:
+	mult:=1;
+	IF maxCell>3350 THEN
+		state:=state+1;
+	END_IF;
+	
+	1:
+	mult:=0.7;
+	IF maxCell>3400 THEN
+		state:=state+1;
+	END_IF;
+	
+	
+	2:
+	mult:=0.6;
+	IF maxCell>3450 THEN
+		state:=state+1;
+	END_IF;
+	
+	3:
+	mult:=0.5;
+	IF maxCell>3500 THEN
+		state:=state+1;
+	END_IF;
+	
+	4:
+	mult:=0.35;
+	IF maxCell>3550 THEN
+		state:=state+1;
+	END_IF;
+	
+	5:
+	mult:=0.3;
+	IF maxCell>3600 THEN
+		state:=state+1;
+	END_IF;
+	
+	6:
+	mult:=0.2;
+	IF maxCell>3650 THEN
+		state:=state+1;
+		
+	END_IF;
+ 
+ 	7:
+	mult:=0;
+	
+END_CASE;
+ 
+ END_FUNCTION_BLOCK

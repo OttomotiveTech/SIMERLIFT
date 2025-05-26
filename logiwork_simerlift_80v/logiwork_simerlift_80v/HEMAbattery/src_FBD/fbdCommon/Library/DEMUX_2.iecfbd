@@ -1,0 +1,78 @@
+FUNCTION_BLOCK DEMUX_2
+  {
+    IN {index := 0};
+    Select {index := 1};
+    OUT_0 {index := 0};
+    OUT_1 {index := 1};
+    width := 200;
+  }
+
+  VAR_INPUT
+    Select : BOOL := 0;
+    IN : UDINT := 0;
+  END_VAR
+  VAR_OUTPUT
+    OUT_0 : UDINT := 0;
+    OUT_1 : UDINT := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    EQ(IN1 := Select, IN2 := 0, EQ => @C(11).EQ);
+    SEL_UDINT(G := @C(11).EQ, IN0 := 0, IN1 := IN, SEL_UDINT => OUT_0);
+    EQ(IN1 := Select, IN2 := 1, EQ => @C(14).EQ);
+    SEL_UDINT(G := @C(14).EQ, IN0 := 0, IN1 := IN, SEL_UDINT => OUT_1);
+
+  *)
+
+  @VF(1) : @E(Select), @R(20.0, 20.0, 220.0, 19.0);
+  @C(11) : @F(EQ), @R(320.0, 20.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
+  @C(14) : @F(EQ), @R(320.0, 80.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
+  @C(42) : @F(SEL_UDINT), @R(590.0, 20.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_UDINT), @R(9.5));
+  @C(48) : @F(SEL_UDINT), @R(590.0, 80.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_UDINT), @R(9.5));
+  @VF(185) : @E(0), @R(130.0, 40.0, 110.0, 19.0), BOOL;
+  @VF(44) : @E(0), @R(440.0, 40.0, 110.0, 19.0), UDINT;
+  @VF(16) : @E(1), @R(130.0, 100.0, 110.0, 19.0), BOOL;
+  @VF(50) : @E(0), @R(440.0, 100.0, 110.0, 19.0), UDINT;
+  @VF(2) : @E(IN), @R(20.0, 60.0, 220.0, 19.0);
+  @VF(5) : @E(OUT_0), @R(750.0, 20.0, 220.0, 19.0);
+  @VF(6) : @E(OUT_1), @R(750.0, 80.0, 220.0, 19.0);
+  @CP(15) : 279.5, 29.5;
+  @CP(4) : 399.5, 69.5;
+
+  @G(12) :
+     @L(@CP(15), @C(11).IN1),
+     @L(@CP(15), @C(14).IN1),
+     @L(@VF(1).o, @CP(15))
+    ;
+  @G(13) :
+     @L(@VF(185).o, @C(11).IN2)
+    ;
+  @G(43) :
+     @L(@C(11).EQ, @C(42).G)
+    ;
+  @G(45) :
+     @L(@VF(44).o, @C(42).IN0)
+    ;
+  @G(83) :
+     @L(@C(14).EQ, @C(48).G)
+    ;
+  @G(17) :
+     @L(@VF(16).o, @C(14).IN2)
+    ;
+  @G(52) :
+     @L(@VF(50).o, @C(48).IN0)
+    ;
+  @G(3) :
+     @L(@VF(2).o, @CP(4)),
+     @L(@CP(4), @C(42).IN1),
+     @L(@CP(4), @C(48).IN1)
+    ;
+  @G(7) :
+     @L(@C(42).SEL_UDINT, @VF(5).i)
+    ;
+  @G(8) :
+     @L(@C(48).SEL_UDINT, @VF(6).i)
+    ;
+END_FUNCTION_BLOCK

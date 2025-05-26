@@ -1,0 +1,47 @@
+FUNCTION_BLOCK Tbuffer
+  {
+    bgColor := "darkgray";
+  }
+
+  VAR
+    TOF1 : TOF;
+    TON1 : TON;
+  END_VAR
+  VAR_INPUT
+    I : BOOL := 0;
+    D : TIME;
+  END_VAR
+  VAR_OUTPUT
+    O : BOOL := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    TON1(IN := I, PT := D);
+    TOF1(IN := TON1.Q, PT := D, Q => O);
+
+  *)
+
+  @C(3) : @FB(TOF1), @R(650.0, 60.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(4) : @FB(TON1), @R(470.0, 60.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @VF(2) : @E(O), @R(790.0, 60.0, 220.0, 19.0);
+  @VF(1) : @E(I), @R(170.0, 60.0, 220.0, 19.0);
+  @VF(11) : @E(D), @R(200.0, 100.0, 140.0, 19.0);
+  @CP(9) : 429.5, 109.5;
+
+  @G(7) :
+     @L(@C(3).Q, @VF(2).i)
+    ;
+  @G(6) :
+     @L(@C(4).Q, @C(3).IN)
+    ;
+  @G(5) :
+     @L(@VF(1).o, @C(4).IN)
+    ;
+  @G(8) :
+     @L(@CP(9), @C(3).PT),
+     @L(@CP(9), @C(4).PT),
+     @L(@VF(11).o, @CP(9))
+    ;
+END_FUNCTION_BLOCK

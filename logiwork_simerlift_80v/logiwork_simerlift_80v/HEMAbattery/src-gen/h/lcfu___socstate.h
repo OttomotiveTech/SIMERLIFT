@@ -1,0 +1,101 @@
+#ifndef LC_PROT_LCFU___SOCSTATE__H
+#define LC_PROT_LCFU___SOCSTATE__H
+
+#include <LC3CGBase.h>
+#include <lcfu_iec61131__ABS.h>
+#include <lcfu_iec61131__R_TRIG.h>
+#include <lcfu_iec61131__TON.h>
+
+/*                            Typedefs                         */
+typedef struct _LC_TD_FunctionBlock_SOCSTATE
+{
+  LC_TD_BOOL LC_VD_CHARGECOMPLETE;
+  LC_TD_BOOL LC_VD_MEMWR;
+  LC_TD_REAL LC_VD_WHCAP;
+  LC_TD_REAL LC_VD_WHINSTANT;
+  LC_TD_REAL LC_VD_WHMEM;
+  LC_TD_BOOL LC_VD_ENO;
+  LC_TD_BOOL LC_VD_RDWH;
+  LC_TD_BOOL LC_VD_WRWH;
+  LC_TD_USINT LC_VD_SOCSTATE;
+  LC_TD_REAL LC_VD_SOC;
+  LC_TD_REAL LC_VD_WHREM;
+  LC_TD_BOOL LC_VD_CHARGECOMPLETETRIG;
+  LC_TD_BOOL LC_VD_MEMWRTRIG;
+  LC_TD_BOOL LC_VD_SOCSTATETIMEOUT;
+  LC_TD_USINT LC_VD_PREVSTATE;
+  LC_TD_USINT LC_VD_STATE;
+  LC_TD_REAL LC_VD_COMPAREVALUE;
+  LC_TD_REAL LC_VD_WHCHANGE;
+  LC_TD_REAL LC_VD_WHREF;
+  LC_TD_REAL LC_VD_WHREMLAST;
+  LC_TD_TIME LC_VD_SOCINTERVAL;
+  LC_TD_TIME LC_VD_SOCSTATEELAPSEDTIME;
+  LC_TD_FunctionBlock_TON LC_VD_SOCTIMER;
+  LC_TD_FunctionBlock_R_TRIG LC_VD_TRIGCHARGECOMPLETE;
+  LC_TD_FunctionBlock_R_TRIG LC_VD_TRIGMEMWR;
+} LCCG_StructAttrib LC_TD_FunctionBlock_SOCSTATE;
+
+/*                   ColdBoot Initialization Macro             */
+#define LC_INIT_FunctionBlock_SOCSTATE(p) \
+{ \
+  LC_INIT_REAL(&((p)->LC_VD_WHCAP)); \
+  LC_INIT_REAL(&((p)->LC_VD_WHINSTANT)); \
+  LC_INIT_REAL(&((p)->LC_VD_WHMEM)); \
+  LC_INIT_BOOL(&((p)->LC_VD_CHARGECOMPLETE)); \
+  LC_INIT_BOOL(&((p)->LC_VD_MEMWR)); \
+  LC_INIT_REAL(&((p)->LC_VD_SOC)); \
+  LC_INIT_REAL(&((p)->LC_VD_WHREM)); \
+  LC_INIT_BOOL(&((p)->LC_VD_WRWH)); \
+  LC_INIT_BOOL(&((p)->LC_VD_RDWH)); \
+  LC_INIT_USINT(&((p)->LC_VD_SOCSTATE)); \
+  LC_INIT_REAL(&((p)->LC_VD_WHREF)); \
+  LC_INIT_REAL(&((p)->LC_VD_WHCHANGE)); \
+  LC_INIT_REAL(&((p)->LC_VD_WHREMLAST)); \
+  LC_INIT_REAL(&((p)->LC_VD_COMPAREVALUE)); \
+  LC_INIT_FunctionBlock_R_TRIG(&((p)->LC_VD_TRIGCHARGECOMPLETE)); \
+  LC_INIT_FunctionBlock_R_TRIG(&((p)->LC_VD_TRIGMEMWR)); \
+  LC_INIT_BOOL(&((p)->LC_VD_CHARGECOMPLETETRIG)); \
+  LC_INIT_BOOL(&((p)->LC_VD_MEMWRTRIG)); \
+  (p)->LC_VD_PREVSTATE = (LC_TD_USINT)0; \
+  LC_INIT_USINT(&((p)->LC_VD_STATE)); \
+  LC_INIT_FunctionBlock_TON(&((p)->LC_VD_SOCTIMER)); \
+  (p)->LC_VD_SOCINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(1),RT_CC_CONST_LL(0)); \
+  LC_INIT_BOOL(&((p)->LC_VD_SOCSTATETIMEOUT)); \
+  LC_INIT_TIME(&((p)->LC_VD_SOCSTATEELAPSEDTIME)); \
+}
+
+/*                   WarmBoot Initialization Macro             */
+#define LC_WINIT_FunctionBlock_SOCSTATE(p,RF) \
+{ \
+  LC_WINIT_REAL(&((p)->LC_VD_WHCAP),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_WHINSTANT),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_WHMEM),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_CHARGECOMPLETE),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_MEMWR),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_SOC),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_WHREM),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_WRWH),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_RDWH),RF); \
+  LC_WINIT_USINT(&((p)->LC_VD_SOCSTATE),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_WHREF),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_WHCHANGE),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_WHREMLAST),RF); \
+  LC_WINIT_REAL(&((p)->LC_VD_COMPAREVALUE),RF); \
+  LC_WINIT_FunctionBlock_R_TRIG(&((p)->LC_VD_TRIGCHARGECOMPLETE),0); \
+  LC_WINIT_FunctionBlock_R_TRIG(&((p)->LC_VD_TRIGMEMWR),0); \
+  LC_WINIT_BOOL(&((p)->LC_VD_CHARGECOMPLETETRIG),RF); \
+  LC_WINIT_BOOL(&((p)->LC_VD_MEMWRTRIG),RF); \
+  if (RF==0) (p)->LC_VD_PREVSTATE = (LC_TD_USINT)0; \
+  LC_WINIT_USINT(&((p)->LC_VD_STATE),RF); \
+  LC_WINIT_FunctionBlock_TON(&((p)->LC_VD_SOCTIMER),0); \
+  if (RF==0) (p)->LC_VD_SOCINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(1),RT_CC_CONST_LL(0)); \
+  LC_WINIT_BOOL(&((p)->LC_VD_SOCSTATETIMEOUT),RF); \
+  LC_WINIT_TIME(&((p)->LC_VD_SOCSTATEELAPSEDTIME),RF); \
+}
+
+/*                            Prototype                        */
+void  lcfu___SOCSTATE(LC_TD_FunctionBlock_SOCSTATE* LC_this, struct _lcoplck_epdb_1_impl* pEPDB);
+
+
+#endif

@@ -1,0 +1,244 @@
+
+
+TYPE
+    PACKSTATE : USINT( STANDBY := 101,
+    	               //STARTUP := 102,
+    	               PRECHARGE := 103,
+    	               DISCHARGE := 104,
+    	               CHARGE := 105,
+    	               SHUTDOWN := 106,
+    	               ERROR := 107,
+    	               CHARGECOMPLETE := 108
+    	               );
+END_TYPE
+
+TYPE
+    CELLVOLTINFO : STRUCT
+        LOCBMU	:USINT;
+    	LOCCELL	:USINT;
+    	VOLT 	:UINT;
+    END_STRUCT; 
+    CELLTEMPINFO   : STRUCT
+        LOCBMU	:USINT;
+    	LOCCELL	:USINT;
+    	TEMP 	:SINT;
+    END_STRUCT; 
+END_TYPE
+
+TYPE
+	checkTable  : ARRAY[1..10] OF BOOL;
+END_TYPE 
+
+TYPE
+    CELLVPACKLIST : ARRAY[1..10] OF CELLVOLTINFO;
+    CELLTPACKLIST : ARRAY[1..10] OF CELLTEMPINFO;
+    CELLVOLTPACKLIST  : ARRAY[1..10] OF UINT;
+    DMxCPACKLIST  : ARRAY[1..10] OF REAL;
+    STATEPACKLIST  : ARRAY[1..10] OF PACKSTATE;
+    TEMPPACKLIST  : ARRAY[1..10] OF SINT;
+    ENERGYPACKLIST  : ARRAY[1..10] OF USINT;
+    CYCLEPACKLIST  : ARRAY[1..10] OF UINT;
+    SOxPACKLIST  : ARRAY[1..10] OF USINT;
+    VBATTPACKLIST  : ARRAY[1..10] OF UINT;
+    ABATTPACKLIST  : ARRAY[1..10] OF REAL;
+    FAULTPACKLIST  : ARRAY[1..10] OF LWORD;
+    //CheckList  : ARRAY[1..10] OF BOOL;
+END_TYPE   
+ 
+TYPE
+BATTERYBUNDLE : STRUCT
+AVGCELLV:CELLVOLTPACKLIST;
+MAXVCELL:CELLVPACKLIST;
+MINVCELL:CELLVPACKLIST;
+MAXTCELL:CELLTPACKLIST;
+MINTCELL:CELLTPACKLIST;
+DMDC:DMxCPACKLIST;
+DMCC:DMxCPACKLIST;
+STATE:STATEPACKLIST;
+TEMP:TEMPPACKLIST;
+CYCLE:CYCLEPACKLIST;
+SOC:SOxPACKLIST; 
+SOH:SOxPACKLIST;
+ENERGY:ENERGYPACKLIST;
+ENERGYremaining:ENERGYPACKLIST;
+VOLTAGE:VBATTPACKLIST;
+CURRENT:ABATTPACKLIST;
+FAULT:FAULTPACKLIST;
+END_STRUCT;
+END_TYPE
+
+
+TYPE
+    BMSSTATE : USINT(  STANDBY := 201,
+    	               STARTUP := 202,
+    	               PRECHARGE := 203,
+    	               DISCHARGE := 204,
+    	               CHARGE := 205,
+    	               SHUTDOWN := 206,
+    	               ERROR := 207,
+    	               CHARGECOMPLETE := 208
+    	               );
+END_TYPE
+
+
+TYPE
+    CELLVOLTBMS : STRUCT
+      CELL:CELLVOLTINFO;
+      PACK:USINT;
+    END_STRUCT; 
+    CELLTEMPBMS : STRUCT
+      CELL:CELLTEMPINFO;
+      PACK:USINT;
+    END_STRUCT; 
+END_TYPE
+
+
+TYPE
+BMSTYPE : STRUCT
+AVGCELLV:UINT;
+MAXCELLV:CELLVOLTBMS;
+MINCELLV:CELLVOLTBMS;
+MAXCELLT:CELLTEMPBMS;
+MINCELLT:CELLTEMPBMS;
+DMDC:UINT;
+DMCC:UINT;
+STATE:BMSSTATE;
+SOC:USINT; 
+SOH:USINT;
+ENERGY:UINT;
+VOLTAGE:UINT;
+CURRENT:REAL;
+NUMofPACKs:USINT;
+END_STRUCT;
+END_TYPE
+
+
+
+TYPE
+    
+	//BCU	: ARRAY[1..10] OF BCU_S;
+	BCU_DMXX : ARRAY[1..10] OF BCU_DMx;
+	BCU_FAULT	: ARRAY[1..10] OF BCU_FAULT_TYPES;
+	DTC_CODE : ARRAY [1..400] OF DWORD;
+	DTC_BAM_BYTE : ARRAY[0..400] OF BYTE;
+END_TYPE
+
+TYPE
+	BCU_DMX : STRUCT
+		DMDC : LREAL;
+		DMCC : LREAL;
+		STATE : USINT;
+	END_STRUCT;
+END_TYPE
+
+TYPE
+	HVCUFAULTS: STRUCT
+		BCU_WAKE_UP:BOOL;
+		PLUS_CONTACTOR:BOOL;
+		NEG_CONTACTOR:BOOL;
+		CHARGE_CONTACTOR:BOOL;
+		ISOLATION:BOOL;
+		HVIL:BOOL;
+		CHARGE_OVERCURRENT:BOOL;
+		DISCHARGE_OVERCURRENT:BOOL;
+		CHARGE_OVERCURRENTinstant:BOOL;
+		DISCHARGE_OVERCURRENTinstant:BOOL;
+		BATTERY_PACKET:BOOL;
+		CURRENT_SENSOR:BOOL;
+		PRECHARGE:BOOL;
+		NO_BATTERY_PACK_FOUND:BOOL;
+		DISCHARGE:BOOL;
+		CHARGE:BOOL;
+	END_STRUCT;
+END_TYPE
+
+TYPE
+		BCU_FAULT_BITS : BYTE( 	WARNING:=0,
+								DANGER:=1,
+								CELL_OV_WNG:=2,
+								CELL_OV_DNG:=3,
+								CELL_UV_WNG:=4,
+								CELL_UV_DNG:=5,	
+								CELL_OT_WNG:=6,
+								CELL_OT_DNG:=7,
+								CELL_UT_WNG:=8,
+								CELL_UT_DNG:=9,			
+								PACK_OT_WNG:=10,
+								PACK_UT_DNG:=11,																						
+								DMDC_EXCEED:=12,
+								DMCC_EXCEED:=13,
+								HVIL:=14,
+								CONTACTOR:=15,
+								FUSE:=16,
+								CMS:=17,
+								FIRE_WNG:=18,
+								HIGH_HUMIDITY:=19,
+								BMU:=20,
+								
+								DEAD_CELL_WNG:=32,
+								CAN_COMM:=33,
+								
+								OPEN_WIRE:=37,
+								
+								STACK_ERR_NO_RESPONSE:=40,
+								STACK_ERR_INITIALIZATION:=41,
+								STACK_ERR_MEASUREMENT:=42,
+								STACK_ERR_CONFIG:=43,
+								STACK_ERR_SQZACTIVE:=44,
+								STACK_ERR_RTOS:=45,
+								
+								BRD_FAULT_GPI:=48,
+								BRD_FAULT_CHIP:=49,
+								BRD_FAULT_SYS:=50,
+								BRD_FAULT_COMM:=51,
+								BRD_FAULT_CMPOV:=52,
+								BRD_FAULT_CMPUV:=53,
+								BRD_FAULT_AUXOV:=54,
+								BRD_FAULT_AUXUV:=55,
+								BRD_FAULT_OV:=56,
+								BRD_FAULT_UV:=57,
+								BRD_FAULT_STACK:=58,
+								BRD_FAULT_OWD:=59);	
+
+END_TYPE
+
+TYPE
+	BCU_FAULT_TYPES : STRUCT
+		Fault_Pack_Contactor    : BOOL;
+		Fault_Pack_HVIL    : BOOL;
+		Fault_Pack_Fuse    : BOOL;
+		Fault_Board_Under_Voltage    : BOOL;
+		Fault_Board_Sys    : BOOL;
+		Fault_Board_Over_Voltage    : BOOL;
+		Fault_Board_Open_Wire_Detect    : BOOL;
+		Fault_Board_GPI    : BOOL;
+		Fault_Board_Comp_Under_Voltage    : BOOL;
+		Fault_Board_Comp_Over_Voltage    : BOOL;
+		Fault_Board_Comminication    : BOOL;
+		Fault_Board_Chip    : BOOL;
+		Fault_Board_Aux_Under_Voltage    : BOOL;
+		Fault_Board_Aux_Over_Voltage    : BOOL;
+		Fault_Pack_Temp_High    : BOOL;
+		Fault_Voltage_Redundancy    : BOOL;
+		Fault_Cell_Under_Temp_Warning    : BOOL;
+		Fault_Cell_Under_Voltage_Warning    : BOOL;
+		Fault_Pack_Int_Communication    : BOOL;
+		Fault_Cell_Over_Voltage_Warning    : BOOL;
+		Fault_Open_Wire    : BOOL;
+		Fault_Pack_Temp_Low    : BOOL;
+		Fault_Internal_Measurement    : BOOL;
+		Fault_Cell_Over_Temp_Warning    : BOOL;
+		Fault_DMDC_Exceed    : BOOL;
+		Fault_DMCC_Exceed    : BOOL;
+		Fault_Dead_Cell    : BOOL;
+		Fault_Pack_Current_Sensor    : BOOL;
+		Fault_CAN_Communication    : BOOL;
+		Fault_Cell_Under_Temp_Danger    : BOOL;
+		Fault_Cell_Under_Voltage_Danger    : BOOL;
+		Fault_Cell_Over_Temp_Danger    : BOOL;
+		Fault_Cell_Over_Voltage_Danger    : BOOL;	
+	END_STRUCT;
+	
+
+END_TYPE
+

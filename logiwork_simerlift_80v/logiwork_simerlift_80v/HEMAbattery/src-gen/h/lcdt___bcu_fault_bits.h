@@ -1,0 +1,85 @@
+#ifndef LC_PROT_LCDT___BCU_FAULT_BITS__H
+#define LC_PROT_LCDT___BCU_FAULT_BITS__H
+
+#include <LC3CGBase.h>
+
+/*                            Typedefs                         */
+typedef LC_TD_BYTE LC_TD_DataType_BCU_FAULT_BITS;
+
+/*                            Named Value Constants                         */
+#define LC_ED__BCU_FAULT_BITS__WARNING ((LC_TD_BYTE)0)
+#define LC_ED__BCU_FAULT_BITS__DANGER ((LC_TD_BYTE)1)
+#define LC_ED__BCU_FAULT_BITS__CELL_OV_WNG ((LC_TD_BYTE)2)
+#define LC_ED__BCU_FAULT_BITS__CELL_OV_DNG ((LC_TD_BYTE)3)
+#define LC_ED__BCU_FAULT_BITS__CELL_UV_WNG ((LC_TD_BYTE)4)
+#define LC_ED__BCU_FAULT_BITS__CELL_UV_DNG ((LC_TD_BYTE)5)
+#define LC_ED__BCU_FAULT_BITS__CELL_OT_WNG ((LC_TD_BYTE)6)
+#define LC_ED__BCU_FAULT_BITS__CELL_OT_DNG ((LC_TD_BYTE)7)
+#define LC_ED__BCU_FAULT_BITS__CELL_UT_WNG ((LC_TD_BYTE)8)
+#define LC_ED__BCU_FAULT_BITS__CELL_UT_DNG ((LC_TD_BYTE)9)
+#define LC_ED__BCU_FAULT_BITS__PACK_OT_WNG ((LC_TD_BYTE)10)
+#define LC_ED__BCU_FAULT_BITS__PACK_UT_DNG ((LC_TD_BYTE)11)
+#define LC_ED__BCU_FAULT_BITS__DMDC_EXCEED ((LC_TD_BYTE)12)
+#define LC_ED__BCU_FAULT_BITS__DMCC_EXCEED ((LC_TD_BYTE)13)
+#define LC_ED__BCU_FAULT_BITS__HVIL ((LC_TD_BYTE)14)
+#define LC_ED__BCU_FAULT_BITS__CONTACTOR ((LC_TD_BYTE)15)
+#define LC_ED__BCU_FAULT_BITS__FUSE ((LC_TD_BYTE)16)
+#define LC_ED__BCU_FAULT_BITS__CMS ((LC_TD_BYTE)17)
+#define LC_ED__BCU_FAULT_BITS__FIRE_WNG ((LC_TD_BYTE)18)
+#define LC_ED__BCU_FAULT_BITS__HIGH_HUMIDITY ((LC_TD_BYTE)19)
+#define LC_ED__BCU_FAULT_BITS__BMU ((LC_TD_BYTE)20)
+#define LC_ED__BCU_FAULT_BITS__DEAD_CELL_WNG ((LC_TD_BYTE)32)
+#define LC_ED__BCU_FAULT_BITS__CAN_COMM ((LC_TD_BYTE)33)
+#define LC_ED__BCU_FAULT_BITS__OPEN_WIRE ((LC_TD_BYTE)37)
+#define LC_ED__BCU_FAULT_BITS__STACK_ERR_NO_RESPONSE ((LC_TD_BYTE)40)
+#define LC_ED__BCU_FAULT_BITS__STACK_ERR_INITIALIZATION ((LC_TD_BYTE)41)
+#define LC_ED__BCU_FAULT_BITS__STACK_ERR_MEASUREMENT ((LC_TD_BYTE)42)
+#define LC_ED__BCU_FAULT_BITS__STACK_ERR_CONFIG ((LC_TD_BYTE)43)
+#define LC_ED__BCU_FAULT_BITS__STACK_ERR_SQZACTIVE ((LC_TD_BYTE)44)
+#define LC_ED__BCU_FAULT_BITS__STACK_ERR_RTOS ((LC_TD_BYTE)45)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_GPI ((LC_TD_BYTE)48)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_CHIP ((LC_TD_BYTE)49)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_SYS ((LC_TD_BYTE)50)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_COMM ((LC_TD_BYTE)51)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_CMPOV ((LC_TD_BYTE)52)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_CMPUV ((LC_TD_BYTE)53)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_AUXOV ((LC_TD_BYTE)54)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_AUXUV ((LC_TD_BYTE)55)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_OV ((LC_TD_BYTE)56)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_UV ((LC_TD_BYTE)57)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_STACK ((LC_TD_BYTE)58)
+#define LC_ED__BCU_FAULT_BITS__BRD_FAULT_OWD ((LC_TD_BYTE)59)
+
+/*                   ColdBoot Initialization Macro             */
+#define LC_INIT_DataType_BCU_FAULT_BITS(p) \
+{ \
+  (*(p)) = LC_ED__BCU_FAULT_BITS__WARNING; \
+}
+
+/*                   WarmBoot Initialization Macro             */
+#define LC_WINIT_DataType_BCU_FAULT_BITS(p,RF) \
+{ \
+  if (RF==0) (*(p)) = LC_ED__BCU_FAULT_BITS__WARNING; \
+}
+
+/*                ColdBoot Initialization Macro for Arrays            */
+#define LC_INIT_ARRAY_OF_DataType_BCU_FAULT_BITS(p,ARRAYSIZE) \
+{ \
+  LC_TD_DataType_BCU_FAULT_BITS * ptrToElement_ArrayOf_BCU_FAULT_BITS = (LC_TD_DataType_BCU_FAULT_BITS*)(p);\
+  LC_TD_DataType_BCU_FAULT_BITS * arrayEnd = ptrToElement_ArrayOf_BCU_FAULT_BITS+ARRAYSIZE;\
+  for (; ptrToElement_ArrayOf_BCU_FAULT_BITS < arrayEnd; ptrToElement_ArrayOf_BCU_FAULT_BITS++) \
+  { \
+    LC_INIT_DataType_BCU_FAULT_BITS(ptrToElement_ArrayOf_BCU_FAULT_BITS); \
+  } \
+}
+
+/*                WarmBoot Initialization Macro for Arrays            */
+#define LC_WINIT_ARRAY_OF_DataType_BCU_FAULT_BITS(p,ARRAYSIZE,RF) \
+{ \
+  if (RF==0) \
+  { \
+    LC_INIT_ARRAY_OF_DataType_BCU_FAULT_BITS(p,ARRAYSIZE); \
+  } \
+}
+
+#endif

@@ -1,0 +1,96 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 12,
+        "e": 12
+      },
+      "st": {
+        "b": 20,
+        "e": 20
+      },
+      "l": 0,
+      "sk": 14
+    },
+    {
+      "c": {
+        "b": 13,
+        "e": 22
+      },
+      "st": {
+        "b": 22,
+        "e": 26
+      },
+      "l": 0,
+      "sk": 9
+    },
+    {
+      "c": {
+        "b": 16,
+        "e": 19
+      },
+      "st": {
+        "b": 23,
+        "e": 25
+      },
+      "l": 1,
+      "sk": 10
+    },
+    {
+      "c": {
+        "b": 18,
+        "e": 18
+      },
+      "st": {
+        "b": 24,
+        "e": 24
+      },
+      "l": 2,
+      "sk": 14
+    },
+    {
+      "c": {
+        "b": 23,
+        "e": 23
+      },
+      "st": {
+        "b": 28,
+        "e": 28
+      },
+      "l": 0,
+      "sk": 17
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "fMaxSint"
+    },
+    "LC_VD_SIZEOF": {
+      "v": "sizeof",
+      "t": "USINT"
+    },
+    "lcfu___FMAXSINT": {
+      "v": "",
+      "t": "fMaxSint"
+    },
+    "LC_VD_MAX": {
+      "v": "max",
+      "t": "SINT"
+    },
+    "LC_VD_I": {
+      "v": "i",
+      "t": "USINT"
+    },
+    "LC_VD_ARR": {
+      "v": "arr",
+      "t": "ARRAY[0..15] OF SINT"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/fbdCommon/fMaxSint.iecst",
+  "cCodeFile": "src-gen/lcfu___fmaxsint.c"
+}

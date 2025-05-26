@@ -1,0 +1,17 @@
+{extern_c}
+
+FUNCTION_BLOCK NTC
+
+  VAR_INPUT
+    VOLT : REAL;
+    VSUP: REAL;
+    RS:   REAL;
+    BETA : REAL;
+    TNOM: REAL;
+    RNOM: REAL;
+  END_VAR
+  VAR_OUTPUT
+    TEMP: REAL;
+  END_VAR
+
+END_FUNCTION_BLOCK

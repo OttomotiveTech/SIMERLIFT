@@ -1,0 +1,22 @@
+TYPE
+
+    CAN_RETCODE : UINT(CAN_OK := 0,
+                           CAN_SEND_ERROR := 1,
+                           CAN_RECEIVE_ERROR := 2,
+                           CAN_NO_RECEIVE_DATA_REFERENCE := 3,
+                           CAN_NO_SEND_DATA_REFERENCE := 4,
+                           CAN_SYSTEM_SERVICE_NOT_LOADED := 5,
+                           CAN_DLC_ERROR := 6,
+                           CAN_INTERFACE_ERROR := 7,
+                           CAN_NO_INTERFACE_NAME := 8,
+                           CAN_NO_BITRATE := 9,
+                           CAN_NO_FREE_INTERFACE_SLOT := 10,
+                           CAN_NO_VALID_HANDLE := 11,
+                           CAN_NO_CONNECTION := 12,
+                           CAN_INTERFACE_STILL_IN_USE := 13,
+                           CAN_INTERFACE_SLOT_UNUSED := 14,
+                           CAN_INTERFACE_ALREADY_IN_USE := 15,
+                           CAN_NOT_IMPLEMENTED := 16,
+                           CAN_NO_VALID_BITRATE := 17,
+                           CAN_RX_TIMEOUT := 18);
+END_TYPE

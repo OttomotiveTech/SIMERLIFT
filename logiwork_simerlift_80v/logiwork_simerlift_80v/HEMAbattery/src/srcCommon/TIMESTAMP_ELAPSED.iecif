@@ -1,0 +1,16 @@
+{extern_c}
+
+FUNCTION_BLOCK TIMESTAMP_ELAPSED  {
+    height := 18;
+    width := 320;
+  }
+ 
+  VAR_INPUT
+    START : TIME;
+  END_VAR
+  
+  VAR_OUTPUT
+    ELAPSED:TIME;
+  END_VAR
+
+END_FUNCTION_BLOCK

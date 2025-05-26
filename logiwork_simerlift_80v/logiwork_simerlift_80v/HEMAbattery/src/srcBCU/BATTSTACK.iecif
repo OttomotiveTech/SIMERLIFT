@@ -1,0 +1,91 @@
+{extern_c}
+
+FUNCTION_BLOCK BATTSTACK  {
+    MAXCELLBRD {index := 0};
+    MAXCELLNUM {index := 1};
+    MINCELLBRD {index := 2};
+    MINCELLNUM {index := 3};
+    VMAXCELL {index := 4};
+    VMINCELL {index := 5};
+    VAV {index := 6};
+    MAXTEMPBRD {index := 7};
+    MAXTEMPCELL {index := 8};
+    MINTEMPBRD {index := 9};
+    MINTEMPCELL {index := 10};
+    MAXTEMP {index := 11};
+    MINTEMP {index := 12};
+    VCELL {index := 13};
+    TEMPCELL {index := 14};
+    VSTACK {index := 15};
+    BALREG {index := 17};
+    N_BRD {index := 18};
+    FAULT {index := 19};
+    ERR {index := 20};
+    VCH {index := 16};
+    height := 258;
+    width := 310;
+  }
+
+
+  VAR_INPUT
+  NBOARDS: UDINT;
+  BAUD: UDINT;
+  OVTHRES: UDINT;
+  UVTHRES: UDINT;
+  M_ALL_R:BOOL;
+  M_AUX_R:BOOL;
+  N_CELLS:ARRAY[0..15]OF USINT;
+  T_CELLS:ARRAY[0..15]OF USINT;
+  CHSEL:ARRAY[0..15]OF PLCHANNEL;
+  
+  BRD:USINT;
+  CELL:USINT;
+  CH:PLCHANNEL;
+  
+  BALV: UDINT;
+  BALENB: BOOL;
+
+  NTCBETA:REAL;
+  NTCNOMT_KLV:REAL;
+  NTCNOMR_OHM:REAL;
+  ENB: BOOL;
+  END_VAR
+  
+  
+ 
+  VAR_OUTPUT
+  
+  N_BRD:USINT;
+  
+  VCH:UDINT;
+  VCELL:UDINT;
+  VAV:UDINT;
+  VMINCELL: UDINT;
+  VMAXCELL: UDINT;
+  VSTACK:REAL;
+  
+  MAXCELLBRD: USINT;
+  MAXCELLNUM: USINT;
+  MINCELLBRD: USINT;
+  MINCELLNUM: USINT;
+  BALREG: UINT;
+  TEMPCELL:REAL;
+  MAXTEMP:REAL;
+  MINTEMP:REAL;
+  MAXTEMPBRD: USINT;
+  MAXTEMPCELL: USINT;
+  MINTEMPBRD: USINT;
+  MINTEMPCELL: USINT;
+  FAULT:BATTSTACKFAULT;
+  ERR: BATTSTACKERR;
+  END_VAR
+  
+  
+  VAR
+  M_ALL_R_M:BOOL;
+  M_AUX_R_M:BOOL;
+  ALLtrigCount:UDINT;
+  AUXtrigCount:UDINT;
+  END_VAR
+  
+END_FUNCTION_BLOCK

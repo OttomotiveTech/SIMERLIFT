@@ -1,0 +1,130 @@
+FUNCTION_BLOCK  chargeState  {
+    width := 400;
+  }
+
+VAR_INPUT
+    chargeOn:BOOL;
+    mainComplete:BOOL;
+    dmcc:REAL;
+	battAmpr:REAL;
+	balAmpr:REAL;
+	balDiff:UDINT;
+    maxCell:UDINT;
+    minCell:UDINT;
+END_VAR
+
+VAR_OUTPUT
+	complete:BOOL;
+	balance:BOOL;
+	chargeAmpr:REAL;
+	chState:USINT;
+END_VAR
+
+
+VAR
+
+balDiffTol:UDINT;
+
+balanceOK_mid:BOOL;
+balanceOK:BOOL;
+balanceTIMERhigh:TON;
+balanceTIMERlow:TOF;
+
+amperLow_mid:BOOL;
+amperLow:BOOL;
+amperTIMERhigh:TON;
+amperTIMERlow:TOF;
+
+PREVSTATE:USINT:=0;
+state:USINT;
+chargeTIMER:TON;
+chargeInterval:TIME:=T#1s;
+chargeSTATETIMEOUT:BOOL;
+chargeSTATEELAPSEDTIME:TIME;
+END_VAR
+
+chargeTIMER(IN:=state=PREVSTATE, PT:=chargeInterval, Q=>chargeSTATETIMEOUT, ET=>chargeSTATEELAPSEDTIME);
+PREVSTATE:=state;
+
+amperTIMERhigh(IN:=ABS(battAmpr)<(balAmpr+3), PT:=T#3s, Q=>amperLow_mid);
+amperTIMERlow(IN:=amperLow_mid, PT:=T#3s, Q=>amperLow);
+
+balanceTIMERhigh(IN:= (maxCell-minCell)<balDiffTol, PT:=T#5s, Q=>balanceOK_mid);  //20
+balanceTIMERlow(IN:=balanceOK_mid, PT:=T#5s, Q=>balanceOK);  //20
+
+ IF NOT chargeOn THEN
+    state:=0;
+END_IF;
+
+CASE state OF
+
+	0: //stb
+	chargeInterval:=T#5m;
+	complete:=mainComplete;
+	balance:=0;
+	chargeAmpr:=dmcc;
+
+	IF chargeOn AND NOT complete THEN
+		state:=1;
+		complete:=0;
+	END_IF;
+	
+	
+	1: //charge on
+	chargeInterval:=T#5m;  //5m
+	complete:=0;
+	balance:=0;
+	chargeAmpr:=dmcc;
+	IF mainComplete THEN
+		state:=2;  // go to rest before balance decision
+	END_IF;
+	
+	
+	2:  //rest
+	chargeInterval:=T#10s;  //2m
+	complete:=0;
+	balance:=0;
+	chargeAmpr:=balAmpr;
+	balDiffTol:=balDiff;
+	
+	IF chargeSTATETIMEOUT THEN
+		IF balanceOK THEN
+			state:=4;
+		ELSE 
+			state:=3;
+		END_IF;
+	ELSIF chargeSTATEELAPSEDTIME>T#30s THEN
+		IF NOT amperLow THEN
+			state:=4;
+		END_IF;
+	END_IF;
+
+
+	3:  //balance
+	chargeInterval:=T#1m;  //30m
+	complete:=0;
+	balance:=1;
+	chargeAmpr:=balAmpr;
+	balDiffTol:=10;
+
+	IF chargeSTATETIMEOUT OR NOT amperLow THEN
+		state:=4;
+	ELSIF chargeSTATEELAPSEDTIME>T#10m THEN   //10m
+		IF balanceOK THEN
+			state:=4;
+		END_IF;
+	END_IF;
+	
+	
+	4: //charge state complete
+	chargeInterval:=T#1m;   //1m
+	complete:=1;
+	balance:=0;
+	chargeAmpr:=0;
+	
+END_CASE;
+
+chState:=state;
+
+END_FUNCTION_BLOCK
+

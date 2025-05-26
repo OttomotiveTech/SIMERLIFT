@@ -1,0 +1,148 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 19,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 22,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 33
+      },
+      "st": {
+        "b": 24,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 34,
+        "e": 41
+      },
+      "st": {
+        "b": 26,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 39,
+        "e": 39
+      },
+      "st": {
+        "b": 18,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 43,
+        "e": 43
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "Select_4"
+    },
+    "lcfu___SELECT_4": {
+      "v": "",
+      "t": "Select_4"
+    },
+    "LC_VD_IN0": {
+      "v": "In0",
+      "t": "WORD"
+    },
+    "LC_VD_IN1": {
+      "v": "In1",
+      "t": "WORD"
+    },
+    "LC_VD_IN2": {
+      "v": "In2",
+      "t": "WORD"
+    },
+    "LC_VD_Q": {
+      "v": "Q",
+      "t": "WORD"
+    },
+    "LC_VD_IN3": {
+      "v": "In3",
+      "t": "WORD"
+    },
+    "LC_VD___22_SEL_WORD": {
+      "v": "__22_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_I": {
+      "v": "i",
+      "t": "WORD"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    },
+    "LC_VD___24_SEL_WORD": {
+      "v": "__24_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_S2": {
+      "v": "S2",
+      "t": "BOOL"
+    },
+    "LC_VD_S3": {
+      "v": "S3",
+      "t": "BOOL"
+    },
+    "LC_VD___19_SEL_WORD": {
+      "v": "__19_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD___26_SEL_WORD": {
+      "v": "__26_SEL_WORD",
+      "t": "WORD"
+    },
+    "LC_VD_S0": {
+      "v": "S0",
+      "t": "BOOL"
+    },
+    "LC_VD_S1": {
+      "v": "S1",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/fbdCommon/Library/Select_4.iecfbd",
+  "cCodeFile": "src-gen/lcfu___select_4.c"
+}

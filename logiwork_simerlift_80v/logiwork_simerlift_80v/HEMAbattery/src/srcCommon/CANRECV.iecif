@@ -1,0 +1,33 @@
+{extern_c}
+
+FUNCTION_BLOCK CANRECV  {
+    height := 98;
+    width := 160;
+  }
+
+  VAR_INPUT
+    CH : TMS570_CAN;
+    ID: UDINT;
+    FMT: CAN_FORMAT;
+    PER:TIME;
+    ENB:BOOL;
+  END_VAR
+  
+  VAR_OUTPUT
+    CRX:UDINT;
+    DATA:LWORD;
+    DLC:UDINT;
+    MPER:TIME;
+    RC:CAN_RETCODE;
+  END_VAR
+  
+  VAR
+  BOX:UDINT;
+  ID_M:UDINT;
+  CH_M: TMS570_CAN;
+  FMT_M: CAN_FORMAT;
+  STATE:UINT;
+  STARTT:TIME;
+  END_VAR
+  
+END_FUNCTION_BLOCK

@@ -1,0 +1,28 @@
+FUNCTION fMinSint  {
+    width := 200;
+  }
+
+VAR_INPUT
+	arr:ARRAY[0..15] OF SINT;
+	sizeof:USINT;
+END_VAR
+
+VAR_OUTPUT
+	min : SINT;
+END_VAR
+
+
+VAR
+i:USINT;
+
+END_VAR
+
+min:=127;
+
+FOR i:=1 TO sizeof By 1 DO
+	IF min>arr[i-1] THEN
+		min:=arr[i-1];
+	END_IF;
+END_FOR;
+
+END_FUNCTION

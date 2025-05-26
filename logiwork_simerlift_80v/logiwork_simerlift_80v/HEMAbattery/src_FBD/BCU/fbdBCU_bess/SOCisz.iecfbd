@@ -1,0 +1,89 @@
+FUNCTION_BLOCK SOCisz
+  {
+    width := 340;
+  }
+
+  VAR
+    socState1 : socState;
+    RMEM_REAL1 : RMEM_REAL;
+    memReadWh : REAL;
+    fMemW_REAL1 : fMemW_REAL;
+  END_VAR
+  VAR_INPUT
+    capacityWh : REAL;
+    instantWh : REAL;
+    chargeCompleted : BOOL;
+    memoryWrite : BOOL;
+  END_VAR
+  VAR_OUTPUT
+    SOC : REAL;
+    remainingWh : REAL;
+    state : USINT;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    socState1(whCap := capacityWh, whInstant := instantWh, whMem := memReadWh, chargeComplete := chargeCompleted, memWr := memoryWrite, SOC => SOC, whRem => remainingWh, socState => state);
+    fMemW_REAL1(ADDR := 16#100, VAL := socState1.whRem, R := socState1.wrWh);
+    RMEM_REAL1(ADDR := 16#100, R := socState1.rdWh, VAL => memReadWh);
+
+  *)
+
+  @VF(3) : @E(16#100), @R(1000.0, 180.0, 80.0, 19.0), UDINT;
+  @C(2) : @FB(RMEM_REAL1), @R(1120.0, 240.0, 210.0, 38.0), @I(@N(ADDR), @L(9.5)), @I(@N(R), @L(29.5)), @O(@N(VAL), @R(9.5)), @O(@N(NXT), @R(29.5));
+  @VF(6) : @E(memReadWh), @R(1370.0, 240.0, 140.0, 19.0);
+  @VF(8) : @E(memReadWh), @R(180.0, 220.0, 140.0, 19.0);
+  @VF(10) : @E(capacityWh), @R(180.0, 180.0, 140.0, 19.0);
+  @VF(12) : @E(instantWh), @R(180.0, 200.0, 140.0, 19.0);
+  @VF(14) : @E(chargeCompleted), @R(180.0, 240.0, 140.0, 19.0);
+  @VF(16) : @E(memoryWrite), @R(180.0, 260.0, 140.0, 19.0);
+  @C(18) : @FB(fMemW_REAL1), @R(1120.0, 180.0, 250.0, 58.0), @I(@N(ADDR), @L(9.5)), @I(@N(VAL), @L(29.5)), @I(@N(R), @L(49.5)), @O(@N(OK), @R(9.5)), @O(@N(RET), @R(29.5)), @O(@N(NXT), @R(49.5));
+  @VF(22) : @E(SOC), @R(780.0, 180.0, 140.0, 19.0);
+  @VF(24) : @E(remainingWh), @R(1210.0, 310.0, 140.0, 19.0);
+  @C(1) : @FB(socState1), @R(360.0, 180.0, 400.0, 98.0), @I(@N(whCap), @L(9.5)), @I(@N(whInstant), @L(29.5)), @I(@N(whMem), @L(49.5)), @I(@N(chargeComplete), @L(69.5)), @I(@N(memWr), @L(89.5)), @O(@N(SOC), @R(9.5)), @O(@N(whRem), @R(29.5)), @O(@N(wrWh), @R(49.5)), @O(@N(rdWh), @R(69.5)), @O(@N(socState), @R(89.5));
+  @VF(26) : @E(state), @R(780.0, 260.0, 140.0, 19.0);
+  @CP(21) : 1099.5, 189.5;
+  @CP(25) : 969.5, 209.5;
+
+  @G(4) :
+     @L(@C(1).rdWh, @C(2).R)
+    ;
+  @G(7) :
+     @L(@C(2).VAL, @VF(6).i)
+    ;
+  @G(9) :
+     @L(@VF(8).o, @C(1).whMem)
+    ;
+  @G(11) :
+     @L(@VF(10).o, @C(1).whCap)
+    ;
+  @G(13) :
+     @L(@VF(12).o, @C(1).whInstant)
+    ;
+  @G(15) :
+     @L(@VF(14).o, @C(1).chargeComplete)
+    ;
+  @G(17) :
+     @L(@VF(16).o, @C(1).memWr)
+    ;
+  @G(19) :
+     @L(@C(1).wrWh, @C(18).R)
+    ;
+  @G(20) :
+     @L(@C(1).whRem, @CP(25)),
+     @L(@CP(25), @C(18).VAL),
+     @L(@CP(25), @VF(24).i)
+    ;
+  @G(5) :
+     @L(@VF(3).o, @CP(21)),
+     @L(@CP(21), @C(18).ADDR),
+     @L(@CP(21), @C(2).ADDR)
+    ;
+  @G(23) :
+     @L(@C(1).SOC, @VF(22).i)
+    ;
+  @G(27) :
+     @L(@C(1).socState, @VF(26).i)
+    ;
+END_FUNCTION_BLOCK

@@ -1,0 +1,164 @@
+FUNCTION_BLOCK Select_8
+  {
+    In0 {index := 0};
+    S0 {index := 1};
+    In1 {index := 2};
+    S1 {index := 3};
+    In2 {index := 4};
+    In3 {index := 6};
+    In4 {index := 8};
+    In5 {index := 10};
+    In6 {index := 12};
+    In7 {index := 14};
+    S2 {index := 5};
+    S3 {index := 7};
+    S4 {index := 9};
+    S5 {index := 11};
+    S6 {index := 13};
+    S7 {index := 15};
+    i {index := 17};
+    Q {index := 0};
+    width := 160;
+    height := 358;
+  }
+
+  VAR_INPUT
+    In0 : WORD := 0;
+    In1 : WORD := 0;
+    In2 : WORD := 0;
+    In3 : WORD := 0;
+    In4 : WORD := 0;
+    In5 : WORD := 0;
+    In6 : WORD := 0;
+    In7 : WORD := 0;
+    S0 : BOOL := 0;
+    S1 : BOOL := 0;
+    S2 : BOOL := 0;
+    S3 : BOOL := 0;
+    S4 : BOOL := 0;
+    S5 : BOOL := 0;
+    S6 : BOOL := 0;
+    S7 : BOOL := 0;
+    i : BYTE := 0;
+  END_VAR
+  VAR_OUTPUT
+    Q : WORD := 0;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    SEL_WORD(G := S0, IN0 := i, IN1 := In0, SEL_WORD => @C(19).SEL_WORD);
+    SEL_WORD(G := S1, IN0 := @C(19).SEL_WORD, IN1 := In1, SEL_WORD => @C(22).SEL_WORD);
+    SEL_WORD(G := S2, IN0 := @C(22).SEL_WORD, IN1 := In2, SEL_WORD => @C(24).SEL_WORD);
+    SEL_WORD(G := S3, IN0 := @C(24).SEL_WORD, IN1 := In3, SEL_WORD => @C(26).SEL_WORD);
+    SEL_WORD(G := S4, IN0 := @C(26).SEL_WORD, IN1 := In4, SEL_WORD => @C(25).SEL_WORD);
+    SEL_WORD(G := S5, IN0 := @C(25).SEL_WORD, IN1 := In5, SEL_WORD => @C(28).SEL_WORD);
+    SEL_WORD(G := S6, IN0 := @C(28).SEL_WORD, IN1 := In6, SEL_WORD => @C(27).SEL_WORD);
+    SEL_WORD(G := S7, IN0 := @C(27).SEL_WORD, IN1 := In7, SEL_WORD => Q);
+
+  *)
+
+  @VF(1) : @E(In0), @R(40.0, 500.0, 140.0, 19.0);
+  @VF(2) : @E(In1), @R(40.0, 440.0, 140.0, 19.0);
+  @VF(3) : @E(In2), @R(40.0, 380.0, 140.0, 19.0);
+  @VF(4) : @E(In3), @R(40.0, 320.0, 140.0, 19.0);
+  @VF(5) : @E(In4), @R(40.0, 260.0, 140.0, 19.0);
+  @VF(6) : @E(In5), @R(40.0, 200.0, 140.0, 19.0);
+  @VF(7) : @E(In6), @R(40.0, 140.0, 140.0, 19.0);
+  @VF(8) : @E(In7), @R(40.0, 80.0, 140.0, 19.0);
+  @VF(9) : @E(S0), @R(40.0, 460.0, 140.0, 19.0);
+  @VF(10) : @E(S1), @R(40.0, 400.0, 140.0, 19.0);
+  @VF(11) : @E(S2), @R(40.0, 340.0, 140.0, 19.0);
+  @VF(12) : @E(S3), @R(40.0, 280.0, 140.0, 19.0);
+  @VF(13) : @E(S4), @R(40.0, 220.0, 140.0, 19.0);
+  @VF(14) : @E(S5), @R(40.0, 160.0, 140.0, 19.0);
+  @VF(15) : @E(S6), @R(40.0, 100.0, 140.0, 19.0);
+  @VF(16) : @E(S7), @R(40.0, 40.0, 140.0, 19.0);
+  @VF(17) : @E(i), @R(40.0, 480.0, 140.0, 19.0);
+  @VF(18) : @E(Q), @R(1510.0, 40.0, 140.0, 19.0);
+  @C(19) : @F(SEL_WORD), @R(220.0, 460.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(22) : @F(SEL_WORD), @R(380.0, 400.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(23) : @F(SEL_WORD), @R(1350.0, 40.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(24) : @F(SEL_WORD), @R(540.0, 340.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(25) : @F(SEL_WORD), @R(860.0, 220.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(26) : @F(SEL_WORD), @R(700.0, 280.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(27) : @F(SEL_WORD), @R(1190.0, 100.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+  @C(28) : @F(SEL_WORD), @R(1030.0, 160.0, 120.0, 58.0), @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL_WORD), @R(9.5));
+
+  @G(20) :
+     @L(@VF(9).o, @C(19).G)
+    ;
+  @G(21) :
+     @L(@VF(1).o, @C(19).IN1)
+    ;
+  @G(29) :
+     @L(@VF(10).o, @C(22).G)
+    ;
+  @G(30) :
+     @L(@VF(11).o, @C(24).G)
+    ;
+  @G(31) :
+     @L(@VF(15).o, @C(27).G)
+    ;
+  @G(32) :
+     @L(@VF(14).o, @C(28).G)
+    ;
+  @G(33) :
+     @L(@VF(13).o, @C(25).G)
+    ;
+  @G(34) :
+     @L(@VF(12).o, @C(26).G)
+    ;
+  @G(35) :
+     @L(@VF(16).o, @C(23).G)
+    ;
+  @G(36) :
+     @L(@VF(2).o, @C(22).IN1)
+    ;
+  @G(37) :
+     @L(@VF(3).o, @C(24).IN1)
+    ;
+  @G(38) :
+     @L(@VF(4).o, @C(26).IN1)
+    ;
+  @G(39) :
+     @L(@VF(5).o, @C(25).IN1)
+    ;
+  @G(40) :
+     @L(@VF(6).o, @C(28).IN1)
+    ;
+  @G(41) :
+     @L(@VF(7).o, @C(27).IN1)
+    ;
+  @G(42) :
+     @L(@VF(8).o, @C(23).IN1)
+    ;
+  @G(101) :
+     @L(@VF(17).o, @C(19).IN0)
+    ;
+  @G(43) :
+     @L(@C(19).SEL_WORD, @C(22).IN0)
+    ;
+  @G(44) :
+     @L(@C(22).SEL_WORD, @C(24).IN0)
+    ;
+  @G(45) :
+     @L(@C(24).SEL_WORD, @C(26).IN0)
+    ;
+  @G(46) :
+     @L(@C(26).SEL_WORD, @C(25).IN0)
+    ;
+  @G(47) :
+     @L(@C(25).SEL_WORD, @C(28).IN0)
+    ;
+  @G(48) :
+     @L(@C(28).SEL_WORD, @C(27).IN0)
+    ;
+  @G(49) :
+     @L(@C(27).SEL_WORD, @C(23).IN0)
+    ;
+  @G(50) :
+     @L(@C(23).SEL_WORD, @VF(18).i)
+    ;
+END_FUNCTION_BLOCK

@@ -1,0 +1,175 @@
+#include <RISMD.h>
+#include <lcdt___bcu_fault_types.h>
+
+extern RISMDSimpleNumType const risMdType_BOOL;
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_AUX_OVER_VOLTAGE[] = "Fault_Board_Aux_Over_Voltage";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_AUX_OVER_VOLTAGE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_AUX_OVER_VOLTAGE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_AUX_OVER_VOLTAGE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_AUX_UNDER_VOLTAGE[] = "Fault_Board_Aux_Under_Voltage";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_AUX_UNDER_VOLTAGE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_AUX_UNDER_VOLTAGE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_AUX_UNDER_VOLTAGE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_CHIP[] = "Fault_Board_Chip";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_CHIP =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_CHIP, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_CHIP));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_COMMINICATION[] = "Fault_Board_Comminication";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_COMMINICATION =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_COMMINICATION, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_COMMINICATION));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_COMP_OVER_VOLTAGE[] = "Fault_Board_Comp_Over_Voltage";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_COMP_OVER_VOLTAGE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_COMP_OVER_VOLTAGE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_COMP_OVER_VOLTAGE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_COMP_UNDER_VOLTAGE[] = "Fault_Board_Comp_Under_Voltage";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_COMP_UNDER_VOLTAGE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_COMP_UNDER_VOLTAGE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_COMP_UNDER_VOLTAGE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_GPI[] = "Fault_Board_GPI";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_GPI =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_GPI, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_GPI));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_OPEN_WIRE_DETECT[] = "Fault_Board_Open_Wire_Detect";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_OPEN_WIRE_DETECT =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_OPEN_WIRE_DETECT, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_OPEN_WIRE_DETECT));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_OVER_VOLTAGE[] = "Fault_Board_Over_Voltage";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_OVER_VOLTAGE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_OVER_VOLTAGE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_OVER_VOLTAGE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_SYS[] = "Fault_Board_Sys";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_SYS =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_SYS, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_SYS));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_UNDER_VOLTAGE[] = "Fault_Board_Under_Voltage";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_UNDER_VOLTAGE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_BOARD_UNDER_VOLTAGE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_BOARD_UNDER_VOLTAGE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CAN_COMMUNICATION[] = "Fault_CAN_Communication";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CAN_COMMUNICATION =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CAN_COMMUNICATION, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CAN_COMMUNICATION));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_DANGER[] = "Fault_Cell_Over_Temp_Danger";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_DANGER =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_DANGER, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_OVER_TEMP_DANGER));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_WARNING[] = "Fault_Cell_Over_Temp_Warning";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_WARNING =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_WARNING, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_OVER_TEMP_WARNING));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_DANGER[] = "Fault_Cell_Over_Voltage_Danger";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_DANGER =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_DANGER, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_OVER_VOLTAGE_DANGER));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_WARNING[] = "Fault_Cell_Over_Voltage_Warning";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_WARNING =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_WARNING, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_OVER_VOLTAGE_WARNING));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_DANGER[] = "Fault_Cell_Under_Temp_Danger";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_DANGER =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_DANGER, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_UNDER_TEMP_DANGER));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_WARNING[] = "Fault_Cell_Under_Temp_Warning";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_WARNING =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_WARNING, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_UNDER_TEMP_WARNING));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_DANGER[] = "Fault_Cell_Under_Voltage_Danger";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_DANGER =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_DANGER, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_UNDER_VOLTAGE_DANGER));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_WARNING[] = "Fault_Cell_Under_Voltage_Warning";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_WARNING =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_WARNING, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_CELL_UNDER_VOLTAGE_WARNING));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_DEAD_CELL[] = "Fault_Dead_Cell";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_DEAD_CELL =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_DEAD_CELL, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_DEAD_CELL));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_DMCC_EXCEED[] = "Fault_DMCC_Exceed";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_DMCC_EXCEED =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_DMCC_EXCEED, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_DMCC_EXCEED));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_DMDC_EXCEED[] = "Fault_DMDC_Exceed";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_DMDC_EXCEED =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_DMDC_EXCEED, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_DMDC_EXCEED));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_INTERNAL_MEASUREMENT[] = "Fault_Internal_Measurement";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_INTERNAL_MEASUREMENT =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_INTERNAL_MEASUREMENT, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_INTERNAL_MEASUREMENT));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_OPEN_WIRE[] = "Fault_Open_Wire";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_OPEN_WIRE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_OPEN_WIRE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_OPEN_WIRE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_CONTACTOR[] = "Fault_Pack_Contactor";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_CONTACTOR =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_CONTACTOR, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_PACK_CONTACTOR));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_CURRENT_SENSOR[] = "Fault_Pack_Current_Sensor";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_CURRENT_SENSOR =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_CURRENT_SENSOR, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_PACK_CURRENT_SENSOR));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_FUSE[] = "Fault_Pack_Fuse";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_FUSE =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_FUSE, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_PACK_FUSE));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_HVIL[] = "Fault_Pack_HVIL";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_HVIL =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_HVIL, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_PACK_HVIL));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_INT_COMMUNICATION[] = "Fault_Pack_Int_Communication";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_INT_COMMUNICATION =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_INT_COMMUNICATION, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_PACK_INT_COMMUNICATION));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_TEMP_HIGH[] = "Fault_Pack_Temp_High";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_TEMP_HIGH =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_TEMP_HIGH, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_PACK_TEMP_HIGH));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_TEMP_LOW[] = "Fault_Pack_Temp_Low";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_TEMP_LOW =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_PACK_TEMP_LOW, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_PACK_TEMP_LOW));
+
+static char const lcmd_var_name_BCU_FAULT_TYPES_FAULT_VOLTAGE_REDUNDANCY[] = "Fault_Voltage_Redundancy";
+static RISMDStdVariable const lcmd_var_BCU_FAULT_TYPES_FAULT_VOLTAGE_REDUNDANCY =
+INIT_RISMDStdVariable(lcmd_var_name_BCU_FAULT_TYPES_FAULT_VOLTAGE_REDUNDANCY, &risMdType_BOOL, offsetof(LC_TD_DataType_BCU_FAULT_TYPES,LC_VD_FAULT_VOLTAGE_REDUNDANCY));
+
+static RISMDReference const lcmd_var_list_BCU_FAULT_TYPES[] =
+{
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_AUX_OVER_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_AUX_UNDER_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_CHIP),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_COMMINICATION),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_COMP_OVER_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_COMP_UNDER_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_GPI),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_OPEN_WIRE_DETECT),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_OVER_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_SYS),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_BOARD_UNDER_VOLTAGE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CAN_COMMUNICATION),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_DANGER),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_TEMP_WARNING),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_DANGER),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_OVER_VOLTAGE_WARNING),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_DANGER),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_TEMP_WARNING),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_DANGER),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_CELL_UNDER_VOLTAGE_WARNING),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_DEAD_CELL),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_DMCC_EXCEED),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_DMDC_EXCEED),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_INTERNAL_MEASUREMENT),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_OPEN_WIRE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_CONTACTOR),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_CURRENT_SENSOR),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_FUSE),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_HVIL),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_INT_COMMUNICATION),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_TEMP_HIGH),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_PACK_TEMP_LOW),
+  INIT_RISMDReference(&lcmd_var_BCU_FAULT_TYPES_FAULT_VOLTAGE_REDUNDANCY),
+};
+
+static char const lcmd_type_name_BCU_FAULT_TYPES[] = "BCU_FAULT_TYPES";
+RISMDCompoundType const lcmd_type_BCU_FAULT_TYPES = INIT_RISMDCompoundType(lcmd_type_name_BCU_FAULT_TYPES, sizeof(LC_TD_DataType_BCU_FAULT_TYPES), 33, lcmd_var_list_BCU_FAULT_TYPES);

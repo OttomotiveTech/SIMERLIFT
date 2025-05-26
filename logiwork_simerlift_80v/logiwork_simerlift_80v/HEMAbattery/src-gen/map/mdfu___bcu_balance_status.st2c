@@ -1,0 +1,148 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 13,
+        "e": 19
+      },
+      "st": {
+        "b": 215,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 15,
+        "e": 18
+      },
+      "st": {
+        "b": 215,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 20,
+        "e": 26
+      },
+      "st": {
+        "b": 64,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 27,
+        "e": 37
+      },
+      "st": {
+        "b": 219,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 29,
+        "e": 36
+      },
+      "st": {
+        "b": 219,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 20
+    },
+    {
+      "c": {
+        "b": 38,
+        "e": 45
+      },
+      "st": {
+        "b": 95,
+        "e": -1
+      },
+      "l": 0,
+      "sk": 260
+    },
+    {
+      "c": {
+        "b": 43,
+        "e": 43
+      },
+      "st": {
+        "b": 114,
+        "e": -1
+      },
+      "l": 1,
+      "sk": 280
+    },
+    {
+      "c": {
+        "b": 47,
+        "e": 47
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_VD___95_NE": {
+      "v": "__95_NE",
+      "t": "BOOL"
+    },
+    "LC_this": {
+      "v": "",
+      "t": "BCU_Balance_Status"
+    },
+    "LC_VD_WBITS19": {
+      "v": "WBITS19",
+      "t": "WBITS"
+    },
+    "LC_VD___64_NE": {
+      "v": "__64_NE",
+      "t": "BOOL"
+    },
+    "LC_VD_CANSEND4": {
+      "v": "CANSEND4",
+      "t": "CANSEND"
+    },
+    "LC_VD_CAN_ERROR": {
+      "v": "CAN_Error",
+      "t": "BOOL"
+    },
+    "LC_VD_CAN_ID": {
+      "v": "CAN_ID",
+      "t": "UDINT"
+    },
+    "LC_VD_BALANCE_REGISTER": {
+      "v": "Balance_Register",
+      "t": "UINT"
+    },
+    "LC_VD_CAN_CH": {
+      "v": "CAN_CH",
+      "t": "UDINT"
+    },
+    "lcfu___BCU_BALANCE_STATUS": {
+      "v": "",
+      "t": "BCU_Balance_Status"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/CAN/BCU/BCU_Balance_Status.iecfbd",
+  "cCodeFile": "src-gen/lcfu___bcu_balance_status.c"
+}

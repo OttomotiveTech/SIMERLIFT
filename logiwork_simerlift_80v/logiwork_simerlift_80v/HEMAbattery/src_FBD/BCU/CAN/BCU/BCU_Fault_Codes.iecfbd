@@ -1,0 +1,1085 @@
+FUNCTION_BLOCK BCU_Fault_Codes
+  {
+    CAN_ID {index := 1};
+    CAN_CH {index := 0};
+    GUI_Fault {index := 0};
+    CAN_Error {index := 1};
+    width := 300;
+    height := 878;
+    bgColor := "cadetblue";
+  }
+
+  VAR
+    CANSEND4 : CANSEND;
+    Fault_Code_Byte_0_1 : LWORD := 0;
+    Fault_Code_Byte_2_3 : LWORD := 0;
+    Fault_Code_Byte_4 : LWORD := 0;
+    Fault_Code_Byte_6_7 : LWORD := 0;
+    Fault_Code_Byte_5 : LWORD := 0;
+  END_VAR
+  VAR_INPUT
+    CAN_ID : UDINT := 0;
+    Fault_00 : BOOL := 0;
+    Fault_01 : BOOL := 0;
+    Fault_02 : BOOL := 0;
+    Fault_03 : BOOL := 0;
+    Fault_04 : BOOL := 0;
+    Fault_05 : BOOL := 0;
+    Fault_06 : BOOL := 0;
+    Fault_07 : BOOL := 0;
+    Fault_08 : BOOL := 0;
+    Fault_09 : BOOL := 0;
+    Fault_10 : BOOL := 0;
+    Fault_11 : BOOL := 0;
+    Fault_12 : BOOL := 0;
+    Fault_13 : BOOL := 0;
+    Fault_14 : BOOL := 0;
+    Fault_15 : BOOL := 0;
+    Fault_16 : BOOL := 0;
+    Fault_17 : BOOL := 0;
+    Fault_18 : BOOL := 0;
+    Fault_19 : BOOL := 0;
+    Fault_20 : BOOL := 0;
+    Fault_21 : BOOL := 0;
+    Fault_22 : BOOL := 0;
+    Fault_23 : BOOL := 0;
+    Fault_24 : BOOL := 0;
+    Fault_25 : BOOL := 0;
+    Fault_26 : BOOL := 0;
+    Fault_27 : BOOL := 0;
+    Fault_28 : BOOL := 0;
+    Fault_29 : BOOL := 0;
+    Fault_30 : BOOL := 0;
+    Fault_31 : BOOL := 0;
+    Fault_32 : BOOL := 0;
+    Fault_33 : BOOL := 0;
+    Fault_34 : BOOL := 0;
+    Fault_35 : BOOL := 0;
+    Fault_36 : BOOL := 0;
+    Fault_37 : BOOL := 0;
+    Fault_38 : BOOL := 0;
+    Fault_39 : BOOL := 0;
+    Fault_Byte_5 : UDINT := 0;
+    CAN_CH : UDINT := 0;
+    Fault_Byte_6_7 : UDINT := 0;
+  END_VAR
+  VAR_OUTPUT
+    CAN_Error : BOOL := 0;
+    GUI_Fault : UDINT := 0;
+    sum : LWORD;
+  END_VAR
+
+  (*
+
+    // Network 1:
+    TO_LWORD(IN := Fault_00, TO_LWORD => @C(44).TO_LWORD);
+    WBIT(start := 0, len := 1, INbit := @C(44).TO_LWORD, OUTbit => @C(2).OUTbit);
+    TO_LWORD(IN := Fault_01, TO_LWORD => @C(45).TO_LWORD);
+    WBIT(start := 1, len := 1, INbit := @C(45).TO_LWORD, OUTbit => @C(3).OUTbit);
+    TO_LWORD(IN := Fault_02, TO_LWORD => @C(46).TO_LWORD);
+    WBIT(start := 2, len := 1, INbit := @C(46).TO_LWORD, OUTbit => @C(4).OUTbit);
+    TO_LWORD(IN := Fault_03, TO_LWORD => @C(47).TO_LWORD);
+    WBIT(start := 3, len := 1, INbit := @C(47).TO_LWORD, OUTbit => @C(5).OUTbit);
+    TO_LWORD(IN := Fault_04, TO_LWORD => @C(48).TO_LWORD);
+    WBIT(start := 4, len := 1, INbit := @C(48).TO_LWORD, OUTbit => @C(6).OUTbit);
+    TO_LWORD(IN := Fault_05, TO_LWORD => @C(49).TO_LWORD);
+    WBIT(start := 5, len := 1, INbit := @C(49).TO_LWORD, OUTbit => @C(14).OUTbit);
+    TO_LWORD(IN := Fault_06, TO_LWORD => @C(50).TO_LWORD);
+    WBIT(start := 6, len := 1, INbit := @C(50).TO_LWORD, OUTbit => @C(15).OUTbit);
+    TO_LWORD(IN := Fault_07, TO_LWORD => @C(51).TO_LWORD);
+    WBIT(start := 7, len := 1, INbit := @C(51).TO_LWORD, OUTbit => @C(16).OUTbit);
+    TO_LWORD(IN := Fault_08, TO_LWORD => @C(52).TO_LWORD);
+    WBIT(start := 8, len := 1, INbit := @C(52).TO_LWORD, OUTbit => @C(21).OUTbit);
+    TO_LWORD(IN := Fault_09, TO_LWORD => @C(53).TO_LWORD);
+    WBIT(start := 9, len := 1, INbit := @C(53).TO_LWORD, OUTbit => @C(23).OUTbit);
+    TO_LWORD(IN := Fault_10, TO_LWORD => @C(56).TO_LWORD);
+    WBIT(start := 10, len := 1, INbit := @C(56).TO_LWORD, OUTbit => @C(24).OUTbit);
+    TO_LWORD(IN := Fault_11, TO_LWORD => @C(57).TO_LWORD);
+    WBIT(start := 11, len := 1, INbit := @C(57).TO_LWORD, OUTbit => @C(31).OUTbit);
+    TO_LWORD(IN := Fault_12, TO_LWORD => @C(59).TO_LWORD);
+    WBIT(start := 12, len := 1, INbit := @C(59).TO_LWORD, OUTbit => @C(32).OUTbit);
+    TO_LWORD(IN := Fault_13, TO_LWORD => @C(60).TO_LWORD);
+    WBIT(start := 13, len := 1, INbit := @C(60).TO_LWORD, OUTbit => @C(39).OUTbit);
+    TO_LWORD(IN := Fault_14, TO_LWORD => @C(61).TO_LWORD);
+    WBIT(start := 14, len := 1, INbit := @C(61).TO_LWORD, OUTbit => @C(40).OUTbit);
+    TO_LWORD(IN := Fault_15, TO_LWORD => @C(62).TO_LWORD);
+    WBIT(start := 15, len := 1, INbit := @C(62).TO_LWORD, OUTbit => @C(41).OUTbit);
+    OR(IN1 := @C(2).OUTbit, IN2 := @C(3).OUTbit, IN3 := @C(4).OUTbit, IN4 := @C(5).OUTbit, IN5 := @C(6).OUTbit, IN6 := @C(14).OUTbit, IN7 := @C(15).OUTbit, IN8 := @C(16).OUTbit, IN9 := @C(21).OUTbit, IN10 := @C(23).OUTbit, IN11 := @C(24).OUTbit, IN12 := @C(31).OUTbit, IN13 := @C(32).OUTbit, IN14 := @C(39).OUTbit, IN15 := @C(40).OUTbit, IN16 := @C(41).OUTbit, OR => Fault_Code_Byte_0_1);
+
+    // Network 2:
+    WBIT(start := 32, len := 1, INbit := Fault_32, OUTbit => @C(220).OUTbit);
+    WBIT(start := 33, len := 1, INbit := Fault_33, OUTbit => @C(219).OUTbit);
+    WBIT(start := 34, len := 1, INbit := Fault_34, OUTbit => @C(215).OUTbit);
+    WBIT(start := 35, len := 1, INbit := Fault_35, OUTbit => @C(221).OUTbit);
+    WBIT(start := 36, len := 1, INbit := Fault_36, OUTbit => @C(224).OUTbit);
+    WBIT(start := 37, len := 1, INbit := Fault_37, OUTbit => @C(227).OUTbit);
+    WBIT(start := 38, len := 1, INbit := Fault_38, OUTbit => @C(228).OUTbit);
+    WBIT(start := 39, len := 1, INbit := Fault_39, OUTbit => @C(231).OUTbit);
+    OR(IN1 := @C(220).OUTbit, IN2 := @C(219).OUTbit, IN3 := @C(215).OUTbit, IN4 := @C(221).OUTbit, IN5 := @C(224).OUTbit, IN6 := @C(227).OUTbit, IN7 := @C(228).OUTbit, IN8 := @C(231).OUTbit, OR => Fault_Code_Byte_4);
+
+    // Network 3:
+    TO_LWORD(IN := Fault_Byte_5, TO_LWORD => @C(216).TO_LWORD);
+    WBIT(start := 40, len := 8, INbit := @C(216).TO_LWORD, OUTbit => Fault_Code_Byte_5);
+
+    // Network 4:
+    TO_LWORD(IN := Fault_Byte_6_7, TO_LWORD => @C(222).TO_LWORD);
+    WBIT(start := 48, len := 16, INbit := @C(222).TO_LWORD, OUTbit => Fault_Code_Byte_6_7);
+
+    // Network 5:
+    WBIT(start := 16, len := 1, INbit := Fault_16, OUTbit => @C(130).OUTbit);
+    TO_LWORD(IN := Fault_17, TO_LWORD => @C(167).TO_LWORD);
+    WBIT(start := 17, len := 1, INbit := @C(167).TO_LWORD, OUTbit => @C(129).OUTbit);
+    TO_LWORD(IN := Fault_18, TO_LWORD => @C(168).TO_LWORD);
+    WBIT(start := 18, len := 1, INbit := @C(168).TO_LWORD, OUTbit => @C(128).OUTbit);
+    TO_LWORD(IN := Fault_19, TO_LWORD => @C(169).TO_LWORD);
+    WBIT(start := 19, len := 1, INbit := @C(169).TO_LWORD, OUTbit => @C(127).OUTbit);
+    TO_LWORD(IN := Fault_20, TO_LWORD => @C(170).TO_LWORD);
+    WBIT(start := 20, len := 1, INbit := @C(170).TO_LWORD, OUTbit => @C(126).OUTbit);
+    TO_LWORD(IN := Fault_21, TO_LWORD => @C(171).TO_LWORD);
+    WBIT(start := 21, len := 1, INbit := @C(171).TO_LWORD, OUTbit => @C(125).OUTbit);
+    TO_LWORD(IN := Fault_22, TO_LWORD => @C(172).TO_LWORD);
+    WBIT(start := 22, len := 1, INbit := @C(172).TO_LWORD, OUTbit => @C(124).OUTbit);
+    TO_LWORD(IN := Fault_23, TO_LWORD => @C(173).TO_LWORD);
+    WBIT(start := 23, len := 1, INbit := @C(173).TO_LWORD, OUTbit => @C(123).OUTbit);
+    TO_LWORD(IN := Fault_24, TO_LWORD => @C(174).TO_LWORD);
+    WBIT(start := 24, len := 1, INbit := @C(174).TO_LWORD, OUTbit => @C(122).OUTbit);
+    TO_LWORD(IN := Fault_25, TO_LWORD => @C(175).TO_LWORD);
+    WBIT(start := 25, len := 1, INbit := @C(175).TO_LWORD, OUTbit => @C(121).OUTbit);
+    TO_LWORD(IN := Fault_26, TO_LWORD => @C(176).TO_LWORD);
+    WBIT(start := 26, len := 1, INbit := @C(176).TO_LWORD, OUTbit => @C(120).OUTbit);
+    TO_LWORD(IN := Fault_27, TO_LWORD => @C(177).TO_LWORD);
+    WBIT(start := 27, len := 1, INbit := @C(177).TO_LWORD, OUTbit => @C(119).OUTbit);
+    TO_LWORD(IN := Fault_28, TO_LWORD => @C(178).TO_LWORD);
+    WBIT(start := 28, len := 1, INbit := @C(178).TO_LWORD, OUTbit => @C(118).OUTbit);
+    TO_LWORD(IN := Fault_29, TO_LWORD => @C(179).TO_LWORD);
+    WBIT(start := 29, len := 1, INbit := @C(179).TO_LWORD, OUTbit => @C(115).OUTbit);
+    TO_LWORD(IN := Fault_30, TO_LWORD => @C(180).TO_LWORD);
+    WBIT(start := 30, len := 1, INbit := @C(180).TO_LWORD, OUTbit => @C(116).OUTbit);
+    TO_LWORD(IN := Fault_31, TO_LWORD => @C(181).TO_LWORD);
+    WBIT(start := 31, len := 1, INbit := @C(181).TO_LWORD, OUTbit => @C(117).OUTbit);
+    OR(IN1 := @C(130).OUTbit, IN2 := @C(129).OUTbit, IN3 := @C(128).OUTbit, IN4 := @C(127).OUTbit, IN5 := @C(126).OUTbit, IN6 := @C(125).OUTbit, IN7 := @C(124).OUTbit, IN8 := @C(123).OUTbit, IN9 := @C(122).OUTbit, IN10 := @C(121).OUTbit, IN11 := @C(120).OUTbit, IN12 := @C(119).OUTbit, IN13 := @C(118).OUTbit, IN14 := @C(115).OUTbit, IN15 := @C(116).OUTbit, IN16 := @C(117).OUTbit, OR => Fault_Code_Byte_2_3);
+
+    // Network 6:
+    OR(IN1 := Fault_Code_Byte_0_1, IN2 := Fault_Code_Byte_2_3, IN3 := Fault_Code_Byte_4, IN4 := Fault_Code_Byte_5, IN5 := Fault_Code_Byte_6_7, OR => (@C(212).OR, sum));
+    NE(IN1 := CAN_ID, IN2 := 0, NE => @C(64).NE);
+    CANSEND4(CH := CAN_CH, ID := CAN_ID, FMT := CAN_FORMAT#EXTENDED, DATA := @C(212).OR, DLC := 8, PER := T#100ms, ENB := @C(64).NE);
+    NE(IN1 := CANSEND4.RC, IN2 := 0, NE => CAN_Error);
+
+    // Network 7:
+    OR(IN1 := Fault_Code_Byte_0_1, IN2 := Fault_Code_Byte_2_3, OR => @C(259).OR);
+    TO_UDINT(IN := @C(259).OR, TO_UDINT => GUI_Fault);
+
+  *)
+
+  @C(12) : @F(OR), @R(740.0, 40.0, 40.0, 318.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @I(@N(IN3), @L(49.5)), @I(@N(IN4), @L(69.5)), @I(@N(IN5), @L(89.5)), @I(@N(IN6), @L(109.5)), @I(@N(IN7), @L(129.5)), @I(@N(IN8), @L(149.5)), @I(@N(IN9), @L(169.5)), @I(@N(IN10), @L(189.5)), @I(@N(IN11), @L(209.5)), @I(@N(IN12), @L(229.5)), @I(@N(IN13), @L(249.5)), @I(@N(IN14), @L(269.5)), @I(@N(IN15), @L(289.5)), @I(@N(IN16), @L(309.5)), @O(@N(OR), @R(9.5));
+  @C(64) : @F(NE), @R(2580.0, 920.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @VF(27) : @E(1), @R(300.0, 120.0, 110.0, 19.0), INT;
+  @VF(29) : @E(1), @R(300.0, 60.0, 110.0, 19.0), INT;
+  @VF(28) : @E(1), @R(300.0, 100.0, 110.0, 19.0), INT;
+  @VF(30) : @E(0), @R(300.0, 40.0, 110.0, 19.0), INT;
+  @VF(25) : @E(1), @R(300.0, 180.0, 110.0, 19.0), INT;
+  @VF(26) : @E(2), @R(300.0, 160.0, 110.0, 19.0), INT;
+  @VF(42) : @E(3), @R(300.0, 220.0, 110.0, 19.0), INT;
+  @VF(35) : @E(1), @R(300.0, 240.0, 110.0, 19.0), INT;
+  @VF(55) : @E(4), @R(300.0, 280.0, 110.0, 19.0), INT;
+  @VF(54) : @E(1), @R(300.0, 300.0, 110.0, 19.0), INT;
+  @VF(66) : @E(0), @R(2390.0, 940.0, 110.0, 19.0), UDINT;
+  @VF(19) : @E(8), @R(2390.0, 880.0, 110.0, 19.0), UDINT;
+  @VF(18) : @E(T#100ms), @R(2390.0, 900.0, 110.0, 19.0);
+  @VF(20) : @E(CAN_FORMAT#EXTENDED), @R(2280.0, 860.0, 220.0, 19.0);
+  @VF(58) : @E(CAN_ID), @R(2280.0, 840.0, 220.0, 19.0);
+  @VF(7) : @E(1), @R(300.0, 360.0, 110.0, 19.0), INT;
+  @VF(8) : @E(5), @R(300.0, 340.0, 110.0, 19.0), INT;
+  @VF(9) : @E(6), @R(300.0, 400.0, 110.0, 19.0), INT;
+  @VF(10) : @E(1), @R(300.0, 420.0, 110.0, 19.0), INT;
+  @VF(13) : @E(7), @R(300.0, 460.0, 110.0, 19.0), INT;
+  @VF(17) : @E(1), @R(300.0, 480.0, 110.0, 19.0), INT;
+  @VF(75) : @E(1), @R(300.0, 600.0, 110.0, 19.0), INT;
+  @VF(76) : @E(1), @R(300.0, 540.0, 110.0, 19.0), INT;
+  @VF(77) : @E(9), @R(300.0, 580.0, 110.0, 19.0), INT;
+  @VF(78) : @E(8), @R(300.0, 520.0, 110.0, 19.0), INT;
+  @VF(79) : @E(1), @R(300.0, 660.0, 110.0, 19.0), INT;
+  @VF(80) : @E(10), @R(300.0, 640.0, 110.0, 19.0), INT;
+  @VF(81) : @E(11), @R(300.0, 700.0, 110.0, 19.0), INT;
+  @VF(82) : @E(1), @R(300.0, 720.0, 110.0, 19.0), INT;
+  @VF(83) : @E(12), @R(300.0, 760.0, 110.0, 19.0), INT;
+  @VF(84) : @E(1), @R(300.0, 780.0, 110.0, 19.0), INT;
+  @VF(85) : @E(1), @R(300.0, 840.0, 110.0, 19.0), INT;
+  @VF(86) : @E(13), @R(300.0, 820.0, 110.0, 19.0), INT;
+  @VF(87) : @E(14), @R(300.0, 880.0, 110.0, 19.0), INT;
+  @VF(88) : @E(1), @R(300.0, 900.0, 110.0, 19.0), INT;
+  @VF(89) : @E(15), @R(300.0, 940.0, 110.0, 19.0), INT;
+  @VF(90) : @E(1), @R(300.0, 960.0, 110.0, 19.0), INT;
+  @C(131) : @F(OR), @R(740.0, 1380.0, 40.0, 318.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @I(@N(IN3), @L(49.5)), @I(@N(IN4), @L(69.5)), @I(@N(IN5), @L(89.5)), @I(@N(IN6), @L(109.5)), @I(@N(IN7), @L(129.5)), @I(@N(IN8), @L(149.5)), @I(@N(IN9), @L(169.5)), @I(@N(IN10), @L(189.5)), @I(@N(IN11), @L(209.5)), @I(@N(IN12), @L(229.5)), @I(@N(IN13), @L(249.5)), @I(@N(IN14), @L(269.5)), @I(@N(IN15), @L(289.5)), @I(@N(IN16), @L(309.5)), @O(@N(OR), @R(9.5));
+  @VF(132) : @E(1), @R(300.0, 1520.0, 110.0, 19.0), INT;
+  @VF(133) : @E(19), @R(300.0, 1560.0, 110.0, 19.0), INT;
+  @VF(134) : @E(1), @R(300.0, 1580.0, 110.0, 19.0), INT;
+  @VF(135) : @E(20), @R(300.0, 1620.0, 110.0, 19.0), INT;
+  @VF(136) : @E(1), @R(300.0, 1640.0, 110.0, 19.0), INT;
+  @VF(137) : @E(1), @R(300.0, 1700.0, 110.0, 19.0), INT;
+  @VF(138) : @E(21), @R(300.0, 1680.0, 110.0, 19.0), INT;
+  @VF(139) : @E(22), @R(300.0, 1740.0, 110.0, 19.0), INT;
+  @VF(140) : @E(1), @R(300.0, 1760.0, 110.0, 19.0), INT;
+  @VF(141) : @E(23), @R(300.0, 1800.0, 110.0, 19.0), INT;
+  @VF(142) : @E(1), @R(300.0, 1820.0, 110.0, 19.0), INT;
+  @VF(143) : @E(1), @R(300.0, 1940.0, 110.0, 19.0), INT;
+  @VF(144) : @E(1), @R(300.0, 1880.0, 110.0, 19.0), INT;
+  @VF(145) : @E(25), @R(300.0, 1920.0, 110.0, 19.0), INT;
+  @VF(146) : @E(24), @R(300.0, 1860.0, 110.0, 19.0), INT;
+  @VF(147) : @E(1), @R(300.0, 2000.0, 110.0, 19.0), INT;
+  @VF(148) : @E(26), @R(300.0, 1980.0, 110.0, 19.0), INT;
+  @VF(149) : @E(27), @R(300.0, 2040.0, 110.0, 19.0), INT;
+  @VF(150) : @E(1), @R(300.0, 2060.0, 110.0, 19.0), INT;
+  @VF(151) : @E(28), @R(300.0, 2100.0, 110.0, 19.0), INT;
+  @VF(152) : @E(1), @R(300.0, 2120.0, 110.0, 19.0), INT;
+  @VF(153) : @E(1), @R(300.0, 2180.0, 110.0, 19.0), INT;
+  @VF(154) : @E(29), @R(300.0, 2160.0, 110.0, 19.0), INT;
+  @VF(155) : @E(30), @R(300.0, 2220.0, 110.0, 19.0), INT;
+  @VF(156) : @E(1), @R(300.0, 2240.0, 110.0, 19.0), INT;
+  @VF(157) : @E(31), @R(300.0, 2280.0, 110.0, 19.0), INT;
+  @VF(158) : @E(1), @R(300.0, 2300.0, 110.0, 19.0), INT;
+  @VF(159) : @E(18), @R(300.0, 1500.0, 110.0, 19.0), INT;
+  @VF(160) : @E(1), @R(300.0, 1460.0, 110.0, 19.0), INT;
+  @VF(161) : @E(17), @R(300.0, 1440.0, 110.0, 19.0), INT;
+  @VF(162) : @E(1), @R(300.0, 1400.0, 110.0, 19.0), INT;
+  @VF(163) : @E(16), @R(300.0, 1380.0, 110.0, 19.0), INT;
+  @C(212) : @F(OR), @R(2200.0, 800.0, 40.0, 98.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @I(@N(IN3), @L(49.5)), @I(@N(IN4), @L(69.5)), @I(@N(IN5), @L(89.5)), @O(@N(OR), @R(9.5));
+  @C(247) : @F(OR), @R(2630.0, 40.0, 40.0, 158.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @I(@N(IN3), @L(49.5)), @I(@N(IN4), @L(69.5)), @I(@N(IN5), @L(89.5)), @I(@N(IN6), @L(109.5)), @I(@N(IN7), @L(129.5)), @I(@N(IN8), @L(149.5)), @O(@N(OR), @R(9.5));
+  @VF(296) : @E(39), @R(2200.0, 460.0, 110.0, 19.0), INT;
+  @VF(297) : @E(1), @R(2200.0, 480.0, 110.0, 19.0), INT;
+  @VF(298) : @E(1), @R(2200.0, 420.0, 110.0, 19.0), INT;
+  @VF(299) : @E(38), @R(2200.0, 400.0, 110.0, 19.0), INT;
+  @VF(300) : @E(1), @R(2200.0, 360.0, 110.0, 19.0), INT;
+  @VF(301) : @E(37), @R(2200.0, 340.0, 110.0, 19.0), INT;
+  @VF(302) : @E(36), @R(2200.0, 280.0, 110.0, 19.0), INT;
+  @VF(303) : @E(1), @R(2200.0, 300.0, 110.0, 19.0), INT;
+  @VF(304) : @E(1), @R(2200.0, 240.0, 110.0, 19.0), INT;
+  @VF(305) : @E(35), @R(2200.0, 220.0, 110.0, 19.0), INT;
+  @VF(306) : @E(1), @R(2200.0, 180.0, 110.0, 19.0), INT;
+  @VF(307) : @E(34), @R(2200.0, 160.0, 110.0, 19.0), INT;
+  @VF(308) : @E(1), @R(2200.0, 120.0, 110.0, 19.0), INT;
+  @VF(309) : @E(33), @R(2200.0, 100.0, 110.0, 19.0), INT;
+  @VF(310) : @E(1), @R(2200.0, 60.0, 110.0, 19.0), INT;
+  @VF(311) : @E(32), @R(2200.0, 40.0, 110.0, 19.0), INT;
+  @VF(408) : @E(Fault_Code_Byte_0_1), @R(1940.0, 800.0, 220.0, 19.0);
+  @VF(409) : @E(Fault_Code_Byte_2_3), @R(1940.0, 820.0, 220.0, 19.0);
+  @VF(410) : @E(Fault_Code_Byte_4), @R(1940.0, 840.0, 220.0, 19.0);
+  @VF(411) : @E(Fault_Code_Byte_6_7), @R(1940.0, 880.0, 220.0, 19.0);
+  @VF(416) : @E(Fault_Code_Byte_4), @R(2710.0, 40.0, 220.0, 19.0);
+  @VF(418) : @E(Fault_Code_Byte_2_3), @R(820.0, 1380.0, 220.0, 19.0);
+  @VF(422) : @E(Fault_00), @R(120.0, 80.0, 140.0, 19.0);
+  @VF(423) : @E(Fault_01), @R(120.0, 140.0, 140.0, 19.0);
+  @VF(424) : @E(Fault_02), @R(120.0, 200.0, 140.0, 19.0);
+  @VF(425) : @E(Fault_03), @R(120.0, 260.0, 140.0, 19.0);
+  @VF(426) : @E(Fault_04), @R(120.0, 320.0, 140.0, 19.0);
+  @VF(427) : @E(Fault_05), @R(120.0, 380.0, 140.0, 19.0);
+  @VF(428) : @E(Fault_06), @R(120.0, 440.0, 140.0, 19.0);
+  @VF(429) : @E(Fault_07), @R(120.0, 500.0, 140.0, 19.0);
+  @VF(430) : @E(Fault_08), @R(120.0, 560.0, 140.0, 19.0);
+  @VF(431) : @E(Fault_09), @R(120.0, 620.0, 140.0, 19.0);
+  @VF(432) : @E(Fault_10), @R(120.0, 680.0, 140.0, 19.0);
+  @VF(433) : @E(Fault_11), @R(120.0, 740.0, 140.0, 19.0);
+  @VF(434) : @E(Fault_12), @R(120.0, 800.0, 140.0, 19.0);
+  @VF(435) : @E(Fault_13), @R(120.0, 860.0, 140.0, 19.0);
+  @VF(436) : @E(Fault_14), @R(120.0, 920.0, 140.0, 19.0);
+  @VF(437) : @E(Fault_15), @R(120.0, 980.0, 140.0, 19.0);
+  @VF(438) : @E(Fault_16), @R(120.0, 1420.0, 140.0, 19.0);
+  @VF(439) : @E(Fault_17), @R(120.0, 1480.0, 140.0, 19.0);
+  @VF(440) : @E(Fault_18), @R(120.0, 1540.0, 140.0, 19.0);
+  @VF(441) : @E(Fault_19), @R(120.0, 1600.0, 140.0, 19.0);
+  @VF(442) : @E(Fault_20), @R(120.0, 1660.0, 140.0, 19.0);
+  @VF(443) : @E(Fault_21), @R(120.0, 1720.0, 140.0, 19.0);
+  @VF(444) : @E(Fault_22), @R(120.0, 1780.0, 140.0, 19.0);
+  @VF(445) : @E(Fault_23), @R(120.0, 1840.0, 140.0, 19.0);
+  @VF(446) : @E(Fault_24), @R(120.0, 1900.0, 140.0, 19.0);
+  @VF(447) : @E(Fault_25), @R(120.0, 1960.0, 140.0, 19.0);
+  @VF(448) : @E(Fault_26), @R(120.0, 2020.0, 140.0, 19.0);
+  @VF(449) : @E(Fault_27), @R(120.0, 2080.0, 140.0, 19.0);
+  @VF(450) : @E(Fault_28), @R(120.0, 2140.0, 140.0, 19.0);
+  @VF(451) : @E(Fault_29), @R(120.0, 2200.0, 140.0, 19.0);
+  @VF(452) : @E(Fault_30), @R(120.0, 2260.0, 140.0, 19.0);
+  @VF(453) : @E(Fault_31), @R(120.0, 2320.0, 140.0, 19.0);
+  @VF(454) : @E(Fault_32), @R(2020.0, 80.0, 140.0, 19.0);
+  @VF(455) : @E(Fault_33), @R(2020.0, 140.0, 140.0, 19.0);
+  @VF(456) : @E(Fault_34), @R(2020.0, 200.0, 140.0, 19.0);
+  @VF(457) : @E(Fault_35), @R(2020.0, 260.0, 140.0, 19.0);
+  @VF(458) : @E(Fault_36), @R(2020.0, 320.0, 140.0, 19.0);
+  @VF(459) : @E(Fault_37), @R(2020.0, 380.0, 140.0, 19.0);
+  @VF(460) : @E(Fault_38), @R(2020.0, 440.0, 140.0, 19.0);
+  @VF(461) : @E(Fault_39), @R(2020.0, 500.0, 140.0, 19.0);
+  @VF(214) : @E(Fault_Byte_5), @R(1940.0, 560.0, 220.0, 19.0);
+  @VF(217) : @E(48), @R(2200.0, 580.0, 110.0, 19.0), INT;
+  @VF(218) : @E(16), @R(2200.0, 600.0, 110.0, 19.0), INT;
+  @VF(223) : @E(Fault_Code_Byte_6_7), @R(2530.0, 580.0, 220.0, 19.0);
+  @VF(36) : @E(CAN_CH), @R(2280.0, 820.0, 220.0, 19.0);
+  @VF(226) : @E(Fault_Code_Byte_5), @R(2530.0, 520.0, 220.0, 19.0);
+  @VF(229) : @E(40), @R(2200.0, 520.0, 110.0, 19.0), INT;
+  @VF(230) : @E(8), @R(2200.0, 540.0, 110.0, 19.0), INT;
+  @VF(234) : @E(Fault_Byte_6_7), @R(1940.0, 620.0, 220.0, 19.0);
+  @VF(237) : @E(Fault_Code_Byte_5), @R(1940.0, 860.0, 220.0, 19.0);
+  @VF(248) : @E(Fault_Code_Byte_0_1), @R(820.0, 40.0, 220.0, 19.0);
+  @C(251) : @F(NE), @R(2820.0, 920.0, 40.0, 38.0), UINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
+  @VF(252) : @E(CAN_Error), @R(2890.0, 920.0, 110.0, 19.0);
+  @VF(253) : @E(0), @R(2670.0, 940.0, 110.0, 19.0), UINT;
+  @C(11) : @FB(CANSEND4), @R(2660.0, 800.0, 120.0, 138.0), @I(@N(CH), @L(29.5)), @I(@N(ID), @L(49.5)), @I(@N(FMT), @L(69.5)), @I(@N(DATA), @L(9.5)), @I(@N(DLC), @L(89.5)), @I(@N(PER), @L(109.5)), @I(@N(ENB), @L(129.5)), @O(@N(CTX), @R(9.5)), @O(@N(RC), @R(129.5));
+  @VF(257) : @E(Fault_Code_Byte_0_1), @R(1940.0, 1060.0, 220.0, 19.0);
+  @VF(258) : @E(Fault_Code_Byte_2_3), @R(1940.0, 1080.0, 220.0, 19.0);
+  @C(259) : @F(OR), @R(2200.0, 1060.0, 40.0, 38.0), LWORD, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
+  @VF(262) : @E(GUI_Fault), @R(2440.0, 1060.0, 220.0, 19.0);
+  @C(263) : @F(TO_UDINT), @R(2280.0, 1060.0, 120.0, 18.0), LWORD, @I(@N(IN), @L(9.5)), @O(@N(TO_UDINT), @R(9.5));
+  @C(2) : @F(WBIT), @R(470.0, 40.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(3) : @F(WBIT), @R(470.0, 100.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(4) : @F(WBIT), @R(470.0, 160.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(5) : @F(WBIT), @R(470.0, 220.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(6) : @F(WBIT), @R(470.0, 280.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(14) : @F(WBIT), @R(470.0, 340.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(15) : @F(WBIT), @R(470.0, 400.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(16) : @F(WBIT), @R(470.0, 460.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(21) : @F(WBIT), @R(470.0, 520.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(23) : @F(WBIT), @R(470.0, 580.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(24) : @F(WBIT), @R(470.0, 640.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(31) : @F(WBIT), @R(470.0, 700.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(32) : @F(WBIT), @R(470.0, 760.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(39) : @F(WBIT), @R(470.0, 820.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(40) : @F(WBIT), @R(470.0, 880.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(41) : @F(WBIT), @R(470.0, 940.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(44) : @F(TO_LWORD), @R(290.0, 80.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(45) : @F(TO_LWORD), @R(290.0, 140.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(46) : @F(TO_LWORD), @R(290.0, 200.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(47) : @F(TO_LWORD), @R(290.0, 260.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(48) : @F(TO_LWORD), @R(290.0, 320.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(49) : @F(TO_LWORD), @R(290.0, 380.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(50) : @F(TO_LWORD), @R(290.0, 440.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(51) : @F(TO_LWORD), @R(290.0, 500.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(52) : @F(TO_LWORD), @R(290.0, 560.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(53) : @F(TO_LWORD), @R(290.0, 620.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(56) : @F(TO_LWORD), @R(290.0, 680.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(57) : @F(TO_LWORD), @R(290.0, 740.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(59) : @F(TO_LWORD), @R(290.0, 800.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(60) : @F(TO_LWORD), @R(290.0, 860.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(61) : @F(TO_LWORD), @R(290.0, 920.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(62) : @F(TO_LWORD), @R(290.0, 980.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(115) : @F(WBIT), @R(470.0, 2160.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(116) : @F(WBIT), @R(470.0, 2220.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(117) : @F(WBIT), @R(470.0, 2280.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(118) : @F(WBIT), @R(470.0, 2100.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(119) : @F(WBIT), @R(470.0, 2040.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(120) : @F(WBIT), @R(470.0, 1980.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(121) : @F(WBIT), @R(470.0, 1920.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(122) : @F(WBIT), @R(470.0, 1860.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(123) : @F(WBIT), @R(470.0, 1800.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(124) : @F(WBIT), @R(470.0, 1740.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(125) : @F(WBIT), @R(470.0, 1680.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(126) : @F(WBIT), @R(470.0, 1620.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(127) : @F(WBIT), @R(470.0, 1560.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(128) : @F(WBIT), @R(470.0, 1500.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(129) : @F(WBIT), @R(470.0, 1440.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(130) : @F(WBIT), @R(470.0, 1380.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(167) : @F(TO_LWORD), @R(290.0, 1480.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(168) : @F(TO_LWORD), @R(290.0, 1540.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(169) : @F(TO_LWORD), @R(290.0, 1600.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(170) : @F(TO_LWORD), @R(290.0, 1660.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(171) : @F(TO_LWORD), @R(290.0, 1720.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(172) : @F(TO_LWORD), @R(290.0, 1780.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(173) : @F(TO_LWORD), @R(290.0, 1840.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(174) : @F(TO_LWORD), @R(290.0, 1900.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(175) : @F(TO_LWORD), @R(290.0, 1960.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(176) : @F(TO_LWORD), @R(290.0, 2020.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(177) : @F(TO_LWORD), @R(290.0, 2080.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(178) : @F(TO_LWORD), @R(290.0, 2140.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(179) : @F(TO_LWORD), @R(290.0, 2200.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(180) : @F(TO_LWORD), @R(290.0, 2260.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(181) : @F(TO_LWORD), @R(290.0, 2320.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(215) : @F(WBIT), @R(2350.0, 160.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(219) : @F(WBIT), @R(2350.0, 100.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(220) : @F(WBIT), @R(2350.0, 40.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(221) : @F(WBIT), @R(2350.0, 220.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(224) : @F(WBIT), @R(2350.0, 280.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(227) : @F(WBIT), @R(2350.0, 340.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(228) : @F(WBIT), @R(2350.0, 400.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(231) : @F(WBIT), @R(2350.0, 460.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(232) : @F(WBIT), @R(2350.0, 520.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(233) : @F(WBIT), @R(2350.0, 580.0, 120.0, 58.0), @I(@N(start), @L(9.5)), @I(@N(len), @L(29.5)), @I(@N(INbit), @L(49.5)), @O(@N(OUTbit), @R(9.5));
+  @C(216) : @F(TO_LWORD), @R(2190.0, 560.0, 120.0, 18.0), UDINT, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @C(222) : @F(TO_LWORD), @R(2190.0, 620.0, 120.0, 18.0), UDINT, @I(@N(IN), @L(9.5)), @O(@N(TO_LWORD), @R(9.5));
+  @VF(345) : @E(sum), @R(2660.0, 780.0, 140.0, 19.0);
+  @CP(65) : 2539.5, 849.5;
+  @CP(346) : 2609.5, 809.5;
+
+  @G(37) :
+     @L(@VF(58).o, @CP(65)),
+     @L(@CP(65), @C(11).ID),
+     @L(@CP(65), @C(64).IN1)
+    ;
+  @G(67) :
+     @L(@VF(66).o, @C(64).IN2)
+    ;
+  @G(1) :
+     @L(@C(64).NE, @C(11).ENB)
+    ;
+  @G(34) :
+     @L(@VF(18).o, @C(11).PER)
+    ;
+  @G(33) :
+     @L(@VF(19).o, @C(11).DLC)
+    ;
+  @G(38) :
+     @L(@VF(20).o, @C(11).FMT)
+    ;
+  @G(43) :
+     @L(@C(212).OR, @CP(346)),
+     @L(@CP(346), @C(11).DATA),
+     @L(@CP(346), @VF(345).i)
+    ;
+  @G(213) :
+     @L(@VF(408).o, @C(212).IN1)
+    ;
+  @G(413) :
+     @L(@VF(409).o, @C(212).IN2)
+    ;
+  @G(414) :
+     @L(@VF(410).o, @C(212).IN3)
+    ;
+  @G(419) :
+     @L(@C(131).OR, @VF(418).i)
+    ;
+  @G(421) :
+     @L(@C(247).OR, @VF(416).i)
+    ;
+  @G(22) :
+     @L(@VF(36).o, @C(11).CH)
+    ;
+  @G(236) :
+     @L(@VF(411).o, @C(212).IN5)
+    ;
+  @G(238) :
+     @L(@VF(237).o, @C(212).IN4)
+    ;
+  @G(249) :
+     @L(@C(12).OR, @VF(248).i)
+    ;
+  @G(254) :
+     @L(@C(251).NE, @VF(252).i)
+    ;
+  @G(255) :
+     @L(@VF(253).o, @C(251).IN2)
+    ;
+  @G(256) :
+     @L(@C(11).RC, @C(251).IN1)
+    ;
+  @G(264) :
+     @L(@C(259).OR, @C(263).IN)
+    ;
+  @G(265) :
+     @L(@C(263).TO_UDINT, @VF(262).i)
+    ;
+  @G(260) :
+     @L(@VF(257).o, @C(259).IN1)
+    ;
+  @G(261) :
+     @L(@VF(258).o, @C(259).IN2)
+    ;
+  @G(63) :
+     @L(@VF(437).o, @C(62).IN)
+    ;
+  @G(68) :
+     @L(@C(62).TO_LWORD, @C(41).INbit)
+    ;
+  @G(69) :
+     @L(@VF(90).o, @C(41).len)
+    ;
+  @G(70) :
+     @L(@VF(89).o, @C(41).start)
+    ;
+  @G(71) :
+     @L(@C(61).TO_LWORD, @C(40).INbit)
+    ;
+  @G(72) :
+     @L(@VF(436).o, @C(61).IN)
+    ;
+  @G(73) :
+     @L(@VF(435).o, @C(60).IN)
+    ;
+  @G(74) :
+     @L(@VF(88).o, @C(40).len)
+    ;
+  @G(91) :
+     @L(@VF(87).o, @C(40).start)
+    ;
+  @G(92) :
+     @L(@C(60).TO_LWORD, @C(39).INbit)
+    ;
+  @G(93) :
+     @L(@VF(85).o, @C(39).len)
+    ;
+  @G(94) :
+     @L(@VF(86).o, @C(39).start)
+    ;
+  @G(95) :
+     @L(@C(59).TO_LWORD, @C(32).INbit)
+    ;
+  @G(96) :
+     @L(@VF(84).o, @C(32).len)
+    ;
+  @G(97) :
+     @L(@VF(83).o, @C(32).start)
+    ;
+  @G(98) :
+     @L(@C(57).TO_LWORD, @C(31).INbit)
+    ;
+  @G(99) :
+     @L(@VF(81).o, @C(31).start)
+    ;
+  @G(100) :
+     @L(@VF(82).o, @C(31).len)
+    ;
+  @G(101) :
+     @L(@C(56).TO_LWORD, @C(24).INbit)
+    ;
+  @G(102) :
+     @L(@VF(79).o, @C(24).len)
+    ;
+  @G(103) :
+     @L(@VF(80).o, @C(24).start)
+    ;
+  @G(104) :
+     @L(@C(53).TO_LWORD, @C(23).INbit)
+    ;
+  @G(105) :
+     @L(@VF(75).o, @C(23).len)
+    ;
+  @G(106) :
+     @L(@VF(77).o, @C(23).start)
+    ;
+  @G(107) :
+     @L(@C(52).TO_LWORD, @C(21).INbit)
+    ;
+  @G(108) :
+     @L(@VF(76).o, @C(21).len)
+    ;
+  @G(109) :
+     @L(@VF(78).o, @C(21).start)
+    ;
+  @G(110) :
+     @L(@C(51).TO_LWORD, @C(16).INbit)
+    ;
+  @G(111) :
+     @L(@VF(17).o, @C(16).len)
+    ;
+  @G(112) :
+     @L(@VF(13).o, @C(16).start)
+    ;
+  @G(113) :
+     @L(@C(50).TO_LWORD, @C(15).INbit)
+    ;
+  @G(114) :
+     @L(@VF(10).o, @C(15).len)
+    ;
+  @G(250) :
+     @L(@VF(9).o, @C(15).start)
+    ;
+  @G(266) :
+     @L(@C(49).TO_LWORD, @C(14).INbit)
+    ;
+  @G(267) :
+     @L(@VF(7).o, @C(14).len)
+    ;
+  @G(268) :
+     @L(@VF(8).o, @C(14).start)
+    ;
+  @G(269) :
+     @L(@C(48).TO_LWORD, @C(6).INbit)
+    ;
+  @G(270) :
+     @L(@VF(54).o, @C(6).len)
+    ;
+  @G(271) :
+     @L(@VF(55).o, @C(6).start)
+    ;
+  @G(272) :
+     @L(@C(47).TO_LWORD, @C(5).INbit)
+    ;
+  @G(273) :
+     @L(@VF(35).o, @C(5).len)
+    ;
+  @G(274) :
+     @L(@VF(42).o, @C(5).start)
+    ;
+  @G(275) :
+     @L(@C(46).TO_LWORD, @C(4).INbit)
+    ;
+  @G(276) :
+     @L(@VF(25).o, @C(4).len)
+    ;
+  @G(277) :
+     @L(@VF(26).o, @C(4).start)
+    ;
+  @G(278) :
+     @L(@C(45).TO_LWORD, @C(3).INbit)
+    ;
+  @G(279) :
+     @L(@VF(27).o, @C(3).len)
+    ;
+  @G(280) :
+     @L(@VF(28).o, @C(3).start)
+    ;
+  @G(281) :
+     @L(@C(44).TO_LWORD, @C(2).INbit)
+    ;
+  @G(282) :
+     @L(@VF(29).o, @C(2).len)
+    ;
+  @G(283) :
+     @L(@VF(30).o, @C(2).start)
+    ;
+  @G(284) :
+     @L(@VF(422).o, @C(44).IN)
+    ;
+  @G(285) :
+     @L(@VF(423).o, @C(45).IN)
+    ;
+  @G(286) :
+     @L(@VF(424).o, @C(46).IN)
+    ;
+  @G(287) :
+     @L(@VF(425).o, @C(47).IN)
+    ;
+  @G(288) :
+     @L(@VF(426).o, @C(48).IN)
+    ;
+  @G(289) :
+     @L(@VF(427).o, @C(49).IN)
+    ;
+  @G(290) :
+     @L(@VF(428).o, @C(50).IN)
+    ;
+  @G(291) :
+     @L(@VF(429).o, @C(51).IN)
+    ;
+  @G(292) :
+     @L(@VF(430).o, @C(52).IN)
+    ;
+  @G(293) :
+     @L(@VF(432).o, @C(56).IN)
+    ;
+  @G(294) :
+     @L(@VF(431).o, @C(53).IN)
+    ;
+  @G(295) :
+     @L(@VF(433).o, @C(57).IN)
+    ;
+  @G(312) :
+     @L(@VF(434).o, @C(59).IN)
+    ;
+  @G(313) :
+     @L(@C(2).OUTbit, @C(12).IN1)
+    ;
+  @G(314) :
+     @L(@C(3).OUTbit, @C(12).IN2)
+    ;
+  @G(315) :
+     @L(@C(4).OUTbit, @C(12).IN3)
+    ;
+  @G(316) :
+     @L(@C(5).OUTbit, @C(12).IN4)
+    ;
+  @G(317) :
+     @L(@C(6).OUTbit, @C(12).IN5)
+    ;
+  @G(318) :
+     @L(@C(14).OUTbit, @C(12).IN6)
+    ;
+  @G(319) :
+     @L(@C(15).OUTbit, @C(12).IN7)
+    ;
+  @G(320) :
+     @L(@C(16).OUTbit, @C(12).IN8)
+    ;
+  @G(321) :
+     @L(@C(21).OUTbit, @C(12).IN9)
+    ;
+  @G(322) :
+     @L(@C(23).OUTbit, @C(12).IN10)
+    ;
+  @G(323) :
+     @L(@C(24).OUTbit, @C(12).IN11)
+    ;
+  @G(324) :
+     @L(@C(31).OUTbit, @C(12).IN12)
+    ;
+  @G(325) :
+     @L(@C(32).OUTbit, @C(12).IN13)
+    ;
+  @G(326) :
+     @L(@C(39).OUTbit, @C(12).IN14)
+    ;
+  @G(327) :
+     @L(@C(40).OUTbit, @C(12).IN15)
+    ;
+  @G(328) :
+     @L(@C(41).OUTbit, @C(12).IN16)
+    ;
+  @G(164) :
+     @L(@VF(163).o, @C(130).start)
+    ;
+  @G(165) :
+     @L(@VF(162).o, @C(130).len)
+    ;
+  @G(182) :
+     @L(@VF(453).o, @C(181).IN)
+    ;
+  @G(183) :
+     @L(@C(181).TO_LWORD, @C(117).INbit)
+    ;
+  @G(184) :
+     @L(@VF(158).o, @C(117).len)
+    ;
+  @G(185) :
+     @L(@VF(157).o, @C(117).start)
+    ;
+  @G(186) :
+     @L(@C(180).TO_LWORD, @C(116).INbit)
+    ;
+  @G(187) :
+     @L(@VF(156).o, @C(116).len)
+    ;
+  @G(188) :
+     @L(@VF(155).o, @C(116).start)
+    ;
+  @G(189) :
+     @L(@C(179).TO_LWORD, @C(115).INbit)
+    ;
+  @G(190) :
+     @L(@VF(153).o, @C(115).len)
+    ;
+  @G(191) :
+     @L(@VF(154).o, @C(115).start)
+    ;
+  @G(192) :
+     @L(@C(178).TO_LWORD, @C(118).INbit)
+    ;
+  @G(193) :
+     @L(@VF(152).o, @C(118).len)
+    ;
+  @G(194) :
+     @L(@VF(151).o, @C(118).start)
+    ;
+  @G(195) :
+     @L(@C(177).TO_LWORD, @C(119).INbit)
+    ;
+  @G(196) :
+     @L(@VF(150).o, @C(119).len)
+    ;
+  @G(197) :
+     @L(@VF(149).o, @C(119).start)
+    ;
+  @G(198) :
+     @L(@C(176).TO_LWORD, @C(120).INbit)
+    ;
+  @G(199) :
+     @L(@VF(147).o, @C(120).len)
+    ;
+  @G(200) :
+     @L(@VF(148).o, @C(120).start)
+    ;
+  @G(201) :
+     @L(@C(175).TO_LWORD, @C(121).INbit)
+    ;
+  @G(202) :
+     @L(@VF(143).o, @C(121).len)
+    ;
+  @G(203) :
+     @L(@VF(145).o, @C(121).start)
+    ;
+  @G(204) :
+     @L(@C(174).TO_LWORD, @C(122).INbit)
+    ;
+  @G(205) :
+     @L(@VF(144).o, @C(122).len)
+    ;
+  @G(206) :
+     @L(@VF(146).o, @C(122).start)
+    ;
+  @G(207) :
+     @L(@C(173).TO_LWORD, @C(123).INbit)
+    ;
+  @G(208) :
+     @L(@VF(142).o, @C(123).len)
+    ;
+  @G(209) :
+     @L(@VF(141).o, @C(123).start)
+    ;
+  @G(210) :
+     @L(@C(172).TO_LWORD, @C(124).INbit)
+    ;
+  @G(211) :
+     @L(@VF(140).o, @C(124).len)
+    ;
+  @G(329) :
+     @L(@VF(139).o, @C(124).start)
+    ;
+  @G(330) :
+     @L(@C(171).TO_LWORD, @C(125).INbit)
+    ;
+  @G(331) :
+     @L(@VF(137).o, @C(125).len)
+    ;
+  @G(332) :
+     @L(@VF(138).o, @C(125).start)
+    ;
+  @G(333) :
+     @L(@C(170).TO_LWORD, @C(126).INbit)
+    ;
+  @G(334) :
+     @L(@VF(136).o, @C(126).len)
+    ;
+  @G(335) :
+     @L(@VF(135).o, @C(126).start)
+    ;
+  @G(336) :
+     @L(@C(169).TO_LWORD, @C(127).INbit)
+    ;
+  @G(337) :
+     @L(@VF(134).o, @C(127).len)
+    ;
+  @G(338) :
+     @L(@VF(133).o, @C(127).start)
+    ;
+  @G(339) :
+     @L(@C(168).TO_LWORD, @C(128).INbit)
+    ;
+  @G(340) :
+     @L(@VF(132).o, @C(128).len)
+    ;
+  @G(341) :
+     @L(@VF(159).o, @C(128).start)
+    ;
+  @G(342) :
+     @L(@C(167).TO_LWORD, @C(129).INbit)
+    ;
+  @G(343) :
+     @L(@VF(160).o, @C(129).len)
+    ;
+  @G(344) :
+     @L(@VF(161).o, @C(129).start)
+    ;
+  @G(347) :
+     @L(@VF(439).o, @C(167).IN)
+    ;
+  @G(348) :
+     @L(@VF(440).o, @C(168).IN)
+    ;
+  @G(349) :
+     @L(@VF(441).o, @C(169).IN)
+    ;
+  @G(350) :
+     @L(@VF(442).o, @C(170).IN)
+    ;
+  @G(351) :
+     @L(@VF(443).o, @C(171).IN)
+    ;
+  @G(352) :
+     @L(@VF(444).o, @C(172).IN)
+    ;
+  @G(353) :
+     @L(@VF(445).o, @C(173).IN)
+    ;
+  @G(354) :
+     @L(@VF(446).o, @C(174).IN)
+    ;
+  @G(355) :
+     @L(@VF(447).o, @C(175).IN)
+    ;
+  @G(356) :
+     @L(@VF(448).o, @C(176).IN)
+    ;
+  @G(357) :
+     @L(@VF(449).o, @C(177).IN)
+    ;
+  @G(358) :
+     @L(@VF(450).o, @C(178).IN)
+    ;
+  @G(359) :
+     @L(@VF(451).o, @C(179).IN)
+    ;
+  @G(360) :
+     @L(@VF(452).o, @C(180).IN)
+    ;
+  @G(361) :
+     @L(@C(130).OUTbit, @C(131).IN1)
+    ;
+  @G(362) :
+     @L(@C(129).OUTbit, @C(131).IN2)
+    ;
+  @G(363) :
+     @L(@C(128).OUTbit, @C(131).IN3)
+    ;
+  @G(364) :
+     @L(@C(127).OUTbit, @C(131).IN4)
+    ;
+  @G(365) :
+     @L(@C(126).OUTbit, @C(131).IN5)
+    ;
+  @G(366) :
+     @L(@C(125).OUTbit, @C(131).IN6)
+    ;
+  @G(367) :
+     @L(@C(124).OUTbit, @C(131).IN7)
+    ;
+  @G(368) :
+     @L(@C(123).OUTbit, @C(131).IN8)
+    ;
+  @G(369) :
+     @L(@C(122).OUTbit, @C(131).IN9)
+    ;
+  @G(370) :
+     @L(@C(121).OUTbit, @C(131).IN10)
+    ;
+  @G(371) :
+     @L(@C(120).OUTbit, @C(131).IN11)
+    ;
+  @G(372) :
+     @L(@C(119).OUTbit, @C(131).IN12)
+    ;
+  @G(373) :
+     @L(@C(118).OUTbit, @C(131).IN13)
+    ;
+  @G(374) :
+     @L(@C(115).OUTbit, @C(131).IN14)
+    ;
+  @G(375) :
+     @L(@C(116).OUTbit, @C(131).IN15)
+    ;
+  @G(382) :
+     @L(@C(117).OUTbit, @C(131).IN16)
+    ;
+  @G(239) :
+     @L(@VF(311).o, @C(220).start)
+    ;
+  @G(240) :
+     @L(@VF(310).o, @C(220).len)
+    ;
+  @G(241) :
+     @L(@VF(454).o, @C(220).INbit)
+    ;
+  @G(242) :
+     @L(@VF(309).o, @C(219).start)
+    ;
+  @G(243) :
+     @L(@VF(308).o, @C(219).len)
+    ;
+  @G(244) :
+     @L(@VF(455).o, @C(219).INbit)
+    ;
+  @G(245) :
+     @L(@VF(307).o, @C(215).start)
+    ;
+  @G(246) :
+     @L(@VF(306).o, @C(215).len)
+    ;
+  @G(376) :
+     @L(@VF(456).o, @C(215).INbit)
+    ;
+  @G(377) :
+     @L(@VF(305).o, @C(221).start)
+    ;
+  @G(378) :
+     @L(@VF(304).o, @C(221).len)
+    ;
+  @G(379) :
+     @L(@VF(457).o, @C(221).INbit)
+    ;
+  @G(380) :
+     @L(@VF(302).o, @C(224).start)
+    ;
+  @G(381) :
+     @L(@VF(303).o, @C(224).len)
+    ;
+  @G(383) :
+     @L(@VF(458).o, @C(224).INbit)
+    ;
+  @G(384) :
+     @L(@VF(301).o, @C(227).start)
+    ;
+  @G(385) :
+     @L(@VF(300).o, @C(227).len)
+    ;
+  @G(386) :
+     @L(@VF(459).o, @C(227).INbit)
+    ;
+  @G(387) :
+     @L(@VF(299).o, @C(228).start)
+    ;
+  @G(388) :
+     @L(@VF(298).o, @C(228).len)
+    ;
+  @G(389) :
+     @L(@VF(460).o, @C(228).INbit)
+    ;
+  @G(390) :
+     @L(@VF(296).o, @C(231).start)
+    ;
+  @G(391) :
+     @L(@VF(297).o, @C(231).len)
+    ;
+  @G(392) :
+     @L(@VF(461).o, @C(231).INbit)
+    ;
+  @G(393) :
+     @L(@VF(229).o, @C(232).start)
+    ;
+  @G(394) :
+     @L(@VF(230).o, @C(232).len)
+    ;
+  @G(225) :
+     @L(@C(222).TO_LWORD, @C(233).INbit)
+    ;
+  @G(235) :
+     @L(@C(216).TO_LWORD, @C(232).INbit)
+    ;
+  @G(395) :
+     @L(@VF(217).o, @C(233).start)
+    ;
+  @G(396) :
+     @L(@VF(218).o, @C(233).len)
+    ;
+  @G(397) :
+     @L(@VF(214).o, @C(216).IN)
+    ;
+  @G(398) :
+     @L(@VF(234).o, @C(222).IN)
+    ;
+  @G(399) :
+     @L(@C(233).OUTbit, @VF(223).i)
+    ;
+  @G(400) :
+     @L(@C(232).OUTbit, @VF(226).i)
+    ;
+  @G(401) :
+     @L(@C(220).OUTbit, @C(247).IN1)
+    ;
+  @G(402) :
+     @L(@C(219).OUTbit, @C(247).IN2)
+    ;
+  @G(403) :
+     @L(@C(215).OUTbit, @C(247).IN3)
+    ;
+  @G(404) :
+     @L(@C(221).OUTbit, @C(247).IN4)
+    ;
+  @G(405) :
+     @L(@C(224).OUTbit, @C(247).IN5)
+    ;
+  @G(406) :
+     @L(@C(227).OUTbit, @C(247).IN6)
+    ;
+  @G(407) :
+     @L(@C(228).OUTbit, @C(247).IN7)
+    ;
+  @G(412) :
+     @L(@C(231).OUTbit, @C(247).IN8)
+    ;
+  @G(166) :
+     @L(@VF(438).o, @C(130).INbit)
+    ;
+END_FUNCTION_BLOCK

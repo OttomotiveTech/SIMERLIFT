@@ -1,0 +1,32 @@
+{
+  "codeMapping": [
+    {
+      "c": {
+        "b": 11,
+        "e": 11
+      },
+      "st": {
+        "b": 0,
+        "e": 0
+      },
+      "l": 0,
+      "sk": 273
+    }
+  ],
+  "nameMapping": {
+    "LC_this": {
+      "v": "",
+      "t": "BMU_Cell_Volt"
+    },
+    "lcfu___BMU_CELL_VOLT": {
+      "v": "",
+      "t": "BMU_Cell_Volt"
+    },
+    "LC_VD_ENO": {
+      "v": "ENO",
+      "t": "BOOL"
+    }
+  },
+  "stCodeFile": "src_FBD/BCU/CAN/BCU/BMU_Cell_Volt.iecfbd",
+  "cCodeFile": "src-gen/lcfu___bmu_cell_volt.c"
+}
