@@ -60,7 +60,7 @@ PROGRAM HemaBattery
     Number_Of_BMU_cfg : USINT;
     Cell_Voltage : UDINT := 0;
     Cell_Temp : REAL := 0;
-    NumOfCells : ARRAY[0..15] OF USINT := [15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15];
+    NumOfCells : ARRAY[0..15] OF USINT := [15,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     ChannelSelect : ARRAY[0..15] OF PLCHANNEL := [16#0F00,16#0F00,16#0100,16#0100,16#0100,16#0100,16#0100,16#0100,16#0100,16#0100,16#0100,16#0100,16#0F00,16#0100,16#0100,16#0100];
     Total_Voltage : REAL := 0;
     Number_Of_Cell : UINT;
