@@ -250,7 +250,7 @@ PROGRAM HemaBattery
     contactNegEnable_batt : BOOL;
     contactEnableCharge_batt : BOOL;
     ChargeInVoltage : REAL;
-    contactFbkNeg : BOOL;
+    contactFbkDischarge : BOOL;
     contactFbkCharge : BOOL;
     TOF8 : TOF;
     Buffer22 : Buffer;
@@ -428,12 +428,13 @@ PROGRAM HemaBattery
     IGNITION_KL15 : BOOL;
     F_TRIG2 : F_TRIG;
     NTC2 : NTC;
-    new_contactEnable1 : BOOL;
-    new_contactEnable2 : BOOL;
+    new_CHG_CONTACT : BOOL;
+    new_DCHG_CONTACT : BOOL;
     new_contactFbk1 : BOOL;
     new_contactFbk2 : BOOL;
     hkm_DischargeContact : BOOL;
     hkm_DischargeInVoltage : REAL;
+    DischargeInVoltage : REAL;
   END_VAR
 
   (*
@@ -649,7 +650,7 @@ PROGRAM HemaBattery
     DIV(IN1 := CMD_Current_Sense, IN2 := 1000, DIV => BatteryCurrent);
     DIV(IN1 := CMD_Voltage_Sense_1, IN2 := 1000, DIV => BatteryVoltage);
     DIV(IN1 := CMD_Voltage_Sense_2, IN2 := 1000, DIV => (OutputVoltage, ChargeInVoltage));
-    DIV(IN1 := CMD_Voltage_Sense_3, IN2 := 1000, DIV => hkm_DischargeInVoltage);
+    DIV(IN1 := CMD_Voltage_Sense_3, IN2 := 1000, DIV => DischargeInVoltage);
 
     // Network 48:
     GE(IN1 := BatteryCurrent, IN2 := 0.5, GE => @C(2595).GE);
@@ -676,121 +677,115 @@ PROGRAM HemaBattery
     LT(IN1 := @C(1258).ABS, IN2 := 3, LT => shutdownComplete);
 
     // Network 52:
-    IOWR24(PORT := TMS570_GIO#HET1, PIN := 2, VAL := new_contactEnable1);
-
-    // Network 53:
     IOWR13(PORT := TMS570_GIO#HET1, PIN := 24, VAL := 1);
 
-    // Network 54:
-    IOWR10(PORT := TMS570_GIO#HET1, PIN := 0, VAL := new_contactEnable2);
-
-    // Network 55:
+    // Network 53:
     ANLG8(ADC := TMSADC#A1, GRP := TMSADCGRP#G1, CH := 10);
 
-    // Network 56:
+    // Network 54:
     IOWR22(PORT := TMS570_GIO#A, PIN := 7);
 
-    // Network 57:
+    // Network 55:
     IOWR23(PORT := TMS570_GIO#A, PIN := 6);
 
-    // Network 58:
+    // Network 56:
     IOWR7(PORT := TMS570_GIO#HET1, PIN := 22);
 
-    // Network 59:
+    // Network 57:
     IOWR9(PORT := TMS570_GIO#HET1, PIN := 8);
 
-    // Network 60:
+    // Network 58:
     EQ(IN1 := HW_version, IN2 := 1, EQ => @C(1957).EQ);
     SEL(G := @C(1957).EQ, IN0 := 0, IN1 := 1, SEL => @C(1958).SEL);
     IOWR19(PORT := TMS570_GIO#SPI2, PIN := 10, VAL := @C(1958).SEL);
 
-    // Network 61:
+    // Network 59:
     dgtIn4(ch := 2);
-    TO_BOOL(IN := dgtIn4.stat, TO_BOOL => new_contactFbk1);
+    TO_BOOL(IN := dgtIn4.stat, TO_BOOL => contactFbkCharge);
 
-    // Network 62:
+    // Network 60:
     dgtIn3(ch := 3);
-    TO_BOOL(IN := dgtIn3.stat, TO_BOOL => new_contactFbk2);
+    TO_BOOL(IN := dgtIn3.stat, TO_BOOL => contactFbkDischarge);
 
-    // Network 63:
+    // Network 61:
     dgtIn8(ch := 4);
 
-    // Network 64:
+    // Network 62:
     IORD1(PORT := TMS570_GIO#HET1, PIN := 12);
 
-    // Network 65:
+    // Network 63:
     IORD4(PORT := TMS570_GIO#HET1, PIN := 16);
 
+    // Network 64:
+    IOWR5(PORT := TMS570_GIO#HET1, PIN := 24, VAL := 1);
+
+    // Network 65:
+    IORD5(PORT := TMS570_GIO#HET1, PIN := 14);
+
     // Network 66:
-    HVIL1_status := 1;
+    IORD2(PORT := TMS570_GIO#HET1, PIN := 18);
 
     // Network 67:
+    HVIL1_status := 1;
+
+    // Network 68:
     NOT(IN := HVIL1_status, NOT => @C(510).NOT);
     Buffer10(I := @C(510).NOT);
     TOF6(IN := Buffer10.O, PT := T#3s, Q => Fault_Pack_HVIL_1);
 
-    // Network 68:
-    IOWR5(PORT := TMS570_GIO#HET1, PIN := 24, VAL := 1);
-
     // Network 69:
-    HVIL2_status := 1;
+    IOWR6(PORT := TMS570_GIO#SPI3, PIN := 8, VAL := 1);
 
     // Network 70:
+    HVIL2_status := 1;
+
+    // Network 71:
     NOT(IN := HVIL2_status, NOT => @C(2154).NOT);
     Buffer13(I := @C(2154).NOT);
     TOF10(IN := Buffer13.O, PT := T#3s, Q => Fault_Pack_HVIL_2);
 
-    // Network 71:
-    IORD5(PORT := TMS570_GIO#HET1, PIN := 14);
-
     // Network 72:
-    IORD2(PORT := TMS570_GIO#HET1, PIN := 18);
-
-    // Network 73:
-    IOWR6(PORT := TMS570_GIO#SPI3, PIN := 8, VAL := 1);
-
-    // Network 74:
     IORD3(PORT := TMS570_GIO#HET1, PIN := 17);
 
-    // Network 75:
+    // Network 73:
     ANLG1(ADC := TMSADC#A1, GRP := TMSADCGRP#G1, CH := 6);
     TO_REAL(IN := ANLG1.VAL, TO_REAL => @C(1345).TO_REAL);
     NTC2(VOLT := @C(1345).TO_REAL, VSUP := 7000, RS := 10000, BETA := 3950, TNOM := 298.15, RNOM := 10000, TEMP => Pack_Temperature);
 
-    // Network 76:
+    // Network 74:
     IOWR18(PORT := TMS570_GIO#SPI2, PIN := 0, VAL := 1);
 
-    // Network 77:
+    // Network 75:
     ANLG2(ADC := TMSADC#A1, GRP := TMSADCGRP#G1, CH := 5);
 
-    // Network 78:
+    // Network 76:
     IOWR20(PORT := TMS570_GIO#SPI2, PIN := 11, VAL := 1);
 
-    // Network 79:
+    // Network 77:
     ANLG3(ADC := TMSADC#A1, GRP := TMSADCGRP#G1, CH := 8);
 
-    // Network 80:
+    // Network 78:
     FLASH4(IN := 1, PER := T#3s);
     IOWR21(PORT := TMS570_GIO#SPI2, PIN := 9, VAL := FLASH4.OUT);
 
-    // Network 81:
+    // Network 79:
     ANLG4(ADC := TMSADC#A1, GRP := TMSADCGRP#G1, CH := 11);
 
-    // Network 82:
+    // Network 80:
     FLASH1(IN := 1, PER := T#250ms, OUT => selClock);
     TO_USINT(IN := CTU2.CV, TO_USINT => Selected_BMU_Loc);
     CTU2(CU := CTU1.Q, R := CTU2.Q, PV := Number_Of_BMU_cfg);
     CTU1(CU := FLASH1.OUT, R := CTU1.Q, PV := NumOfCells[0]);
     TO_USINT(IN := CTU1.CV, TO_USINT => Selected_Cell_Loc);
 
-    // Network 83:
-    BCU_State_Message1(CAN_ID := CAN_ID_10, State := BMS_State, Contactor_Status := contactFbk, ChargeContact := contactFbkCharge, Ambient_Temp := Pack_Temperature, DMDC := Pack_DMDC, DMCC := Pack_DMCC, CAN_CH := BCU_CAN_CH, NegContact := contactFbkNeg, isolationStatus := isolationStatus, chargeComplete := chargeProtect, dischargeComplete := dischargeProtect, emergencyButton := hkm_DischargeContact, in1Status := inputSgn1Status, in2Status := inputSgn2Status);
+    // Network 81:
+    BCU_State_Message1(CAN_ID := CAN_ID_10, State := BMS_State, Contactor_Status := contactFbk, ChargeContact := contactFbkCharge, Ambient_Temp := Pack_Temperature, DMDC := Pack_DMDC, DMCC := Pack_DMCC, CAN_CH := BCU_CAN_CH, NegContact := contactFbkDischarge, isolationStatus := isolationStatus, chargeComplete := chargeProtect, dischargeComplete := dischargeProtect, emergencyButton := emergencyBtn, in1Status := inputSgn1Status, in2Status := inputSgn2Status);
     BCU_Cell_Status1(Selected_BMU_Loc := Selected_BMU_Loc, Selected_Cell_Loc := Selected_Cell_Loc, Cell_Voltage := Cell_Voltage, Cell_Temp := Cell_Temp, CAN_ID := CAN_ID_11, CAN_CH := BCU_CAN_CH, Total_Voltage := Total_Voltage, Instant_Current := BatteryCurrent, CAN_Error => CAN_Fault_03);
     Max_Min_Voltage_Status1(Max_Volt_BMU_Loc := Cell_Voltage_Max_BMU_Loc, Max_Volt_Cell_Loc := Cell_Voltage_Max_Cell_Loc, Min_Volt_BMU_Loc := Cell_Voltage_Min_BMU_Loc, Min_Volt_Cell_Loc := Cell_Voltage_Min_Cell_Loc, Max_Cell_Voltage := Cell_Voltage_Max, Min_Cell_Voltage := Cell_Voltage_Min, Average_Cell_Voltage := Cell_Voltage_Average, CAN_ID := CAN_ID_12, CAN_CH := BCU_CAN_CH, CAN_Error => CAN_Fault_04);
     BCU_status21(Max_Temp_BMU_Loc := Cell_Temp_Max_BMU_Loc, Max_Temp_Cell_Loc := Cell_Temp_Max_Cell_Loc, Min_Temp_BMU_Loc := Cell_Temp_Min_BMU_Loc, Min_Temp_Cell_Loc := Cell_Temp_Min_Cell_Loc, Max_Cell_Temp := Cell_Temp_Max, Min_Cell_Temp := Cell_Temp_Min, CAN_ID := CAN_ID_13, CAN_CH := BCU_CAN_CH, outVolt := OutputVoltage, CAN_Error => CAN_Fault_05);
     BCU_Battery_Status1(SoC := SoC_CC, SoH := SoH, Duty_Cycle := Duty_Cycle, Remain_Energy := usableRemkwh, CAN_ID := CAN_ID_14, CAN_CH := BCU_CAN_CH, Available_Energy := usableCapkwh, CAN_Error => CAN_Fault_06);
 
-    // Network 84:
+    // Network 82:
     OR(IN1 := UV_danger, IN2 := dischargeComplete, OR => (@C(1278).OR, dischargeProtect));
     GT(IN1 := BatteryCurrent, IN2 := 5, GT => @C(1296).GT);
     AND(IN1 := @C(1296).GT, IN2 := @C(1278).OR, AND => @C(1291).AND);
@@ -800,7 +795,7 @@ PROGRAM HemaBattery
     OR(IN1 := TON17.Q, IN2 := TON2.Q, OR => @C(1304).OR);
     AND(IN1 := @C(1278).OR, IN2 := @C(1304).OR, AND => dischargeOff);
 
-    // Network 85:
+    // Network 83:
     OR(IN1 := OV_danger, IN2 := BCU_Charge_Complete, OR => (@C(1315).OR, chargeProtect));
     LT(IN1 := BatteryCurrent, IN2 := -5, LT => @C(1283).LT);
     AND(IN1 := @C(1283).LT, IN2 := @C(1315).OR, AND => @C(1375).AND);
@@ -810,10 +805,10 @@ PROGRAM HemaBattery
     OR(IN1 := TON19.Q, IN2 := TON18.Q, OR => @C(1282).OR);
     AND(IN1 := @C(1315).OR, IN2 := @C(1282).OR, AND => chargeOff);
 
-    // Network 86:
+    // Network 84:
     OR(IN1 := chargeOff, IN2 := dischargeOff, IN3 := emergencyBtn, OR => currentProtection);
 
-    // Network 87:
+    // Network 85:
     SEL(G := slaveMode, IN0 := NOT batteryInCharge, IN1 := dischargeCMD, SEL => @C(1642).SEL);
     AND(IN1 := NOT currentProtection, IN2 := @C(1642).SEL, AND => dischargeENB);
     SEL(G := slaveMode, IN0 := batteryInCharge, IN1 := chargeCMD, SEL => @C(1648).SEL);
@@ -821,11 +816,11 @@ PROGRAM HemaBattery
     TON3(IN := emergencyBtn, PT := T#250ms);
     SEL(G := slaveMode, IN0 := TON3.Q, IN1 := shutdownCMD, SEL => shutdownEnb);
 
-    // Network 88:
+    // Network 86:
     TO_REAL(IN := ntcBETA, TO_REAL => @C(265).TO_REAL);
     BATTSTACK1(NBOARDS := Number_Of_BMU_cfg, BAUD := 250000, OVTHRES := Cell_Voltage_Max_Charge, UVTHRES := Cell_Voltage_Min_Disharge, M_ALL_R := Measure_All, M_AUX_R := Measure_Aux, N_CELLS := NumOfCells, T_CELLS := tauxCells, CHSEL := ChannelSelect, BRD := Selected_BMU_Loc, CELL := Selected_Cell_Loc, CH := PLCHANNEL#AUX0, BALV := Balance_Voltage, BALENB := Balance_Enable_Rq, NTCBETA := @C(265).TO_REAL, NTCNOMT_KLV := 298.15, NTCNOMR_OHM := 10000.0, ENB := 1, N_BRD => Number_Of_BMU, VCELL => Cell_Voltage, VAV => Cell_Voltage_Average, VMINCELL => Cell_Voltage_Min, VMAXCELL => Cell_Voltage_Max, VSTACK => Total_Voltage, MAXCELLBRD => Cell_Voltage_Max_BMU_Loc, MAXCELLNUM => Cell_Voltage_Max_Cell_Loc, MINCELLBRD => Cell_Voltage_Min_BMU_Loc, MINCELLNUM => Cell_Voltage_Min_Cell_Loc, BALREG => Balance_Register, TEMPCELL => Cell_Temp, MAXTEMP => Cell_Temp_Max, MINTEMP => Cell_Temp_Min, MAXTEMPBRD => Cell_Temp_Max_BMU_Loc, MAXTEMPCELL => Cell_Temp_Max_Cell_Loc, MINTEMPBRD => Cell_Temp_Min_BMU_Loc, MINTEMPCELL => Cell_Temp_Min_Cell_Loc, FAULT => Board_Fault_Messages, ERR => Board_Error_Messages);
 
-    // Network 89:
+    // Network 87:
     LT(IN1 := Cell_Voltage_Min, IN2 := cellVolt_cutOffLow, LT => @C(803).LT);
     Buffer1(I := @C(803).LT);
     LT(IN1 := Total_Voltage, IN2 := Pack_CutoffLow_Voltage, LT => @C(1669).LT);
@@ -837,65 +832,65 @@ PROGRAM HemaBattery
     Buffer4(I := @C(1825).GT);
     OR(IN1 := Buffer2.O, IN2 := Buffer4.O, OR => OV_fault);
 
-    // Network 90:
+    // Network 88:
     GE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_warningOV, GE => @C(364).GE);
     TON6(IN := @C(364).GE, PT := T#100ms, Q => OV_danger_risk);
     GE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_max, GE => @C(1580).GE);
     TON8(IN := @C(1580).GE, PT := T#20s, Q => OV_danger);
 
-    // Network 91:
+    // Network 89:
     LE(IN1 := Cell_Voltage_Min, IN2 := cellVolt_warningUV, LE => @C(404).LE);
     TON7(IN := @C(404).LE, PT := T#100ms, Q => UV_danger_risk);
     LE(IN1 := Cell_Voltage_Min, IN2 := cellVolt_min, LE => @C(1582).LE);
     TON9(IN := @C(1582).LE, PT := T#20s, Q => UV_danger);
 
-    // Network 92:
+    // Network 90:
     SUB(IN1 := cellTemp_maxLim, IN2 := 1, SUB => @C(276).SUB);
     GE(IN1 := Cell_Temp_Max, IN2 := @C(276).SUB, GE => @C(279).GE);
     TON10(IN := @C(279).GE, PT := T#500ms, Q => OT_danger_risk);
     GE(IN1 := Cell_Temp_Max, IN2 := cellTemp_maxLim, GE => @C(920).GE);
     TON12(IN := @C(920).GE, PT := T#2s, Q => OT_danger);
 
-    // Network 93:
+    // Network 91:
     ADD(IN1 := cellTemp_minLim, IN2 := 1, ADD => @C(277).ADD);
     LE(IN1 := Cell_Temp_Min, IN2 := @C(277).ADD, LE => @C(919).LE);
     TON11(IN := @C(919).LE, PT := T#500ms, Q => UT_danger_risk);
     LE(IN1 := Cell_Temp_Min, IN2 := cellTemp_minLim, LE => @C(1073).LE);
     TON13(IN := @C(1073).LE, PT := T#2s, Q => UT_danger);
 
-    // Network 94:
+    // Network 92:
     Buffer12(I := OV_danger_risk);
     TOF1(IN := Buffer12.O, PT := T#3s, Q => Fault_Cell_Over_Voltage_Warning);
 
-    // Network 95:
+    // Network 93:
     OR(IN1 := OV_danger, IN2 := OV_fault, OR => @C(259).OR);
     TOF12(IN := @C(259).OR, PT := T#3s, Q => Fault_Cell_Over_Voltage_Danger);
 
-    // Network 96:
+    // Network 94:
     Buffer19(I := UV_danger_risk);
     TOF14(IN := Buffer19.O, PT := T#3s, Q => Fault_Cell_Under_Voltage_Warning);
 
-    // Network 97:
+    // Network 95:
     OR(IN1 := UV_danger, IN2 := UV_fault, OR => @C(1813).OR);
     TOF13(IN := @C(1813).OR, PT := T#3s, Q => Fault_Cell_Under_Voltage_Danger);
 
-    // Network 98:
+    // Network 96:
     GE(IN1 := Cell_Temp_Max, IN2 := cellTemp_warningOT, GE => @C(288).GE);
     Buffer11(I := @C(288).GE);
     TOF3(IN := Buffer11.O, PT := T#3s, Q => Fault_Cell_Over_Temp_Warning);
 
-    // Network 99:
+    // Network 97:
     TOF2(IN := OT_danger, PT := T#3s, Q => Fault_Cell_Over_Temp_Danger);
 
-    // Network 100:
+    // Network 98:
     LE(IN1 := Cell_Temp_Min, IN2 := cellTemp_warningUT, LE => @C(286).LE);
     Buffer9(I := @C(286).LE);
     TOF5(IN := Buffer9.O, PT := T#3s, Q => Fault_Cell_Under_Temp_Warning);
 
-    // Network 101:
+    // Network 99:
     OR(IN1 := Fault_Cell_Over_Voltage_Warning, IN2 := Fault_Cell_Under_Voltage_Warning, IN3 := Fault_Cell_Over_Temp_Warning, IN4 := Fault_Cell_Under_Temp_Warning, IN5 := warningMdlBalT, OR => BCU_Fault_Warning);
 
-    // Network 102:
+    // Network 100:
     NE(IN1 := Number_Of_BMU, IN2 := Number_Of_BMU_cfg, NE => @C(932).NE);
     Tbuffer2(I := @C(932).NE, D := T#3s);
     TO_DWORD(IN := Board_Error_Messages, TO_DWORD => @C(1213).TO_DWORD);
@@ -909,74 +904,69 @@ PROGRAM HemaBattery
     Tbuffer7(I := @C(1243).OR, D := T#3s);
     OR(IN1 := Tbuffer2.O, IN2 := Tbuffer7.O, OR => Fault_Pack_BMU);
 
-    // Network 103:
+    // Network 101:
     TOF4(IN := UT_danger, PT := T#3s, Q => Fault_Cell_Under_Temp_Danger);
 
-    // Network 104:
+    // Network 102:
     ampMultTemp1(temp := Cell_Temp_Max);
     ampMultTemp2(temp := Cell_Temp_Min);
     MIN(IN1 := ampMultTemp1.mult, IN2 := ampMultTemp2.mult, MIN => @C(838).MIN);
     ampMultVoltChar1(chargeOn := BatteryCharging, maxCell := Cell_Voltage_Max);
     MUL(IN1 := @C(838).MIN, IN2 := ampMultVoltChar1.mult, MUL => multAmpChar);
 
-    // Network 105:
+    // Network 103:
     ampMultTempDis1(temp := Cell_Temp_Max);
     ampMultTempDis2(temp := Cell_Temp_Min);
     MIN(IN1 := ampMultTempDis1.mult, IN2 := ampMultTempDis2.mult, MIN => @C(1195).MIN);
     ampMultVoltDisc1(discOn := BatteryDischarging, minCell := Cell_Voltage_Min);
     MUL(IN1 := @C(1195).MIN, IN2 := ampMultVoltDisc1.mult, MUL => multAmpDisch);
 
-    // Network 106:
+    // Network 104:
     MUL(IN1 := multAmpChar, IN2 := maxChargeAmprCfg, MUL => maxChargeAmp);
 
-    // Network 107:
+    // Network 105:
     MUL(IN1 := multAmpDisch, IN2 := maxDischargeAmprCfg, MUL => maxDischargeAmp);
 
-    // Network 108:
+    // Network 106:
     GT(IN1 := cmdBCU, IN2 := 16#AA, GT => @C(657).GT);
     AND(IN1 := NOT cmdTmt, IN2 := @C(657).GT, AND => @C(672).AND);
     SEL(G := @C(672).AND, IN0 := contactEnable_batt, IN1 := forceDischarge, SEL => contactEnable);
     SEL(G := @C(672).AND, IN0 := contactNegEnable_batt, IN1 := forceNegative, SEL => contactNegEnable);
     SEL(G := @C(672).AND, IN0 := contactEnableCharge_batt, IN1 := forceCharge, SEL => contactEnableCharge);
 
-    // Network 109:
-    NE(IN1 := contactEnable, IN2 := contactFbk, NE => @C(243).NE);
-    Buffer21(I := @C(243).NE);
-    TOF7(IN := Buffer21.O, PT := T#3s, Q => Fault_Pack_Discharge_Contactor);
-
-    // Network 110:
+    // Network 107:
     NE(IN1 := contactEnableCharge, IN2 := contactFbkCharge, NE => @C(1109).NE);
     Buffer23(I := @C(1109).NE);
     TOF9(IN := Buffer23.O, PT := T#3s, Q => Fault_Pack_Charge_Contactor);
 
-    // Network 111:
+    // Network 108:
     MUL(IN1 := Number_Of_Cell, IN2 := Number_Of_Parallel_Cell, IN3 := Cell_Current_Nominal, IN4 := cellVolt_nominal, MUL => @C(74).MUL);
     TO_REAL(IN := @C(74).MUL, TO_REAL => @C(73).TO_REAL);
     DIV(IN1 := @C(73).TO_REAL, IN2 := 1000000, DIV => kWhCapacity);
     MUL(IN1 := kWhCapacity, IN2 := SoCreal, MUL => @C(2073).MUL);
     DIV(IN1 := @C(2073).MUL, IN2 := 100, DIV => PackRemCap_kWh);
 
-    // Network 112:
+    // Network 109:
     MUL(IN1 := DoD_rate, IN2 := kWhCapacity, MUL => (@C(1367).MUL, usableCapkwh));
     MUL(IN1 := @C(1367).MUL, IN2 := 1000, MUL => usableCapwh);
 
-    // Network 113:
+    // Network 110:
     DIV(IN1 := CMD_Overall_Power, IN2 := kWhCapacity, DIV => @C(1978).DIV);
     TO_USINT(IN := @C(1978).DIV, TO_USINT => Duty_Cycle);
 
-    // Network 114:
+    // Network 111:
     DIV(IN1 := Duty_Cycle, IN2 := cyclesPerSOH, DIV => @C(1985).DIV);
     SUB(IN1 := 100, IN2 := @C(1985).DIV, SUB => @C(1990).SUB);
     LIMIT(MN := 0, IN := @C(1990).SUB, MX := 100, LIMIT => @C(1993).LIMIT);
     TO_USINT(IN := @C(1993).LIMIT, TO_USINT => SoH);
 
-    // Network 115:
+    // Network 112:
     GUI1(Voltage := CMD_Voltage_Sense_1, Current := CMD_Current_Sense, Temp := Pack_Temperature, Humidity := BMSdmcc_final, Fault := GUI_Fault, SoC := SoC_CC, SoH := SoH, Cycle := Duty_Cycle, State := BMS_State, ID := Selected_Pack_Number, CH := BCU_CAN_CH);
 
-    // Network 116:
+    // Network 113:
     BCU_Fault_Codes1(CAN_ID := CAN_ID_16, Fault_00 := BCU_Fault_Warning, Fault_01 := BCU_Fault_Danger, Fault_02 := Fault_Cell_Over_Voltage_Warning, Fault_03 := Fault_Cell_Over_Voltage_Danger, Fault_04 := Fault_Cell_Under_Voltage_Warning, Fault_05 := Fault_Cell_Under_Voltage_Danger, Fault_06 := Fault_Cell_Over_Temp_Warning, Fault_07 := Fault_Cell_Over_Temp_Danger, Fault_08 := Fault_Cell_Under_Temp_Warning, Fault_09 := Fault_Cell_Under_Temp_Danger, Fault_10 := OC_warning, Fault_11 := OC_fault, Fault_12 := Fault_Pack_CMS, Fault_13 := Fault_Pack_Discharge_Contactor, Fault_14 := Fault_Pack_Charge_Contactor, Fault_15 := Fault_Pack_HVIL_1, Fault_16 := Fault_Pack_HVIL_2, Fault_20 := Fault_Pack_BMU, Fault_21 := Fault_Pack_Negative_Contactor, Fault_22 := prechargeError, Fault_25 := warningMdlBalT, Fault_26 := faultMdlBalT, Fault_33 := Fault_CAN_Communication, Fault_Byte_5 := Board_Error_Messages, CAN_CH := BCU_CAN_CH, Fault_Byte_6_7 := Board_Fault_Messages, GUI_Fault => GUI_Fault, sum => faultsWord);
 
-    // Network 117:
+    // Network 114:
     GE(IN1 := Total_Voltage, IN2 := ChargeOK_Voltage_PACK, GE => @C(887).GE);
     GE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_chargeOK, GE => @C(544).GE);
     OR(IN1 := @C(887).GE, IN2 := @C(544).GE, OR => @C(542).OR);
@@ -987,7 +977,7 @@ PROGRAM HemaBattery
     TON16(IN := @C(1702).AND, PT := T#15s);
     SR1(S1 := TON16.Q, R := @C(742).GT, Q1 => mainChargeComplete);
 
-    // Network 118:
+    // Network 115:
     F_TRIG1(CLK := IGNITION);
     F_TRIG2(CLK := IGNITION_KL15);
     OR(IN1 := F_TRIG1.Q, IN2 := F_TRIG2.Q, OR => @C(223).OR);
@@ -995,11 +985,11 @@ PROGRAM HemaBattery
     TO_USINT(IN := SOCisz1.SOC, TO_USINT => SoC_CC);
     DIV(IN1 := SOCisz1.remainingWh, IN2 := 1000, DIV => usableRemkwh);
 
-    // Network 119:
+    // Network 116:
     R_TRIG2(CLK := mainChargeComplete);
     SEL(G := R_TRIG2.Q, IN0 := socChComp, IN1 := SoCreal, SEL => socChComp);
 
-    // Network 120:
+    // Network 117:
     LT(IN1 := Cell_Voltage_Min, IN2 := cellVolt_dischargeOK, LT => @C(246).LT);
     LT(IN1 := Total_Voltage, IN2 := DichargeOK_Voltage_PACK, LT => @C(1324).LT);
     OR(IN1 := @C(246).LT, IN2 := @C(1324).LT, OR => @C(906).OR);
@@ -1010,71 +1000,91 @@ PROGRAM HemaBattery
     Tbuffer6(I := @C(328).AND, D := T#500ms);
     SR2(S1 := Tbuffer6.O, R := @C(926).GT, Q1 => dischargeComplete);
 
-    // Network 121:
+    // Network 118:
     R_TRIG3(CLK := dischargeComplete);
     SEL(G := R_TRIG3.Q, IN0 := socDchComp, IN1 := SoCreal, SEL => socDchComp);
 
-    // Network 122:
+    // Network 119:
     OR(IN1 := Fault_Cell_Over_Temp_Danger, IN2 := Fault_Cell_Under_Temp_Danger, IN3 := Fault_CAN_Communication, IN4 := Fault_Pack_HVIL_1, IN5 := Fault_Pack_BMU, IN6 := Fault_Pack_Discharge_Contactor, IN7 := Fault_Cell_Over_Voltage_Danger, IN8 := Fault_Cell_Under_Voltage_Danger, IN9 := OC_fault, IN10 := faultMdlBalT, IN11 := Fault_Pack_HVIL_2, IN12 := Fault_Pack_Negative_Contactor, IN13 := Fault_Pack_Charge_Contactor, IN14 := Fault_Pack_CMS, OR => BCU_Fault_Danger);
 
-    // Network 123:
+    // Network 120:
     EQ(IN1 := BMS_State, IN2 := BATTSTATE#CHARGE, EQ => @C(793).EQ);
     chargeState1(chargeOn := @C(793).EQ, mainComplete := mainChargeComplete, dmcc := BMSdmcc_main, battAmpr := BatteryCurrent, balAmpr := 1, balDiff := BalanceDiff_Threshold, maxCell := Cell_Voltage_Max, minCell := Cell_Voltage_Min, complete => BCU_Charge_Complete, balance => BalanceStateEnb, chargeAmpr => BMSdmcc_final, chState => balChargeSt);
 
-    // Network 124:
+    // Network 121:
     Balance_isz1(Max_Cell_Voltage := Cell_Voltage_Max, Min_Cell_Voltage := Cell_Voltage_Min, Avarage_Cell_Voltage := Cell_Voltage_Average, Charge_Status := BalanceStateEnb, Ballance_Interval := T#15s, Difference_Tolerance := 10, Balance_Threshold := cellVolt_balThres, Balance_Enable => Balance_Enable_Rq, Measure_All => Measure_All, Measure_Aux => Measure_Aux, Ballance_Voltage => Balance_Voltage);
 
-    // Network 125:
+    // Network 122:
     TO_UINT(IN := BMSdmcc_final, TO_UINT => Pack_DMCC);
 
-    // Network 126:
+    // Network 123:
     OR(IN1 := Fault_Cell_Over_Temp_Danger, IN2 := Fault_Cell_Under_Temp_Danger, IN3 := Fault_CAN_Communication, IN4 := Fault_Pack_HVIL_1, IN5 := Fault_Pack_BMU, IN6 := Fault_Pack_Discharge_Contactor, IN7 := OV_fault, IN8 := UV_fault, IN9 := OC_fault, IN11 := Fault_Pack_Negative_Contactor, IN12 := Fault_Pack_Charge_Contactor, IN13 := Fault_Pack_CMS, OR => FaultForState);
 
-    // Network 127:
-    essState11(discharge := dischargeENB, charge := chargeENB, shutdown := shutdownEnb, prechargeOk := prechargeComplete, contactFbk := contactFbk, contactFbkNeg := contactFbkNeg, dischargeProtect := dischargeProtect, chargeProtect := chargeProtect, shutdownComplete := shutdownComplete, fault := FaultForState, STATE => BMS_State, prechargeOn => prechargeEnable, contact => contactEnable_batt, contactNeg => contactNegEnable_batt);
+    // Network 124:
+    essState11(discharge := dischargeENB, charge := chargeENB, shutdown := shutdownEnb, prechargeOk := prechargeComplete, contactFbk := contactFbk, contactFbkNeg := contactFbkDischarge, dischargeProtect := dischargeProtect, chargeProtect := chargeProtect, shutdownComplete := shutdownComplete, fault := FaultForState, STATE => BMS_State, prechargeOn => prechargeEnable, contact => contactEnable_batt, contactNeg => contactNegEnable_batt);
 
-    // Network 128:
+    // Network 125:
+    new_CHG_CONTACT := contactEnable_batt;
+
+    // Network 126:
+    new_DCHG_CONTACT := contactNegEnable_batt;
+
+    // Network 127:
     prechargeComplete := prechargeEnable;
 
-    // Network 129:
-    contactFbkNeg := contactNegEnable_batt;
+    // Network 128:
+    contactFbkDischarge := contactNegEnable_batt;
 
-    // Network 130:
-    NE(IN1 := contactNegEnable, IN2 := contactFbkNeg, NE => @C(1092).NE);
+    // Network 129:
+    NE(IN1 := contactNegEnable, IN2 := contactFbkDischarge, NE => @C(1092).NE);
     Buffer22(I := @C(1092).NE);
     TOF8(IN := Buffer22.O, PT := T#3s, Q => Fault_Pack_Negative_Contactor);
 
+    // Network 130:
+    IOWR24(PORT := TMS570_GIO#HET1, PIN := 2, VAL := new_CHG_CONTACT);
+
     // Network 131:
+    IOWR10(PORT := TMS570_GIO#HET1, PIN := 0, VAL := new_DCHG_CONTACT);
+
+    // Network 132:
     EQ(IN1 := BMS_State, IN2 := BATTSTATE#DISCHARGE, EQ => @C(303).EQ);
     TON21(IN := @C(303).EQ, PT := T#5s, Q => dischargeAmpEnb);
 
-    // Network 132:
+    // Network 133:
     EQ(IN1 := BMS_State, IN2 := BATTSTATE#CHARGE, EQ => @C(1795).EQ);
     TON22(IN := @C(1795).EQ, PT := T#5s, Q => chargeAmpEnb);
 
-    // Network 133:
+    // Network 134:
     GE(IN1 := Cell_Voltage_Min, IN2 := cellVolt_dischargeOK, GE => @C(874).GE);
     AND(IN1 := @C(874).GE, IN2 := dischargeAmpEnb, AND => increaseDischargeAmp);
 
-    // Network 134:
+    // Network 135:
     LE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_chargeOK, LE => @C(1847).LE);
     AND(IN1 := @C(1847).LE, IN2 := chargeAmpEnb, IN3 := NOT Balance_Enable_Rq, AND => increaseChargeAmp);
 
-    // Network 135:
+    // Network 136:
     LT(IN1 := BatteryVoltage, IN2 := Pack_Discharge_Voltage, LT => @C(1274).LT);
     OR(IN1 := OT_danger_risk, IN2 := UT_danger_risk, OR => @C(1450).OR);
     LE(IN1 := Cell_Voltage_Min, IN2 := cellVolt_minDischarge, LE => @C(1319).LE);
     AND(IN1 := @C(1319).LE, IN2 := dischargeAmpEnb, AND => @C(1640).AND);
     OR(IN1 := @C(1274).LT, IN2 := @C(1450).OR, IN3 := @C(1640).AND, OR => decreaseDischargeAmp);
 
-    // Network 136:
+    // Network 137:
     GT(IN1 := BatteryVoltage, IN2 := Pack_Charge_Voltage, GT => @C(2092).GT);
     GE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_maxCharge, GE => @C(2028).GE);
     AND(IN1 := @C(2028).GE, IN2 := chargeAmpEnb, IN3 := NOT Balance_Enable_Rq, AND => @C(2103).AND);
     OR(IN1 := OT_danger_risk, IN2 := UT_danger_risk, OR => @C(2110).OR);
     OR(IN1 := @C(2092).GT, IN2 := @C(2103).AND, IN3 := @C(2110).OR, OR => decreaseChargeAmp);
 
-    // Network 137:
+    // Network 138:
+    OR(IN1 := contactFbkCharge, IN2 := contactFbkDischarge, OR => contactFbk);
+
+    // Network 139:
+    NE(IN1 := contactEnable, IN2 := contactFbk, NE => @C(243).NE);
+    Buffer21(I := @C(243).NE);
+    TOF7(IN := Buffer21.O, PT := T#3s, Q => Fault_Pack_Discharge_Contactor);
+
+    // Network 140:
     DIV(IN1 := maxDischargeAmp, IN2 := dischargeUnitAmp, DIV => @C(1762).DIV);
     TO_INT(IN := @C(1762).DIV, TO_INT => @C(1771).TO_INT);
     R_TRIG9(CLK := dischargeAmpEnb);
@@ -1086,7 +1096,7 @@ PROGRAM HemaBattery
     MAX(IN1 := 2, IN2 := @C(1783).MUL, MAX => @C(64).MAX);
     SEL(G := dischargeAmpEnb, IN0 := 2, IN1 := @C(64).MAX, SEL => BMSdmdc_final);
 
-    // Network 138:
+    // Network 141:
     DIV(IN1 := maxChargeAmp, IN2 := chargeUnitAmp, DIV => @C(1770).DIV);
     TO_INT(IN := @C(1770).DIV, TO_INT => @C(1772).TO_INT);
     R_TRIG8(CLK := chargeAmpEnb);
@@ -1098,7 +1108,7 @@ PROGRAM HemaBattery
     MAX(IN1 := 2, IN2 := @C(1782).MUL, MAX => @C(1848).MAX);
     SEL(G := chargeAmpEnb, IN0 := 2, IN1 := @C(1848).MAX, SEL => BMSdmcc_main);
 
-    // Network 139:
+    // Network 142:
     TO_UINT(IN := BMSdmdc_final, TO_UINT => Pack_DMDC);
 
   *)
@@ -1289,7 +1299,7 @@ PROGRAM HemaBattery
   @VF(164) : @E(cellVolt_dischargeOK), @R(50.0, 730.0, 180.0, 19.0);
   @VF(190) : @E(CAN_ID_12), @R(1960.0, 530.0, 220.0, 19.0);
   @VF(188) : @E(CAN_ID_11), @R(1960.0, 370.0, 220.0, 19.0);
-  @VF(182) : @E(BatteryCurrent), @R(430.0, 2370.0, 130.0, 19.0);
+  @VF(182) : @E(BatteryCurrent), @R(430.0, 2480.0, 130.0, 19.0);
   @VF(205) : @E(contactEnable_batt), @R(860.0, 2090.0, 190.0, 19.0);
   @VF(204) : @E(Cell_Temp_Min_Cell_Loc), @R(1960.0, 770.0, 220.0, 19.0);
   @VF(201) : @E(Balance_Enable_Rq), @R(1100.0, 900.0, 210.0, 19.0);
@@ -1562,7 +1572,6 @@ PROGRAM HemaBattery
   @CF(457) : @R(1020.0, 1740.0, 100.0, 19.0), @T("charger Amp");
   @CF(725) : @R(510.0, 2690.0, 370.0, 49.0), @T("sense_1: total voltage$Nsense_2: charge contactor (battery side)$Nsense_3: charge contactor (charge input side)");
   @CF(1842) : @R(740.0, 3500.0, 90.0, 19.0), @T("testAmper");
-  @VF(231) : @E(contactFbk), @R(2350.0, 3250.0, 150.0, 19.0);
   @C(1419) : @FB(IOWR13), @R(3120.0, 2740.0, 120.0, 58.0), @I(@N(PORT), @L(9.5)), @I(@N(PIN), @L(29.5)), @I(@N(VAL), @L(49.5));
   @C(1344) : @FB(ANLG8), @R(3120.0, 2810.0, 120.0, 58.0), @I(@N(ADC), @L(9.5)), @I(@N(GRP), @L(29.5)), @I(@N(CH), @L(49.5)), @O(@N(VAL), @R(9.5));
   @VF(1420) : @E(TMS570_GIO#HET1), @R(2940.0, 2740.0, 140.0, 19.0);
@@ -1604,7 +1613,7 @@ PROGRAM HemaBattery
   @VF(120) : @E(1000), @R(670.0, 1670.0, 60.0, 19.0), REAL;
   @VF(133) : @E(usableRemkwh), @R(2040.0, 990.0, 140.0, 19.0);
   @VF(137) : @E(chargeCMD), @R(3440.0, 370.0, 140.0, 19.0);
-  @VF(149) : @E(HVIL1_status), @R(2420.0, 3290.0, 140.0, 19.0);
+  @VF(149) : @E(HVIL1_status), @R(2410.0, 3370.0, 140.0, 19.0);
   @VF(504) : @E(HVIL1_status), @R(1910.0, 2590.0, 140.0, 19.0);
   @C(505) : @FB(Buffer10), @R(2170.0, 2590.0, 100.0, 18.0), @I(@N(I), @L(9.5)), @O(@N(O), @R(9.5));
   @C(507) : @FB(TOF6), @R(2300.0, 2590.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
@@ -1691,7 +1700,7 @@ PROGRAM HemaBattery
   @C(1093) : @FB(TOF8), @R(2300.0, 2120.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
   @C(1094) : @FB(Buffer22), @R(2170.0, 2120.0, 100.0, 18.0), @I(@N(I), @L(9.5)), @O(@N(O), @R(9.5));
   @VF(1095) : @E(T#3s), @R(2170.0, 2140.0, 100.0, 19.0);
-  @VF(1096) : @E(contactFbkNeg), @R(1910.0, 2140.0, 140.0, 19.0);
+  @VF(1096) : @E(contactFbkDischarge), @R(1910.0, 2140.0, 140.0, 19.0);
   @VF(1097) : @E(contactNegEnable), @R(1910.0, 2120.0, 160.0, 19.0);
   @VF(1098) : @E(Fault_Pack_Negative_Contactor), @R(2430.0, 2120.0, 260.0, 19.0);
   @C(1109) : @F(NE), @R(2090.0, 2160.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
@@ -1702,14 +1711,14 @@ PROGRAM HemaBattery
   @VF(1114) : @E(contactEnableCharge), @R(1910.0, 2160.0, 140.0, 19.0);
   @VF(1116) : @E(Fault_Pack_Charge_Contactor), @R(2430.0, 2160.0, 260.0, 19.0);
   @VF(1127) : @E(Fault_Pack_Negative_Contactor), @R(3070.0, 1860.0, 260.0, 19.0);
-  @VF(1130) : @E(contactFbkNeg), @R(2030.0, 210.0, 150.0, 19.0);
+  @VF(1130) : @E(contactFbkDischarge), @R(2030.0, 210.0, 150.0, 19.0);
   @VF(1131) : @E(contactFbkCharge), @R(2030.0, 130.0, 150.0, 19.0);
-  @VF(359) : @E(contactFbkNeg), @R(720.0, 2330.0, 160.0, 19.0);
+  @VF(359) : @E(contactFbkDischarge), @R(720.0, 2440.0, 160.0, 19.0);
   @VF(362) : @E(dischargeCMD), @R(3440.0, 410.0, 140.0, 19.0);
-  @C(1258) : @F(ABS), @R(580.0, 2370.0, 60.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(ABS), @R(9.5));
-  @C(1259) : @F(LT), @R(660.0, 2370.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
-  @VF(1262) : @E(3), @R(580.0, 2390.0, 60.0, 19.0), REAL;
-  @VF(1264) : @E(shutdownComplete), @R(720.0, 2370.0, 160.0, 19.0);
+  @C(1258) : @F(ABS), @R(580.0, 2480.0, 60.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(ABS), @R(9.5));
+  @C(1259) : @F(LT), @R(660.0, 2480.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
+  @VF(1262) : @E(3), @R(580.0, 2500.0, 60.0, 19.0), REAL;
+  @VF(1264) : @E(shutdownComplete), @R(720.0, 2480.0, 160.0, 19.0);
   @VF(1266) : @E(shutdownComplete), @R(230.0, 2250.0, 150.0, 19.0);
   @C(1268) : @F(EQ), @R(3230.0, 450.0, 40.0, 38.0), USINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
   @VF(1269) : @E(BATTSTATE#SHUTDOWN), @R(3000.0, 470.0, 170.0, 19.0), USINT;
@@ -1738,7 +1747,6 @@ PROGRAM HemaBattery
   @C(1324) : @F(LT), @R(1200.0, 1400.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
   @VF(1338) : @E(DichargeOK_Voltage_PACK), @R(980.0, 1420.0, 200.0, 19.0);
   @CF(840) : @R(2960.0, 2780.0, 60.0, 19.0), @T("AIN8on");
-  @VF(1342) : @E(outputSgn1), @R(2280.0, 2760.0, 140.0, 19.0);
   @C(1412) : @F(OR), @R(3380.0, 450.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
   @VF(335) : @E(HVCU_State), @R(3040.0, 370.0, 130.0, 19.0);
   @VF(241) : @E(inputSgn1Status), @R(2040.0, 310.0, 140.0, 19.0);
@@ -1882,7 +1890,7 @@ PROGRAM HemaBattery
   @VF(2095) : @E(Fault_Pack_Charge_Contactor), @R(2610.0, 1990.0, 220.0, 19.0);
   @VF(195) : @E(FaultForState), @R(230.0, 2270.0, 150.0, 19.0);
   @VF(65) : @E(maxChargeAmprCfg), @R(500.0, 530.0, 150.0, 19.0);
-  @VF(2135) : @E(HVIL2_status), @R(2420.0, 3320.0, 140.0, 19.0);
+  @VF(2135) : @E(HVIL2_status), @R(2410.0, 3400.0, 140.0, 19.0);
   @C(2152) : @FB(TOF10), @R(2300.0, 2630.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
   @C(2153) : @FB(Buffer13), @R(2170.0, 2630.0, 100.0, 18.0), @I(@N(I), @L(9.5)), @O(@N(O), @R(9.5));
   @C(2154) : @F(NOT), @R(2080.0, 2630.0, 60.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(NOT), @R(9.5));
@@ -1918,8 +1926,8 @@ PROGRAM HemaBattery
   @VF(110) : @E(bmuCellVolt[3]), @R(1270.0, 2160.0, 140.0, 19.0);
   @VF(192) : @E(bmuCellVolt[2]), @R(1270.0, 2140.0, 140.0, 19.0);
   @VF(314) : @E(bmuCellVolt[1]), @R(1270.0, 2120.0, 140.0, 19.0);
-  @VF(703) : @E(contactNegEnable_batt), @R(430.0, 2330.0, 190.0, 19.0);
-  @VF(496) : @E(contactFbkNeg), @R(230.0, 2150.0, 160.0, 19.0);
+  @VF(703) : @E(contactNegEnable_batt), @R(430.0, 2440.0, 190.0, 19.0);
+  @VF(496) : @E(contactFbkDischarge), @R(230.0, 2150.0, 160.0, 19.0);
   @C(753) : @F(LT), @R(4080.0, 640.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
   @C(755) : @F(GT), @R(4080.0, 690.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GT), @R(9.5));
   @C(854) : @FB(Tbuffer15), @R(4200.0, 640.0, 120.0, 38.0), @I(@N(I), @L(9.5)), @I(@N(D), @L(29.5)), @O(@N(O), @R(9.5));
@@ -2024,7 +2032,7 @@ PROGRAM HemaBattery
   @C(2433) : @FB(TON3), @R(4010.0, 1030.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
   @VF(2642) : @E(T#250ms), @R(3880.0, 1050.0, 90.0, 19.0);
   @CF(2646) : @R(4460.0, 680.0, 170.0, 39.0), @T("ESS charge discharge decision");
-  @VF(820) : @E(1), @R(2350.0, 3320.0, 60.0, 19.0), BOOL;
+  @VF(820) : @E(1), @R(2340.0, 3400.0, 60.0, 19.0), BOOL;
   @VF(2130) : @E(sim100NotFound), @R(1270.0, 2280.0, 140.0, 19.0);
   @CF(1802) : @R(3800.0, 0.0, 200.0, 49.0), @T("charge/discharge transition$Nprotection$N");
   @CF(1863) : @R(1900.0, 0.0, 170.0, 39.0), @T("CAN communication");
@@ -2046,8 +2054,8 @@ PROGRAM HemaBattery
   @C(2358) : @F(AND), @R(4190.0, 250.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
   @C(1313) : @F(AND), @R(4190.0, 390.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
   @C(1375) : @F(AND), @R(4190.0, 350.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
-  @VF(1003) : @E(prechargeComplete), @R(720.0, 2310.0, 160.0, 19.0);
-  @VF(1963) : @E(prechargeEnable), @R(430.0, 2310.0, 190.0, 19.0);
+  @VF(1003) : @E(prechargeComplete), @R(720.0, 2420.0, 160.0, 19.0);
+  @VF(1963) : @E(prechargeEnable), @R(430.0, 2420.0, 190.0, 19.0);
   @VF(178) : @E(dischargeProtect), @R(2040.0, 270.0, 140.0, 19.0);
   @VF(238) : @E(chargeProtect), @R(2040.0, 250.0, 140.0, 19.0);
   @VF(69) : @E(10), @R(1140.0, 1460.0, 40.0, 19.0), REAL;
@@ -2094,8 +2102,6 @@ PROGRAM HemaBattery
   @C(672) : @F(AND), @R(3230.0, 730.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
   @VF(1148) : @E(cmdTmt), @R(3550.0, 270.0, 120.0, 19.0);
   @VF(1150) : @E(cmdTmt), @R(3020.0, 730.0, 120.0, 19.0), @ONEG;
-  @VF(448) : @E(outputSgn2), @R(2280.0, 2820.0, 140.0, 19.0);
-  @VF(239) : @E(contactEnable), @R(2280.0, 2880.0, 140.0, 19.0);
   @VF(690) : @E(multAmpChar), @R(1710.0, 2720.0, 120.0, 19.0);
   @VF(812) : @E(Cell_Temp_Max), @R(1130.0, 2720.0, 160.0, 19.0);
   @VF(819) : @E(Cell_Temp_Min), @R(1130.0, 2740.0, 160.0, 19.0);
@@ -2359,16 +2365,24 @@ PROGRAM HemaBattery
   @VF(1458) : @E(7000), @R(2330.0, 3510.0, 80.0, 19.0), REAL;
   @VF(1459) : @E(3950), @R(2330.0, 3550.0, 80.0, 19.0), REAL;
   @VF(1460) : @E(10000), @R(2330.0, 3590.0, 80.0, 19.0), REAL;
-  @VF(236) : @E(new_contactEnable1), @R(1910.0, 2760.0, 160.0, 19.0);
-  @VF(253) : @E(new_contactEnable2), @R(1910.0, 2820.0, 160.0, 19.0);
-  @VF(469) : @E(1), @R(2350.0, 3290.0, 60.0, 19.0), BOOL;
+  @VF(236) : @E(new_CHG_CONTACT), @R(1910.0, 2760.0, 160.0, 19.0);
+  @VF(253) : @E(new_DCHG_CONTACT), @R(1910.0, 2820.0, 160.0, 19.0);
+  @VF(469) : @E(1), @R(2340.0, 3370.0, 60.0, 19.0), BOOL;
   @C(330) : @F(TO_BOOL), @R(2260.0, 3190.0, 120.0, 18.0), USINT, @I(@N(IN), @L(9.5)), @O(@N(TO_BOOL), @R(9.5));
   @C(453) : @F(TO_BOOL), @R(2260.0, 3210.0, 120.0, 18.0), USINT, @I(@N(IN), @L(9.5)), @O(@N(TO_BOOL), @R(9.5));
-  @VF(722) : @E(new_contactFbk1), @R(2400.0, 3190.0, 140.0, 19.0);
-  @VF(741) : @E(new_contactFbk2), @R(2400.0, 3210.0, 140.0, 19.0);
-  @VF(46) : @E(hkm_DischargeContact), @R(2040.0, 290.0, 140.0, 19.0);
   @C(43) : @F(DIV), @R(740.0, 2930.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV), @R(9.5));
-  @VF(175) : @E(hkm_DischargeInVoltage), @R(800.0, 2930.0, 140.0, 19.0);
+  @VF(46) : @E(emergencyBtn), @R(2040.0, 290.0, 140.0, 19.0);
+  @VF(239) : @E(contactEnable_batt), @R(430.0, 2370.0, 190.0, 19.0);
+  @VF(448) : @E(contactNegEnable_batt), @R(430.0, 2390.0, 190.0, 19.0);
+  @VF(756) : @E(new_CHG_CONTACT), @R(720.0, 2370.0, 160.0, 19.0);
+  @VF(759) : @E(new_DCHG_CONTACT), @R(720.0, 2390.0, 160.0, 19.0);
+  @VF(747) : @E(DischargeInVoltage), @R(800.0, 2930.0, 140.0, 19.0);
+  @VF(175) : @E(contactFbkCharge), @R(2400.0, 3190.0, 140.0, 19.0);
+  @VF(723) : @E(contactFbkDischarge), @R(2400.0, 3210.0, 140.0, 19.0);
+  @C(833) : @F(OR), @R(2560.0, 3250.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
+  @VF(834) : @E(contactFbk), @R(2610.0, 3250.0, 150.0, 19.0);
+  @VF(837) : @E(contactFbkCharge), @R(2400.0, 3250.0, 140.0, 19.0);
+  @VF(844) : @E(contactFbkDischarge), @R(2400.0, 3270.0, 140.0, 19.0);
   @CP(467) : 2199.5, 59.5;
   @CP(1326) : 2199.5, 359.5;
   @CP(640) : 2199.5, 519.5;
@@ -5521,19 +5535,34 @@ PROGRAM HemaBattery
   @G(721) :
      @L(@C(1361).stat, @C(453).IN)
     ;
-  @G(723) :
-     @L(@C(330).TO_BOOL, @VF(722).i)
-    ;
-  @G(744) :
-     @L(@C(453).TO_BOOL, @VF(741).i)
+  @G(47) :
+     @L(@VF(525).o, @C(43).IN1)
     ;
   @G(449) :
      @L(@VF(46).o, @C(136).emergencyButton)
     ;
-  @G(47) :
-     @L(@VF(525).o, @C(43).IN1)
+  @G(760) :
+     @L(@VF(448).o, @VF(759).i)
     ;
-  @G(747) :
-     @L(@C(43).DIV, @VF(175).i)
+  @G(761) :
+     @L(@VF(239).o, @VF(756).i)
+    ;
+  @G(771) :
+     @L(@C(43).DIV, @VF(747).i)
+    ;
+  @G(722) :
+     @L(@C(330).TO_BOOL, @VF(175).i)
+    ;
+  @G(741) :
+     @L(@C(453).TO_BOOL, @VF(723).i)
+    ;
+  @G(846) :
+     @L(@VF(844).o, @C(833).IN2)
+    ;
+  @G(847) :
+     @L(@VF(837).o, @C(833).IN1)
+    ;
+  @G(849) :
+     @L(@C(833).OR, @VF(834).i)
     ;
 END_PROGRAM

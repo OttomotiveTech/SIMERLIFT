@@ -61,7 +61,6 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
     {
       LC_this->LC_VD_STATE = LC_ED__BATTSTATE__PRECHARGE;
       LC_this->LC_VD_BATSTATEINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(5),RT_CC_CONST_LL(0));
-      LC_this->LC_VD_CONTACTNEG = LC_EL_true;
       {
         LC_TD_BOOL conditionResult = LC_EL_false;
         conditionResult = (lcfu_iec61131__AND__BOOL__2__INL((LC_TD_BOOL)(LC_this->LC_VD_BATSTATEELAPSEDTIME > LC_TIME_VALUE(RT_CC_CONST_LL(0),RT_CC_CONST_LL(50000000))),LC_this->LC_VD_CONTACTFBKNEG));
@@ -72,7 +71,7 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
       }
       if (LC_this->LC_VD_PRECHARGEOK)
       {
-        LC_this->LC_VD_CONTACT = LC_EL_true;
+        LC_this->LC_VD_CONTACTNEG = LC_EL_true;
       }
       {
         LC_TD_BOOL conditionResult = LC_EL_false;
@@ -112,7 +111,7 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
       LC_this->LC_VD_STATE = LC_ED__BATTSTATE__DISCHARGE;
       LC_this->LC_VD_BATSTATEINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(120),RT_CC_CONST_LL(0));
       LC_this->LC_VD_PRECHARGEON = LC_EL_false;
-      LC_this->LC_VD_CONTACT = LC_EL_true;
+      LC_this->LC_VD_CONTACT = LC_EL_false;
       LC_this->LC_VD_CONTACTNEG = LC_EL_true;
       {
         LC_TD_BOOL conditionResult = LC_EL_false;
@@ -151,7 +150,7 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
       LC_this->LC_VD_BATSTATEINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(120),RT_CC_CONST_LL(0));
       LC_this->LC_VD_PRECHARGEON = LC_EL_false;
       LC_this->LC_VD_CONTACT = LC_EL_true;
-      LC_this->LC_VD_CONTACTNEG = LC_EL_true;
+      LC_this->LC_VD_CONTACTNEG = LC_EL_false;
       {
         LC_TD_BOOL conditionResult = LC_EL_false;
         conditionResult = (lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_FAULT,LC_this->LC_VD_SHUTDOWN)),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBK)))),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBKNEG))));

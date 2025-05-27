@@ -653,9 +653,9 @@ static char const lcmd_var_name_HEMABATTERY_CONTACTFBKCHARGE[] = "contactFbkChar
 static RISMDStdVariable const lcmd_var_HEMABATTERY_CONTACTFBKCHARGE =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_CONTACTFBKCHARGE, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_CONTACTFBKCHARGE));
 
-static char const lcmd_var_name_HEMABATTERY_CONTACTFBKNEG[] = "contactFbkNeg";
-static RISMDStdVariable const lcmd_var_HEMABATTERY_CONTACTFBKNEG =
-INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_CONTACTFBKNEG, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_CONTACTFBKNEG));
+static char const lcmd_var_name_HEMABATTERY_CONTACTFBKDISCHARGE[] = "contactFbkDischarge";
+static RISMDStdVariable const lcmd_var_HEMABATTERY_CONTACTFBKDISCHARGE =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_CONTACTFBKDISCHARGE, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_CONTACTFBKDISCHARGE));
 
 static char const lcmd_var_name_HEMABATTERY_CONTACTNEGENABLE[] = "contactNegEnable";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_CONTACTNEGENABLE =
@@ -722,6 +722,10 @@ INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_DISCHARGECOMPLETE, &risMdType_BO
 static char const lcmd_var_name_HEMABATTERY_DISCHARGEENB[] = "dischargeENB";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_DISCHARGEENB =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_DISCHARGEENB, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_DISCHARGEENB));
+
+static char const lcmd_var_name_HEMABATTERY_DISCHARGEINVOLTAGE[] = "DischargeInVoltage";
+static RISMDStdVariable const lcmd_var_HEMABATTERY_DISCHARGEINVOLTAGE =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_DISCHARGEINVOLTAGE, &risMdType_REAL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_DISCHARGEINVOLTAGE));
 
 static char const lcmd_var_name_HEMABATTERY_DISCHARGEOFF[] = "dischargeOff";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_DISCHARGEOFF =
@@ -1256,13 +1260,9 @@ static char const lcmd_var_name_HEMABATTERY_MULTAMPDISCH[] = "multAmpDisch";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_MULTAMPDISCH =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_MULTAMPDISCH, &risMdType_REAL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_MULTAMPDISCH));
 
-static char const lcmd_var_name_HEMABATTERY_NEW_CONTACTENABLE1[] = "new_contactEnable1";
-static RISMDStdVariable const lcmd_var_HEMABATTERY_NEW_CONTACTENABLE1 =
-INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_NEW_CONTACTENABLE1, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_NEW_CONTACTENABLE1));
-
-static char const lcmd_var_name_HEMABATTERY_NEW_CONTACTENABLE2[] = "new_contactEnable2";
-static RISMDStdVariable const lcmd_var_HEMABATTERY_NEW_CONTACTENABLE2 =
-INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_NEW_CONTACTENABLE2, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_NEW_CONTACTENABLE2));
+static char const lcmd_var_name_HEMABATTERY_NEW_CHG_CONTACT[] = "new_CHG_CONTACT";
+static RISMDStdVariable const lcmd_var_HEMABATTERY_NEW_CHG_CONTACT =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_NEW_CHG_CONTACT, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_NEW_CHG_CONTACT));
 
 static char const lcmd_var_name_HEMABATTERY_NEW_CONTACTFBK1[] = "new_contactFbk1";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_NEW_CONTACTFBK1 =
@@ -1271,6 +1271,10 @@ INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_NEW_CONTACTFBK1, &risMdType_BOOL
 static char const lcmd_var_name_HEMABATTERY_NEW_CONTACTFBK2[] = "new_contactFbk2";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_NEW_CONTACTFBK2 =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_NEW_CONTACTFBK2, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_NEW_CONTACTFBK2));
+
+static char const lcmd_var_name_HEMABATTERY_NEW_DCHG_CONTACT[] = "new_DCHG_CONTACT";
+static RISMDStdVariable const lcmd_var_HEMABATTERY_NEW_DCHG_CONTACT =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_NEW_DCHG_CONTACT, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_NEW_DCHG_CONTACT));
 
 extern RISMDPOUType const lcmd_type_NTC;
 static char const lcmd_var_name_HEMABATTERY_NTC2[] = "NTC2";
@@ -2579,6 +2583,10 @@ static char const lcmd_var_name_HEMABATTERY___816_DIV[] = "__816_DIV";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___816_DIV =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___816_DIV, &risMdType_REAL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___816_DIV));
 
+static char const lcmd_var_name_HEMABATTERY___833_OR[] = "__833_OR";
+static RISMDStdVariable const lcmd_var_HEMABATTERY___833_OR =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___833_OR, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___833_OR));
+
 static char const lcmd_var_name_HEMABATTERY___838_MIN[] = "__838_MIN";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___838_MIN =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___838_MIN, &risMdType_REAL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___838_MIN));
@@ -2839,7 +2847,7 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CONTACTENABLE_BATT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CONTACTFBK),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CONTACTFBKCHARGE),
-  INIT_RISMDReference(&lcmd_var_HEMABATTERY_CONTACTFBKNEG),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY_CONTACTFBKDISCHARGE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CONTACTNEGENABLE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CONTACTNEGENABLE_BATT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CTU1),
@@ -2856,6 +2864,7 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_DISCHARGECMD),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_DISCHARGECOMPLETE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_DISCHARGEENB),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY_DISCHARGEINVOLTAGE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_DISCHARGEOFF),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_DISCHARGEPROTECT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_DISCHARGETERMINATE),
@@ -2986,10 +2995,10 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_MEASURE_AUX),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_MULTAMPCHAR),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_MULTAMPDISCH),
-  INIT_RISMDReference(&lcmd_var_HEMABATTERY_NEW_CONTACTENABLE1),
-  INIT_RISMDReference(&lcmd_var_HEMABATTERY_NEW_CONTACTENABLE2),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY_NEW_CHG_CONTACT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_NEW_CONTACTFBK1),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_NEW_CONTACTFBK2),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY_NEW_DCHG_CONTACT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_NTC2),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_NTCBETA),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_NUMBER_OF_BMU),
@@ -3313,6 +3322,7 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___793_EQ),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___803_LT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___816_DIV),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY___833_OR),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___838_MIN),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___859_EQ),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___861_SEL),
@@ -3342,4 +3352,4 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
 };
 
 static char const lcmd_type_name_HEMABATTERY[] = "HEMABATTERY";
-RISMDPOUType const lcmd_type_HEMABATTERY = INIT_RISMDPOUType(lcmd_type_name_HEMABATTERY, sizeof(LC_TD_Program_HEMABATTERY), 654, lcmd_var_list_HEMABATTERY);
+RISMDPOUType const lcmd_type_HEMABATTERY = INIT_RISMDPOUType(lcmd_type_name_HEMABATTERY, sizeof(LC_TD_Program_HEMABATTERY), 656, lcmd_var_list_HEMABATTERY);

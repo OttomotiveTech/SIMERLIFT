@@ -83,14 +83,14 @@ CASE BATTERYSTATE OF
 		STATE:=BATTSTATE#PRECHARGE;
 		BATSTATEINTERVAL:=T#5s;
 		
-		contactNeg:=1;
+		//contactNeg:=1;
 
 		IF BATSTATEELAPSEDTIME>T#50ms AND contactFbkNeg THEN
 			prechargeOn:=1;
 		END_IF;
 		
 		IF prechargeOk THEN
-			contact:=1;
+			contactNeg:=1;
 		END_IF;
 		
 		IF fault OR NOT(discharge OR charge) OR shutdown OR BATSTATETIMEOUT THEN
@@ -109,7 +109,7 @@ CASE BATTERYSTATE OF
 		BATSTATEINTERVAL:=T#120s;
 		
 		prechargeOn:=0;
-		contact:=1;
+		contact:=0;
 		contactNeg:=1;
 
 		IF fault OR shutdown OR NOT contactFbk OR NOT contactFbkNeg THEN
@@ -129,7 +129,7 @@ CASE BATTERYSTATE OF
 		
 		prechargeOn:=0;
 		contact:=1;
-		contactNeg:=1;
+		contactNeg:=0;
 
 		IF fault OR shutdown OR NOT contactFbk OR NOT contactFbkNeg THEN
 			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
