@@ -71,6 +71,7 @@ C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___ampmulttempdis.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___ampmultvoltchar.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___ampmultvoltdisc.c \
+C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___arr2val.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___avg.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___balance_isz.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___bcu_balance_status.c \
@@ -199,6 +200,7 @@ C_DEPS += \
 ./logi/src-gen/lcfu___ampmulttempdis.d \
 ./logi/src-gen/lcfu___ampmultvoltchar.d \
 ./logi/src-gen/lcfu___ampmultvoltdisc.d \
+./logi/src-gen/lcfu___arr2val.d \
 ./logi/src-gen/lcfu___avg.d \
 ./logi/src-gen/lcfu___balance_isz.d \
 ./logi/src-gen/lcfu___bcu_balance_status.d \
@@ -327,6 +329,7 @@ OBJS += \
 ./logi/src-gen/lcfu___ampmulttempdis.obj \
 ./logi/src-gen/lcfu___ampmultvoltchar.obj \
 ./logi/src-gen/lcfu___ampmultvoltdisc.obj \
+./logi/src-gen/lcfu___arr2val.obj \
 ./logi/src-gen/lcfu___avg.obj \
 ./logi/src-gen/lcfu___balance_isz.obj \
 ./logi/src-gen/lcfu___bcu_balance_status.obj \
@@ -455,6 +458,7 @@ OBJS__QUOTED += \
 "logi\src-gen\lcfu___ampmulttempdis.obj" \
 "logi\src-gen\lcfu___ampmultvoltchar.obj" \
 "logi\src-gen\lcfu___ampmultvoltdisc.obj" \
+"logi\src-gen\lcfu___arr2val.obj" \
 "logi\src-gen\lcfu___avg.obj" \
 "logi\src-gen\lcfu___balance_isz.obj" \
 "logi\src-gen\lcfu___bcu_balance_status.obj" \
@@ -583,6 +587,7 @@ C_DEPS__QUOTED += \
 "logi\src-gen\lcfu___ampmulttempdis.d" \
 "logi\src-gen\lcfu___ampmultvoltchar.d" \
 "logi\src-gen\lcfu___ampmultvoltdisc.d" \
+"logi\src-gen\lcfu___arr2val.d" \
 "logi\src-gen\lcfu___avg.d" \
 "logi\src-gen\lcfu___balance_isz.d" \
 "logi\src-gen\lcfu___bcu_balance_status.d" \
@@ -711,6 +716,7 @@ C_SRCS__QUOTED += \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___ampmulttempdis.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___ampmultvoltchar.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___ampmultvoltdisc.c" \
+"C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___arr2val.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___avg.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___balance_isz.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___bcu_balance_status.c" \

@@ -1,0 +1,25 @@
+FUNCTION_BLOCK ARR2VAL  {
+    width := 200;
+  }
+
+VAR_INPUT
+	MaxBMU:USINT;
+    indx:USINT;
+	Map:ARRAY[0..15] OF USINT;
+	CellCounter:USINT;
+END_VAR
+
+VAR_OUTPUT
+	numofCell : UINT;
+	Reset:BOOL;
+END_VAR
+
+Reset:=FALSE;
+numofCell:=Map[indx];
+
+IF (NOT Reset) AND (indx = MaxBMU - 1) AND (CellCounter = Map[indx]) THEN
+    Reset := TRUE;
+END_IF;
+
+END_FUNCTION_BLOCK
+

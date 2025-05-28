@@ -46,6 +46,7 @@ logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_P
 logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_PROGRAM1.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___ampmultvoltchar.h
 logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_PROGRAM1.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___ampmultvoltdisc.h
 logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_PROGRAM1.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___anlg.h
+logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_PROGRAM1.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___arr2val.h
 logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_PROGRAM1.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___balance_isz.h
 logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_PROGRAM1.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___flash.h
 logi/src-gen/localconfiguration/local.builtinplc/instances/LC3PI_INSTANCE_DATA_PROGRAM1.obj: C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__AND.h
@@ -226,6 +227,8 @@ C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___ampmultvoltdisc.h:
 
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___anlg.h:
+
+C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___arr2val.h:
 
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___balance_isz.h:
 

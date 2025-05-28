@@ -7,6 +7,7 @@
 #include "src-gen/lcfu___ampmulttempdis.c"
 #include "src-gen/lcfu___ampmultvoltchar.c"
 #include "src-gen/lcfu___ampmultvoltdisc.c"
+#include "src-gen/lcfu___arr2val.c"
 #include "src-gen/lcfu___balance_isz.c"
 #include "src-gen/lcfu___bcu_battery_status.c"
 #include "src-gen/lcfu___bcu_cell_status.c"

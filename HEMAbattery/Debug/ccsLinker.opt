@@ -284,6 +284,7 @@
 "./logi/src-gen/lcfu___ampmulttempdis.obj"
 "./logi/src-gen/lcfu___ampmultvoltchar.obj"
 "./logi/src-gen/lcfu___ampmultvoltdisc.obj"
+"./logi/src-gen/lcfu___arr2val.obj"
 "./logi/src-gen/lcfu___avg.obj"
 "./logi/src-gen/lcfu___balance_isz.obj"
 "./logi/src-gen/lcfu___bcu_balance_status.obj"

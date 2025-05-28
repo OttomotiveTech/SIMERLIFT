@@ -7,6 +7,7 @@
 #include "src-gen/rismd/mdfu___ampmulttempdis.c"
 #include "src-gen/rismd/mdfu___ampmultvoltchar.c"
 #include "src-gen/rismd/mdfu___ampmultvoltdisc.c"
+#include "src-gen/rismd/mdfu___arr2val.c"
 #include "src-gen/rismd/mdfu___balance_isz.c"
 #include "src-gen/rismd/mdfu___bcu_battery_status.c"
 #include "src-gen/rismd/mdfu___bcu_cell_status.c"
