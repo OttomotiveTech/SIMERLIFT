@@ -1,4 +1,4 @@
 #include <RISMD.h>
 
-RISMDFingerprint const lcmd_fingerprint = INIT_RISMDFingerprint(4211306785);
+RISMDFingerprint const lcmd_fingerprint = INIT_RISMDFingerprint(1394622312);
 

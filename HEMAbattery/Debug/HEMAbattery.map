@@ -1,0 +1,2106 @@
+******************************************************************************
+                  TI ARM Linker PC v20.2.7                     
+******************************************************************************
+>> Linked Wed May 28 14:28:12 2025
+
+OUTPUT FILE NAME:   <HEMAbattery.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 0003e504
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  VECTORS               0000c000   00000020  00000020  00000000     X
+  KERNEL                0000c020   00004000  00002e7c  00001184  R  X
+  FLASH0                00010020   0004ffe0  0003aee8  000150f8  R  X
+  STACKS                08000000   00000400  00000000  00000400  RW  
+  KRAM                  08000400   00000200  00000104  000000fc  RW  
+  HRAM                  08000600   00002200  00002000  00000200  RW  
+  RAM                   08002800   00005800  00003eb2  0000194e  RW  
+
+
+SEGMENT ALLOCATION MAP
+
+run origin  load origin   length   init length attrs members
+----------  ----------- ---------- ----------- ----- -------
+0000c000    0000c000    00002ea0   00002ea0    r-x
+  0000c000    0000c000    00000020   00000020    r-x .intvecs
+  0000c020    0000c020    00002d5c   00002d5c    r-x .kernelTEXT
+  0000ed80    0000ed80    00000120   00000120    r-- .cinit
+00010020    00010020    0003aee8   0003aee8    r-x
+  00010020    00010020    0003a438   0003a438    r-x .text
+  0004a458    0004a458    00000ab0   00000ab0    r-- .const
+08000400    08000400    00000104   00000000    rw-
+  08000400    08000400    00000104   00000000    rw- .kernelBSS
+08000600    08000600    00002000   00000000    rw-
+  08000600    08000600    00002000   00000000    rw- .kernelHEAP
+08002800    08002800    00003eb4   00000000    rw-
+  08002800    08002800    00003c56   00000000    rw- .bss
+  08006458    08006458    0000025c   00000000    rw- .data
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.intvecs   0    0000c000    00000020     
+                  0000c000    00000020     sys_intvecs.obj (.intvecs)
+
+.kernelTEXT 
+*          0    0000c020    00002d5c     
+                  0000c020    000003b0     os_portasm.obj (.kernelTEXT)
+                  0000c3d0    00000314     os_queue.obj (.kernelTEXT:xQueueGenericReceive)
+                  0000c6e4    000002c0     os_queue.obj (.kernelTEXT:xQueueGenericSend)
+                  0000c9a4    00000274     os_port.obj (.kernelTEXT:vPortStoreTaskMPUSettings)
+                  0000cc18    00000268     os_heap.obj (.kernelTEXT:pvPortMalloc)
+                  0000ce80    00000254     os_tasks.obj (.kernelTEXT:xTaskIncrementTick)
+                  0000d0d4    00000244     os_tasks.obj (.kernelTEXT:prvInitialiseNewTask)
+                  0000d318    000001d4     os_tasks.obj (.kernelTEXT:xTaskResumeAll)
+                  0000d4ec    00000174     os_queue.obj (.kernelTEXT:prvCopyDataToQueue)
+                  0000d660    00000174     os_tasks.obj (.kernelTEXT:vTaskDelayUntil)
+                  0000d7d4    00000170     os_tasks.obj (.kernelTEXT:xTaskPriorityDisinherit)
+                  0000d944    00000168     os_tasks.obj (.kernelTEXT:vTaskPriorityInherit)
+                  0000daac    00000144     os_tasks.obj (.kernelTEXT:xTaskCheckForTimeOut)
+                  0000dbf0    00000140     os_tasks.obj (.kernelTEXT:prvAddCurrentTaskToDelayedList)
+                  0000dd30    0000013c     os_tasks.obj (.kernelTEXT:prvAddNewTaskToReadyList)
+                  0000de6c    00000128     os_queue.obj (.kernelTEXT:xQueueGenericReset)
+                  0000df94    0000010c     os_queue.obj (.kernelTEXT:prvUnlockQueue)
+                  0000e0a0    00000108     os_tasks.obj (.kernelTEXT:xTaskRemoveFromEventList)
+                  0000e1a8    00000100     os_heap.obj (.kernelTEXT:vPortFree)
+                  0000e2a8    000000f4     os_tasks.obj (.kernelTEXT:vTaskSwitchContext)
+                  0000e39c    000000f0     os_port.obj (.kernelTEXT:pxPortInitialiseStack)
+                  0000e48c    000000e4     os_tasks.obj (.kernelTEXT:xTaskCreate)
+                  0000e570    000000b8     os_tasks.obj (.kernelTEXT:prvGetExpectedIdleTime)
+                  0000e628    000000b4     os_tasks.obj (.kernelTEXT:prvCheckTasksWaitingTermination)
+                  0000e6dc    000000b4     os_tasks.obj (.kernelTEXT:vTaskStartScheduler)
+                  0000e790    000000b0     os_queue.obj (.kernelTEXT:xQueueGenericCreate)
+                  0000e840    000000ac     os_tasks.obj (.kernelTEXT:prvInitialiseTaskLists)
+                  0000e8ec    00000088     os_tasks.obj (.kernelTEXT:vTaskDelay)
+                  0000e974    00000078     os_queue.obj (.kernelTEXT:prvCopyDataFromQueue)
+                  0000e9ec    00000078     os_tasks.obj (.kernelTEXT:prvDeleteTCB)
+                  0000ea64    0000006c     os_queue.obj (.kernelTEXT:prvInitialiseNewQueue)
+                  0000ead0    00000058     os_tasks.obj (.kernelTEXT:xTaskGetSchedulerState)
+                  0000eb28    00000054     os_queue.obj (.kernelTEXT:prvInitialiseMutex)
+                  0000eb7c    00000048     os_tasks.obj (.kernelTEXT:vTaskPlaceOnEventList)
+                  0000ebc4    00000048     os_tasks.obj (.kernelTEXT:vTaskSetTimeOutState)
+                  0000ec0c    00000044     os_queue.obj (.kernelTEXT:prvIsQueueFull)
+                  0000ec50    00000044     os_queue.obj (.kernelTEXT:xQueueCreateMutex)
+                  0000ec94    0000003c     os_queue.obj (.kernelTEXT:prvIsQueueEmpty)
+                  0000ecd0    00000038     os_tasks.obj (.kernelTEXT:pvTaskIncrementMutexHeldCount)
+                  0000ed08    00000028     os_port.obj (.kernelTEXT:xPortStartScheduler)
+                  0000ed30    00000020     os_tasks.obj (.kernelTEXT:xTaskGetTickCount)
+                  0000ed50    00000018     os_tasks.obj (.kernelTEXT:vTaskSuspendAll)
+                  0000ed68    00000014     os_tasks.obj (.kernelTEXT:vTaskMissedYield)
+
+.cinit     0    0000ed80    00000120     
+                  0000ed80    000000d6     (.cinit..data.load) [load image, compression = lzss]
+                  0000ee56    00000002     --HOLE-- [fill = 0]
+                  0000ee58    0000000c     (__TI_handler_table)
+                  0000ee64    00000009     (.cinit..kernelBSS.load) [load image, compression = lzss]
+                  0000ee6d    00000003     --HOLE-- [fill = 0]
+                  0000ee70    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000ee78    00000008     (.cinit..kernelHEAP.load) [load image, compression = zero_init]
+                  0000ee80    00000020     (__TI_cinit_table)
+
+.text      0    00010020    0003a438     
+                  00010020    00011c20     LC3PT_HEMABATTERY.obj (.text:LC_PT_Init_HEMABATTERY)
+                  00021c40    00007f70     lcpu___hemabattery.obj (.text:lcpu___HEMABATTERY)
+                  00029bb0    00001c68     lcfu___bcu_fault_codes.obj (.text:lcfu___BCU_FAULT_CODES)
+                  0002b818    000016ec     lcfu___cms_ivt.obj (.text:lcfu___CMS_IVT)
+                  0002cf04    000011f8     rtsv7R4_A_be_eabi.lib : _scanfi.c.obj (.text:__TI_scanfi)
+                  0002e0fc    00000e8c                           : e_pow.c.obj (.text:pow)
+                  0002ef88    00000c20     lcfu___essstate1.obj (.text:lcfu___ESSSTATE1)
+                  0002fba8    00000a88     bq76pl455.obj (.text:PLchain_init)
+                  00030630    000009a0     lcfu___bcu_state_message.obj (.text:lcfu___BCU_STATE_MESSAGE)
+                  00030fd0    00000980     battStack.obj (.text:BATTSTACK)
+                  00031950    000007d0     main.obj (.text:init_LOGICAD)
+                  00032120    0000076c     bq76pl455.obj (.text:PLfaults)
+                  0003288c    00000694     lcfu___chargestate.obj (.text:lcfu___CHARGESTATE)
+                  00032f20    00000688     lcfu___gui.obj (.text:lcfu___GUI)
+                  000335a8    00000680     ConfigRead.obj (.text:ConfigRead)
+                  00033c28    00000664     rtsv7R4_A_be_eabi.lib : strtod.c.obj (.text:strtod)
+                  0003428c    00000658     lcfu___battstackinfo.obj (.text:lcfu___BATTSTACKINFO)
+                  000348e4    00000600     adc_tms.obj (.text:adcGroupGetData)
+                  00034ee4    000005e8     lcfu___max_min_voltage_status.obj (.text:lcfu___MAX_MIN_VOLTAGE_STATUS)
+                  000354cc    000005e4     lcfu___bamtx.obj (.text:lcfu___BAMTX)
+                  00035ab0    000005a8     lcfu___bcu_status2.obj (.text:lcfu___BCU_STATUS2)
+                  00036058    0000058c     lcfu___canrecv.obj (.text:lcfu___CANRECV)
+                  000365e4    0000058c     rtsv7R4_A_be_eabi.lib : e_log.c.obj (.text:log)
+                  00036b70    00000528     lcfu___socstate.obj (.text:lcfu___SOCSTATE)
+                  00037098    00000514     lcfu___battstack.obj (.text:lcfu___BATTSTACK)
+                  000375ac    00000510     bq76pl455.obj (.text:PL455_writeReg)
+                  00037abc    00000508     lcfu___bcu_cell_status.obj (.text:lcfu___BCU_CELL_STATUS)
+                  00037fc4    00000504     lcfu___balance_isz.obj (.text:lcfu___BALANCE_ISZ)
+                  000384c8    000004e8     lcfu___cansend.obj (.text:lcfu___CANSEND)
+                  000389b0    000004a8     lcfu___bcu_id.obj (.text:lcfu___BCU_ID)
+                  00038e58    00000468     lcfu___bcu_battery_status.obj (.text:lcfu___BCU_BATTERY_STATUS)
+                  000392c0    00000464     spi.obj (.text:spiInit)
+                  00039724    000003c8     lcfu___hvcu_control_state.obj (.text:lcfu___HVCU_CONTROL_STATE)
+                  00039aec    000003bc     lcfu___wflt.obj (.text:lcfu___WFLT)
+                  00039ea8    000003ac     lcfu___can_test.obj (.text:lcfu___CAN_TEST)
+                  0003a254    000003a8     sys_selftest.obj (.text:errata_PBIST_4)
+                  0003a5fc    0000039c     lcfu___fmemw_real.obj (.text:lcfu___FMEMW_REAL)
+                  0003a998    00000398     lcfu___ampmulttempdis.obj (.text:lcfu___AMPMULTTEMPDIS)
+                  0003ad30    0000038c     rtsv7R4_A_be_eabi.lib : e_logf.c.obj (.text:logf)
+                  0003b0bc    00000344     lcfu___dgtin.obj (.text:lcfu___DGTIN)
+                  0003b400    00000330     lcfu___safety_power.obj (.text:lcfu___SAFETY_POWER)
+                  0003b730    00000328     lcfu___hvcu_config.obj (.text:lcfu___HVCU_CONFIG)
+                  0003ba58    00000324     rtsv7R4_A_be_eabi.lib : e_fmod.c.obj (.text:fmod)
+                  0003bd7c    00000320     lcfu___ampmulttemp.obj (.text:lcfu___AMPMULTTEMP)
+                  0003c09c    000002f8     isabelcfg.obj (.text:isabelConfig)
+                  0003c394    000002ec     lcfu___ampmultvoltchar.obj (.text:lcfu___AMPMULTVOLTCHAR)
+                  0003c680    000002e8     lcfu___ampmultvoltdisc.obj (.text:lcfu___AMPMULTVOLTDISC)
+                  0003c968    000002d0     sys_core.obj (.text)
+                  0003cc38    000002c8     rtsv7R4_A_be_eabi.lib : strtoll.c.obj (.text:strtoll)
+                  0003cf00    000002c0     lcfu___wbit.obj (.text:lcfu___WBIT)
+                  0003d1c0    000002b4     rtsv7R4_A_be_eabi.lib : ull_div32.asm.obj (.text)
+                  0003d474    00000298     sys_selftest.obj (.text:checkRAMECC)
+                  0003d70c    00000288     spi.obj (.text:spi3HighInterruptLevel)
+                  0003d994    00000274     isabellaCan.obj (.text:ISABELLA_init)
+                  0003dc08    00000268     sys_vim.obj (.text:vimParityErrorHandler)
+                  0003de70    00000240     rtsv7R4_A_be_eabi.lib : strtoull.c.obj (.text:strtoull)
+                  0003e0b0    00000238     sys_selftest.obj (.text:pbistSelfCheck)
+                  0003e2e8    0000021c     bq76pl455.obj (.text:PLnode_getChannels)
+                  0003e504    00000214     sys_startup.obj (.text:_c_int00)
+                  0003e718    00000214     rtsv7R4_A_be_eabi.lib : fd_add32.asm.obj (.text)
+                  0003e92c    000001f4                           : strtol.c.obj (.text:strtol)
+                  0003eb20    000001ec     flash_task.obj (.text:Flash_Task_Handler)
+                  0003ed0c    000001ec     rtsv7R4_A_be_eabi.lib : e_sqrt.c.obj (.text:sqrt)
+                  0003eef8    000001e4     IS25.obj (.text:IS25_progMem_reduced)
+                  0003f0dc    000001e4     bq76pl455.obj (.text:PL455_writeFrame)
+                  0003f2c0    000001c4     canbus.obj (.text:canbusTx)
+                  0003f484    000001c0     uart_ext.obj (.text:UARTx_sendData)
+                  0003f644    000001c0     adc.obj (.text:adcInit)
+                  0003f804    000001b8     plStack.obj (.text:PLstack_init)
+                  0003f9bc    000001b8     lcfu___rbit.obj (.text:lcfu___RBIT)
+                  0003fb74    000001b8     rtsv7R4_A_be_eabi.lib : strtoul.c.obj (.text:strtoul)
+                  0003fd2c    000001a4     IS25.obj (.text:IS25_writeMem)
+                  0003fed0    00000194     rtsv7R4_A_be_eabi.lib : e_fmodf.c.obj (.text:fmodf)
+                  00040064    00000194     lcfu___updowncnttim.obj (.text:lcfu___UPDOWNCNTTIM)
+                  000401f8    00000190     adc.obj (.text:adcGetData)
+                  00040388    00000190     rtsv7R4_A_be_eabi.lib : fd_div32.asm.obj (.text)
+                  00040518    00000188     errata_SSWF021_45.obj (.text:_errata_SSWF021_45_pll1)
+                  000406a0    00000180     rtsv7R4_A_be_eabi.lib : memcpy32.asm.obj (.text)
+                  00040820    0000017c     plStack.obj (.text:PLstack_getFault)
+                  0004099c    0000017c     canbus.obj (.text:canbusReceive)
+                  00040b18    00000168     bq76pl455.obj (.text:PL455_frmFsmDecode)
+                  00040c80    00000160     lcfu___ntc.obj (.text:lcfu___NTC)
+                  00040de0    00000158     esm.obj (.text:esmInit)
+                  00040f38    00000158     rtsv7R4_A_be_eabi.lib : s_floor.c.obj (.text:floor)
+                  00041090    0000014c     bq76pl455.obj (.text:PL455_readReg)
+                  000411dc    00000148     bq76pl455.obj (.text:PLchain_minAuxSense)
+                  00041324    00000140     canbus.obj (.text:canbusInit)
+                  00041464    00000140     os_heap.obj (.text:prvHeapInit)
+                  000415a4    00000140     os_heap.obj (.text:prvInsertBlockIntoFreeList)
+                  000416e4    0000013c     spiRxTx.obj (.text:SPI_txBuffer)
+                  00041820    0000013c     canbus.obj (.text:canbusSetBoxRx)
+                  0004195c    0000013c     lcfu___socisz.obj (.text:lcfu___SOCISZ)
+                  00041a98    0000013b     bq76pl455.obj (.text:PLchain_displayChannelVoltages)
+                  00041bd3    00000001     --HOLE-- [fill = 0]
+                  00041bd4    00000138     lcfu___flash.obj (.text:lcfu___FLASH)
+                  00041d0c    00000134     lcfu_iec61131__TP.obj (.text:lcfu_iec61131__TP)
+                  00041e40    00000134     rtsv7R4_A_be_eabi.lib : fs_add32.asm.obj (.text)
+                  00041f74    00000134     sci.obj (.text:sciInit)
+                  000420a8    00000134     spi.obj (.text:spiSendAndGetData)
+                  000421dc    00000130     bq76pl455.obj (.text:PLchain_maxAuxSense)
+                  0004230c    00000130     canbus.obj (.text:canbusSend)
+                  0004243c    00000128     bq76pl455.obj (.text:PLchain_sampleAndReadNodeChannels)
+                  00042564    00000128     spiRxTx.obj (.text:SPI_rxBuffer)
+                  0004268c    00000128     rtsv7R4_A_be_eabi.lib : fd_mul32.asm.obj (.text)
+                  000427b4    00000120     bq76pl455.obj (.text:PLchain_minCellSense)
+                  000428d4    00000120     rtsv7R4_A_be_eabi.lib : s_scalbn.c.obj (.text:scalbn)
+                  000429f4    00000110     lcfu___numofcells.obj (.text:lcfu___NUMOFCELLS)
+                  00042b04    00000110     sys_vim.obj (.text:vimInit)
+                  00042c14    0000010c     main.obj (.text:main)
+                  00042d20    0000010c     sys_selftest.obj (.text:mibspi1ParityCheck)
+                  00042e2c    00000108     bq76pl455.obj (.text:PLchain_maxCellSense)
+                  00042f34    00000108     lcfu___rmem_real.obj (.text:lcfu___RMEM_REAL)
+                  0004303c    00000104     het.obj (.text:hetInit)
+                  00043140    00000104     sci.obj (.text:linHighLevelInterrupt)
+                  00043244    00000100     lcfu_iec61131__TOF.obj (.text:lcfu_iec61131__TOF)
+                  00043344    00000100     lcfu_iec61131__TON.obj (.text:lcfu_iec61131__TON)
+                  00043444    000000fc     lcfu_iec61131__CONVERT.obj (.text:LCfu_iec61131__CONVERT_roundhalfeven_impl)
+                  00043540    000000f8     qrb_ex.obj (.text:qrbx_find_char)
+                  00043638    000000f4     plStack.obj (.text:PLstack_aux2CellTab)
+                  0004372c    000000f4     canbus.obj (.text:canbusGetBox)
+                  00043820    000000f0     uart_ext.obj (.text:UARTx_initHW)
+                  00043910    000000f0     battStack.obj (.text:initializeStack)
+                  00043a00    000000f0     lcfu_iec61131__CTU.obj (.text:lcfu_iec61131__CTU)
+                  00043af0    000000ec     lcfu_iec61131__ENDIAN.obj (.text:LCfu_iec61131__ENDIAN_Swap8)
+                  00043bdc    000000ec     can64_bit_opr.obj (.text:canBytesToCan64)
+                  00043cc8    000000ec     canbus.obj (.text:canbusSetBoxTx)
+                  00043db4    000000ec     esm.obj (.text:esmHighInterrupt)
+                  00043ea0    000000e8     dabort.obj (.text)
+                  00043f88    000000e8     system.obj (.text:mapClocks)
+                  00044070    000000e8     rtsv7R4_A_be_eabi.lib : s_modf.c.obj (.text:modf)
+                  00044158    000000e8     sys_selftest.obj (.text:pbistRun)
+                  00044240    000000e8     uart_ext.obj (.text:sciNotification)
+                  00044328    000000e4     battStack.obj (.text:battStackTask)
+                  0004440c    000000e0     lcfu_iec61131__CONVERT.obj (.text:LCfu_iec61131__CONVERT_roundhalfevenF_impl)
+                  000444ec    000000e0     bq76pl455.obj (.text:PLchain_avCellSense)
+                  000445cc    000000e0     plStack.obj (.text:PLstack_maxTempAux)
+                  000446ac    000000e0     plStack.obj (.text:PLstack_minTempAux)
+                  0004478c    000000e0     rtsv7R4_A_be_eabi.lib : fd_cmp32.asm.obj (.text:__aeabi_cdcmple)
+                  0004486c    000000e0                           : fd_cmp32.asm.obj (.text:__aeabi_cdrcmple)
+                  0004494c    000000e0     chUart_qrbCom.obj (.text:initCellCom_qrb)
+                  00044a2c    000000e0     sys_pmu.obj (.text)
+                  00044b0c    000000dc     sys_selftest.obj (.text:can1ParityCheck)
+                  00044be8    000000dc     sys_selftest.obj (.text:can2ParityCheck)
+                  00044cc4    000000d8     main.obj (.text:LC_task)
+                  00044d9c    000000d8     isabellaCan.obj (.text:isaGetCfgResultData)
+                  00044e74    000000d4     rtsv7R4_A_be_eabi.lib : fs_div32.asm.obj (.text)
+                  00044f48    000000d0     errata_SSWF021_45.obj (.text:disable_plls)
+                  00045018    000000d0     os_port.obj (.text:prvSetupTimerInterrupt)
+                  000450e8    000000d0     sci.obj (.text:sciSetBaudrate)
+                  000451b8    000000cc     isabellaCan.obj (.text:ISA_storeConfigItems)
+                  00045284    000000cc     plStack.obj (.text:NTCtemp)
+                  00045350    000000cc     plStack.obj (.text:PLstack_channelV)
+                  0004541c    000000cc     rtsv7R4_A_be_eabi.lib : sscanf.c.obj (.text:_chkmbc)
+                  000454e8    000000cc     ConfigRead.obj (.text:getLine)
+                  000455b4    000000cc     can_box_deliver.obj (.text:initSystemCanBoxStorage)
+                  00045680    000000cc     system.obj (.text:systemInit)
+                  0004574c    000000c4     isabellaCan.obj (.text:ISA_getDeviceID)
+                  00045810    000000c4     plStack.obj (.text:PLstack_tempAux)
+                  000458d4    000000c4     gio.obj (.text:gioInit)
+                  00045998    000000c4     lcfu___iowr.obj (.text:lcfu___IOWR)
+                  00045a5c    000000c4     pinmux.obj (.text:muxInit)
+                  00045b20    000000c4     os_list.obj (.text:vListInsert)
+                  00045be4    000000c0     bq76pl455.obj (.text:PLnode_setCellBalThres)
+                  00045ca4    000000c0     sys_selftest.obj (.text:efcStuckZeroTest)
+                  00045d64    000000c0     sys_selftest.obj (.text:htu1ParityCheck)
+                  00045e24    000000c0     sys_selftest.obj (.text:vimParityCheck)
+                  00045ee4    000000bc     plStack.obj (.text:NTC_tempSteinhartK)
+                  00045fa0    000000b8     sys_selftest.obj (.text:adc1ParityCheck)
+                  00046058    000000b4     lcfu___isabelinit.obj (.text:lcfu___ISABELINIT)
+                  0004610c    000000b0     sys_selftest.obj (.text:het1ParityCheck)
+                  000461bc    000000b0     LC3AppInfo.obj (.text:lc_get_application_info)
+                  0004626c    000000b0     rtsv7R4_A_be_eabi.lib : memset32.asm.obj (.text)
+                  0004631c    000000b0     tmsOsPeripheral.obj (.text:tmsMutex_getModule)
+                  000463cc    000000ac     isabellaCan.obj (.text:ISA_getSerialNumber)
+                  00046478    000000ac     isabellaCan.obj (.text:ISA_setMode)
+                  00046524    000000ac     isabellaCan.obj (.text:ISA_setconfigResult)
+                  000465d0    000000ac     bq76pl455.obj (.text:PLchain_shutDown)
+                  0004667c    000000ac     bq76pl455.obj (.text:PLchain_totalCellSense)
+                  00046728    000000ac     errata_SSWF021_45.obj (.text:check_frequency)
+                  000467d4    000000ac     sys_selftest.obj (.text:checkefcSelfTest)
+                  00046880    000000a8     isabellaCan.obj (.text:emptyIsabelRxCan)
+                  00046928    000000a8     lcfu___tbuffer.obj (.text:lcfu___TBUFFER)
+                  000469d0    000000a8     rtsv7R4_A_be_eabi.lib : fs_mul32.asm.obj (.text)
+                  00046a78    000000a4     isabellaCan.obj (.text:isaSetCfgResultData)
+                  00046b1c    000000a0     lcfu___buffer.obj (.text:lcfu___BUFFER)
+                  00046bbc    000000a0     lcfu___guicfg_int.obj (.text:lcfu___GUICFG_INT)
+                  00046c5c    000000a0     lcfu___guicfg_real.obj (.text:lcfu___GUICFG_REAL)
+                  00046cfc    0000009c     rtsv7R4_A_be_eabi.lib : fd_tos32.asm.obj (.text)
+                  00046d98    00000098     uart_ext.obj (.text:UARTx_writeChar)
+                  00046e30    00000098     rtsv7R4_A_be_eabi.lib : ll_div32.asm.obj (.text)
+                  00046ec8    00000094     bq76pl455.obj (.text:CRC16)
+                  00046f5c    00000090     rtsv7R4_A_be_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  00046fec    0000008c     sys_selftest.obj (.text:efcCheck)
+                  00047078    0000008c     rtsv7R4_A_be_eabi.lib : s_modff.c.obj (.text:modff)
+                  00047104    0000008c                           : fd_toll32.asm.obj (.text)
+                  00047190    0000008c     os_list.obj (.text:uxListRemove)
+                  0004721c    00000088     bq76pl455.obj (.text:PLnode_setCellBalancing)
+                  000472a4    00000088     rtsv7R4_A_be_eabi.lib : fs_cmp32.asm.obj (.text:__aeabi_cfcmple)
+                  0004732c    00000088                           : fs_cmp32.asm.obj (.text:__aeabi_cfrcmple)
+                  000473b4    00000088     het.obj (.text:het1HighLevelInterrupt)
+                  0004743c    00000084     isabellaCan.obj (.text:ISA_getConfigResult)
+                  000474c0    00000084     rtsv7R4_A_be_eabi.lib : atoi.c.obj (.text:atoi)
+                  00047544    00000084     os_tasks.obj (.text:prvIdleTask)
+                  000475c8    00000084     can_box_deliver.obj (.text:pushBoxToCh)
+                  0004764c    00000084     rtsv7R4_A_be_eabi.lib : fs_toll32.asm.obj (.text)
+                  000476d0    00000080     isabellaCan.obj (.text:ISA_rxCanWithTmt)
+                  00047750    00000080     bq76pl455.obj (.text:PL455_rxFrame)
+                  000477d0    00000080     bq76pl455.obj (.text:PLchain_getBalReg)
+                  00047850    00000080     battStackOsPort.obj (.text:battStackPort_readMail)
+                  000478d0    00000080     qrb_ex.obj (.text:qrbx_enqueue)
+                  00047950    0000007c     bq76pl455.obj (.text:PLchain_setCellBalThres)
+                  000479cc    0000007c     plStack.obj (.text:PLstack_cellV)
+                  00047a48    0000007c     canbus.obj (.text:canbusWaitForBox)
+                  00047ac4    0000007c     tps65381.obj (.text:tps65381_readWrite)
+                  00047b40    00000078     battStackOsPort.obj (.text:battStackPort_sendMail)
+                  00047bb8    00000078     can_box_deliver.obj (.text:getNodeChannel)
+                  00047c30    00000078     os_port.obj (.text:prvSetupDefaultMPU)
+                  00047ca8    00000078     system.obj (.text:trimLPO)
+                  00047d20    00000074     flash_task.obj (.text:Flash_Que_Init)
+                  00047d94    00000074     IS25.obj (.text:IS25_init)
+                  00047e08    00000074     sys_selftest.obj (.text:pbistFail)
+                  00047e7c    00000074     qrb_ex.obj (.text:qrbx_dequeue)
+                  00047ef0    00000074     os_list.obj (.text:vListInsertEnd)
+                  00047f64    00000070     bq76pl455.obj (.text:PL455_rxFrameWithTimeout)
+                  00047fd4    00000070     bq76pl455.obj (.text:PLchain_clrCellBal)
+                  00048044    00000070     flash_box_deliver.obj (.text:initSystemFlashBoxStorage)
+                  000480b4    00000070     battStack.obj (.text:init_BATTSTACK)
+                  00048124    00000070     main.obj (.text:isTimeout)
+                  00048194    00000070     lcfu___iord.obj (.text:lcfu___IORD)
+                  00048204    00000070     can_box_deliver.obj (.text:pullBoxFromCh)
+                  00048274    0000006c     IS25.obj (.text:IS25_readMem)
+                  000482e0    0000006c     bq76pl455.obj (.text:PLchain_handleFault)
+                  0004834c    0000006c     plStack.obj (.text:PLstack_cell2AuxTab)
+                  000483b8    0000006c     plStack.obj (.text:PLstack_countNodes)
+                  00048424    0000006c     plStack.obj (.text:PLstack_totalCellNum)
+                  00048490    0000006c     os_tasks.obj (.text:prvResetNextTaskUnblockTime)
+                  000484fc    0000006c     qrb_ex.obj (.text:qrbx_full)
+                  00048568    00000068     spi.obj (.text:SpiRxStatus)
+                  000485d0    00000068     spi.obj (.text:SpiTxStatus)
+                  00048638    00000068     rtsv7R4_A_be_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  000486a0    00000068     os_port.obj (.text:prvGetMPURegionSizeSetting)
+                  00048708    00000068     tmsOsPeripheral.obj (.text:tmsMutex_init)
+                  00048770    00000068     tmsOsPeripheral.obj (.text:tmsMutex_take)
+                  000487d8    00000064     os_mpu_wrappers.obj (.text:MPU_xTaskCreate)
+                  0004883c    00000064     sys_selftest.obj (.text:disableParity)
+                  000488a0    00000064     sys_selftest.obj (.text:enableParity)
+                  00048904    00000064     system.obj (.text:periphInit)
+                  00048968    00000060     can64_bit_opr.obj (.text:can64toCanBytes)
+                  000489c8    0000005c     lcfu___anlg.obj (.text:lcfu___ANLG)
+                  00048a24    0000005c     sys_selftest.obj (.text:pbistPortTestStatus)
+                  00048a80    0000005c     rtsv7R4_A_be_eabi.lib : fd_toi32.asm.obj (.text)
+                  00048adc    0000005c                           : fs_tod32.asm.obj (.text)
+                  00048b38    00000058     gio.obj (.text:gioToggleBit)
+                  00048b90    00000058     rtsv7R4_A_be_eabi.lib : fd_tou32.asm.obj (.text)
+                  00048be8    00000058     system.obj (.text:setupPLL)
+                  00048c40    00000058     os_list.obj (.text:vListInitialise)
+                  00048c98    00000054     os_mpu_wrappers.obj (.text:MPU_xQueueGenericReceive)
+                  00048cec    00000054     os_mpu_wrappers.obj (.text:MPU_xQueueGenericSend)
+                  00048d40    00000054     memOpr.obj (.text:memRd_F32)
+                  00048d94    00000054     rtsv7R4_A_be_eabi.lib : i_div32.asm.obj (.text)
+                  00048de8    00000054     system.obj (.text:setupFlash)
+                  00048e3c    00000054     rtsv7R4_A_be_eabi.lib : sscanf.c.obj (.text:sscanf)
+                  00048e90    00000050     flash_task.obj (.text:Flash_Task_Init)
+                  00048ee0    00000050     IS25.obj (.text:IS25_sectorErase)
+                  00048f30    00000050     LCAPI_GenCode.obj (.text:LC_GC_EP_callInitCold)
+                  00048f80    00000050     gio.obj (.text:gioSetBit)
+                  00048fd0    00000050     rtsv7R4_A_be_eabi.lib : u_div32.asm.obj (.text)
+                  00049020    0000004c     LCAPI_GenCode.obj (.text:LC_GC_EP_callEntry)
+                  0004906c    0000004c     LCAPI_GenCode.obj (.text:LC_GC_Task_getInterval)
+                  000490b8    0000004c     LCAPI_GenCode.obj (.text:LC_GC_queryEP)
+                  00049104    0000004c     LCAPI_GenCode.obj (.text:LC_GC_queryTask)
+                  00049150    0000004c     os_mpu_wrappers.obj (.text:MPU_xQueueGenericCreate)
+                  0004919c    0000004c     rtsv7R4_A_be_eabi.lib : fs_toi32.asm.obj (.text)
+                  000491e8    0000004c                           : i_tofs32.asm.obj (.text)
+                  00049234    0000004c     tmsOsPeripheral.obj (.text:tmsMutex_give)
+                  00049280    00000048     LCAPI_GenCode.obj (.text:LC_GC_EP_getName)
+                  000492c8    00000048     LCAPI_GenCode.obj (.text:LC_GC_EP_getTask)
+                  00049310    00000048     LCAPI_GenCode.obj (.text:LC_GC_Task_getName)
+                  00049358    00000048     LCAPI_GenCode.obj (.text:LC_GC_Task_getPriority)
+                  000493a0    00000048     lcfu_iec61131__CONVERT.obj (.text:LCfu_iec61131__CONVERT_roundhalfevenF)
+                  000493e8    00000048     plStack.obj (.text:PLstack_boardBalReg)
+                  00049430    00000048     plStack.obj (.text:PLstack_boardCellNum)
+                  00049478    00000048     plStack.obj (.text:PLstack_boardFault)
+                  000494c0    00000048     can_box_deliver.obj (.text:pullBoxFromNode)
+                  00049508    00000048     can_box_deliver.obj (.text:pushBoxToNode)
+                  00049550    00000048     qrb_ex.obj (.text:qrbx_init)
+                  00049598    00000044     isabellaCan.obj (.text:ISA_rxCan)
+                  000495dc    00000044     lcfu_iec61131__CONVERT.obj (.text:LCfu_iec61131__CONVERT_roundhalfeven_unsigned)
+                  00049620    00000044     bq76pl455.obj (.text:PLnode_getCellBalancing)
+                  00049664    00000044     battStackOsPort.obj (.text:battStackPort_init)
+                  000496a8    00000044     sys_selftest.obj (.text:memoryInit)
+                  000496ec    00000040     IS25.obj (.text:IS25_rxBuffer)
+                  0004972c    00000040     IS25.obj (.text:IS25_txBuffer)
+                  0004976c    00000040     LCAPI_GenCode.obj (.text:LC_GC_getFingerprint)
+                  000497ac    00000040     lcfu_iec61131__ENDIAN.obj (.text:LCfu_iec61131__ENDIAN_Swap4)
+                  000497ec    00000040     memOpr.obj (.text:isLegalAddr)
+                  0004982c    00000040     rtsv7R4_A_be_eabi.lib : ull_tofd32.asm.obj (.text)
+                  0004986c    00000040     sci.obj (.text:sciEnableNotification)
+                  000498ac    0000003c     IS25.obj (.text:IS25_transmit)
+                  000498e8    0000003c     LCAPI_GenCode.obj (.text:LC_GC_getCodeImageInfo)
+                  00049924    0000003c     LCAPI_GenCode.obj (.text:LC_GC_getResourceName)
+                  00049960    0000003c     LC3PT_HEMABATTERY.obj (.text:LC_PT_Exec_HEMABATTERY)
+                  0004999c    0000003c     rtsv7R4_A_be_eabi.lib : i_tofd32.asm.obj (.text)
+                  000499d8    00000038     LCAPI_GenCode.obj (.text:LC_GC_getTimerFreq)
+                  00049a10    00000038     sys_selftest.obj (.text:efcSelfTest)
+                  00049a48    00000038     sys_selftest.obj (.text:pbistIsTestPassed)
+                  00049a80    00000038     rtsv7R4_A_be_eabi.lib : u_tofs32.asm.obj (.text)
+                  00049ab8    00000034     IS25.obj (.text:IS25_receive)
+                  00049aec    00000034     isabellaCan.obj (.text:ISA_txCan)
+                  00049b20    00000034     lcfu_iec61131__CONVERT.obj (.text:LCfu_iec61131__CONVERT_roundhalfevenF_unsigned)
+                  00049b54    00000034     LC3_EPDB.obj (.text:LCocc_queryEP)
+                  00049b88    00000034     LC3Task.obj (.text:LCocc_queryTASK)
+                  00049bbc    00000034     os_mpu_wrappers.obj (.text:MPU_vTaskDelayUntil)
+                  00049bf0    00000034     os_mpu_wrappers.obj (.text:MPU_xQueueCreateMutex)
+                  00049c24    00000034     main.obj (.text:edgeNotification)
+                  00049c58    00000034     rtsv7R4_A_be_eabi.lib : memcmp.c.obj (.text:memcmp)
+                  00049c8c    00000034     sys_selftest.obj (.text:pbistStop)
+                  00049cc0    00000034     qrb_ex.obj (.text:qrbx_empty)
+                  00049cf4    00000034     rtsv7R4_A_be_eabi.lib : u_tofd32.asm.obj (.text)
+                  00049d28    00000034                           : strncmp.c.obj (.text:strncmp)
+                  00049d5c    00000030     LCAPI_GenCode.obj (.text:LC_GC_getNumEPs)
+                  00049d8c    00000030     LCAPI_GenCode.obj (.text:LC_GC_getNumTasks)
+                  00049dbc    00000030     bq76pl455.obj (.text:PL_channel2V)
+                  00049dec    00000030     bq76pl455.obj (.text:PL_channel2mv)
+                  00049e1c    00000030     plStack.obj (.text:PLstack_measurement)
+                  00049e4c    00000030     adc.obj (.text:adcIsConversionComplete)
+                  00049e7c    00000030     flashMutex.obj (.text:init_flashMutex)
+                  00049eac    00000030     flash_box_deliver.obj (.text:pullBoxFromFlash)
+                  00049edc    0000002c     IS25.obj (.text:IS25_waitWIP)
+                  00049f08    0000002c     os_mpu_wrappers.obj (.text:MPU_vTaskDelay)
+                  00049f34    0000002c     os_mpu_wrappers.obj (.text:MPU_xTaskGetTickCount)
+                  00049f60    0000002c     os_mpu_wrappers.obj (.text:MPU_xTaskResumeAll)
+                  00049f8c    0000002c     sys_selftest.obj (.text:pbistIsTestCompleted)
+                  00049fb8    0000002c     rtsv7R4_A_be_eabi.lib : strrchr.c.obj (.text:strrchr)
+                  00049fe4    00000028     plStack.obj (.text:PLstack_maxCellV)
+                  0004a00c    00000028     plStack.obj (.text:PLstack_minCellV)
+                  0004a034    00000028     gio.obj (.text:gioGetBit)
+                  0004a05c    00000028     rtsv7R4_A_be_eabi.lib : strchr.c.obj (.text:strchr)
+                  0004a084    00000024     LC3GV.obj (.text:LC_GV_Init)
+                  0004a0a8    00000024     lcfu_iec61131__ENDIAN.obj (.text:LCfu_iec61131__ENDIAN_Swap2)
+                  0004a0cc    00000024     os_mpu_wrappers.obj (.text:MPU_vTaskSuspendAll)
+                  0004a0f0    00000024     plStack.obj (.text:PLstack_fault)
+                  0004a114    00000024     rtsv7R4_A_be_eabi.lib : ll_lsl32.asm.obj (.text)
+                  0004a138    00000024                           : ll_lsr32.asm.obj (.text)
+                  0004a15c    00000020     main.obj (.text:LEDs_init)
+                  0004a17c    00000020     gio.obj (.text:gioSetDirection)
+                  0004a19c    00000020     sci.obj (.text:sciSetFunctional)
+                  0004a1bc    00000020     rtsv7R4_A_be_eabi.lib : strlen.c.obj (.text:strlen)
+                  0004a1dc    0000001c     MBRTMain.obj (.text:LC3_qw_get_current_time_ep)
+                  0004a1f8    0000001c     main.obj (.text:LED1_off)
+                  0004a214    0000001c     plStack.obj (.text:PLstack_setBalThres)
+                  0004a230    0000001c     rtsv7R4_A_be_eabi.lib : sscanf.c.obj (.text:_inpchar)
+                  0004a24c    0000001c     notification.obj (.text:memoryPort0TestFailNotification)
+                  0004a268    0000001c     sci.obj (.text:sciIsTxReady)
+                  0004a284    0000001c     os_list.obj (.text:vListInitialiseItem)
+                  0004a2a0    00000018     plStack.obj (.text:PLstack_avCellV)
+                  0004a2b8    00000018     plStack.obj (.text:PLstack_totalCellV)
+                  0004a2d0    00000018     notification.obj (.text:pwmNotification)
+                  0004a2e8    00000018     rtsv7R4_A_be_eabi.lib : strcpy.c.obj (.text:strcpy)
+                  0004a300    00000014     plStack.obj (.text:PL455_intSet)
+                  0004a314    00000014     plStack.obj (.text:PLstack_clrBalThres)
+                  0004a328    00000014     plStack.obj (.text:PLstack_getBalReg)
+                  0004a33c    00000014     system.obj (.text:customTrimLPO)
+                  0004a350    00000014     rtsv7R4_A_be_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  0004a364    00000014     notification.obj (.text:spiNotification)
+                  0004a378    00000010     chUart_qrbCom.obj (.text:Dprintf)
+                  0004a388    00000010     plStack.obj (.text:PLstack_commTimeoutMsShutdown)
+                  0004a398    00000010     plStack.obj (.text:PLstack_numofBoards)
+                  0004a3a8    00000010     rtsv7R4_A_be_eabi.lib : sscanf.c.obj (.text:_uninpchar)
+                  0004a3b8    00000010                           : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
+                  0004a3c8    00000010     notification.obj (.text:esmGroup1Notification)
+                  0004a3d8    00000010     notification.obj (.text:esmGroup2Notification)
+                  0004a3e8    00000010     sys_selftest.obj (.text:selftestFailNotification)
+                  0004a3f8    00000010     notification.obj (.text:spiEndNotification)
+                  0004a408    0000000c     plStack.obj (.text:PLstack_shutdown)
+                  0004a414    0000000c     rtsv7R4_A_be_eabi.lib : errno.c.obj (.text:__aeabi_errno_addr)
+                  0004a420    0000000c                           : s_copysign.c.obj (.text:copysign)
+                  0004a42c    00000008     LC3_EPDB.obj (.text:LCocc_queryEPCount)
+                  0004a434    00000008     LC3Task.obj (.text:LCocc_queryTASKCount)
+                  0004a43c    00000008     rtsv7R4_A_be_eabi.lib : exit.c.obj (.text:abort:abort)
+                  0004a444    00000004     main.obj (.text:LED2_off)
+                  0004a448    00000004     sys_selftest.obj (.text:custom_dabort)
+                  0004a44c    00000004     sys_startup.obj (.text:handlePLLLockFail)
+                  0004a450    00000004     sys_phantom.obj (.text:phantomInterrupt)
+                  0004a454    00000004     rtsv7R4_A_be_eabi.lib : div0.asm.obj (.text)
+
+.const     0    0004a458    00000ab0     
+                  0004a458    000003a0     het.obj (.const:het1PROGRAM)
+                  0004a7f8    00000200     bq76pl455.obj (.const:crc16_table)
+                  0004a9f8    00000180     sys_vim.obj (.const:s_vim_init)
+                  0004ab78    00000101     rtsv7R4_A_be_eabi.lib : ctype.c.obj (.const:.string:_ctypes_)
+                  0004ac79    00000007                           : _scanfi.c.obj (.const:.string:flit$1)
+                  0004ac80    00000080                           : strtod.c.obj (.const:digits)
+                  0004ad00    00000054     LC3AppInfo.obj (.const:.string)
+                  0004ad54    00000002     lcfu___fmemw_real.obj (.const:$P$T1$2)
+                  0004ad56    00000002     lcfu___fmemw_real.obj (.const:$P$T2$3)
+                  0004ad58    00000048     rtsv7R4_A_be_eabi.lib : strtod.c.obj (.const:powerof10)
+                  0004ada0    00000040     lcfu___safety_power.obj (.const:tokenAnswers)
+                  0004ade0    00000038     bq76pl455.obj (.const:commTimeoutShutdown)
+                  0004ae18    00000020     canbus.obj (.const:canByteOrder)
+                  0004ae38    00000018     lcfu___fmemw_real.obj (.const:$P$T0$1)
+                  0004ae50    00000018     LC3AppInfo.obj (.const)
+                  0004ae68    00000010     rtsv7R4_A_be_eabi.lib : e_fmod.c.obj (.const:Zero)
+                  0004ae78    00000010                           : e_pow.c.obj (.const:bp)
+                  0004ae88    00000010                           : e_pow.c.obj (.const:dp_h)
+                  0004ae98    00000010                           : e_pow.c.obj (.const:dp_l)
+                  0004aea8    0000000f     LC3GV_EPDB.obj (.const:.string)
+                  0004aeb7    00000001     --HOLE-- [fill = 0]
+                  0004aeb8    0000000c     LC3PI_EPDB_PROGRAM1.obj (.const:.string)
+                  0004aec4    0000000c     LC3Task_DEFAULTTASK.obj (.const:.string)
+                  0004aed0    0000000c     adc.obj (.const:s_adcFiFoSize)
+                  0004aedc    00000008     isabellaCan.obj (.const:.string:$P$T0$1)
+                  0004aee4    00000008     isabellaCan.obj (.const:.string:$P$T1$2)
+                  0004aeec    00000008     isabellaCan.obj (.const:.string:$P$T4$5)
+                  0004aef4    00000008     rtsv7R4_A_be_eabi.lib : e_fmodf.c.obj (.const:Zero)
+                  0004aefc    00000006     isabellaCan.obj (.const:$P$T2$3)
+                  0004af02    00000006     rtsv7R4_A_be_eabi.lib : _scanfi.c.obj (.const:.string:barr$2)
+
+.kernelBSS 
+*          0    08000400    00000104     UNINITIALIZED
+                  08000400    000000d0     os_tasks.obj (.kernelBSS:uninit)
+                  080004d0    00000034     os_tasks.obj (.kernelBSS:init)
+
+.kernelHEAP 
+*          0    08000600    00002000     UNINITIALIZED
+                  08000600    00002000     os_heap.obj (.kernelHEAP)
+
+.bss       0    08002800    00003c56     UNINITIALIZED
+                  08002800    00003338     (.common:LC_ProgramInstanceData_PROGRAM1)
+                  08005b38    00000200     IS25.obj (.bss:flashRAM$2)
+                  08005d38    00000138     (.common:plStack)
+                  08005e70    000000ac     (.common:battStack)
+                  08005f1c    00000090     (.common:isabelcfg)
+                  08005fac    00000080     (.common:adcData)
+                  0800602c    00000080     (.common:rs_inBuf)
+                  080060ac    00000080     (.common:rs_outBuf)
+                  0800612c    00000074     (.common:toBattStack)
+                  080061a0    00000060     (.common:anlgData)
+                  08006200    00000048     spi.obj (.bss:g_spiPacket_t)
+                  08006248    00000040     (.common:LC_TASK_StringStackBuffer_DEFAULTTASK)
+                  08006288    00000030     (.common:boxQue)
+                  080062b8    0000002c     (.common:rsCom)
+                  080062e4    00000004     (.common:LC_minPriority)
+                  080062e8    00000028     (.common:logiTask)
+                  08006310    00000028     (.common:tmsPrpMutex)
+                  08006338    00000024     (.common:boxBuf1)
+                  0800635c    00000018     flash_task.obj (.bss:flashRxMessage$1)
+                  08006374    00000018     (.common:rs_in)
+                  0800638c    00000018     (.common:rs_out)
+                  080063a4    00000014     sci.obj (.bss:g_sciTransfer_t)
+                  080063b8    00000014     (.common:boxBuf2)
+                  080063cc    0000000c     (.common:fromBattStack)
+                  080063d8    00000008     os_heap.obj (.bss:xStart)
+                  080063e0    00000008     (.common:ticksPerSec)
+                  080063e8    00000004     (.common:battMailbox)
+                  080063ec    00000004     (.common:battStackMutex)
+                  080063f0    00000004     (.common:bcuMailbox)
+                  080063f4    00000004     (.common:codeImageInfo)
+                  080063f8    00000004     (.common:ep)
+                  080063fc    00000004     (.common:epIdx)
+                  08006400    00000004     (.common:epTask)
+                  08006404    00000004     (.common:fingerprint)
+                  08006408    00000004     (.common:flashMutex)
+                  0800640c    00000004     (.common:flashTaskQueueMailBox)
+                  08006410    00000004     (.common:flashTaskResponse)
+                  08006414    00000004     (.common:flashboxes)
+                  08006418    00000004     (.common:j)
+                  0800641c    00000004     (.common:lastMeasurement)
+                  08006420    00000004     (.common:lastMeasurement1)
+                  08006424    00000004     (.common:lastMeasurement11)
+                  08006428    00000004     (.common:lastMeasurement12)
+                  0800642c    00000004     (.common:resourceName)
+                  08006430    00000004     (.common:safetyTick)
+                  08006434    00000004     (.common:task)
+                  08006438    00000004     (.common:taskIdx)
+                  0800643c    00000004     (.common:testTick)
+                  08006440    00000004     (.common:usart1in)
+                  08006444    00000004     (.common:usart1out)
+                  08006448    00000004     (.common:usart2in)
+                  0800644c    00000004     (.common:usart2out)
+                  08006450    00000002     flash_task.obj (.bss:fResponseTxMessage$2)
+                  08006452    00000001     (.common:currentTokenValue)
+                  08006453    00000001     (.common:flashTaskState)
+                  08006454    00000001     (.common:g_LC3_GVInstanceData)
+                  08006455    00000001     (.common:tpsstate)
+
+.data      0    08006458    0000025c     UNINITIALIZED
+                  08006458    00000088     LC3GV_EPDB.obj (.data:LC_vg_GV_EPDB)
+                  080064e0    00000088     LC3PI_EPDB_PROGRAM1.obj (.data:LC_vg_PI_EPDB_PROGRAM1)
+                  08006568    00000050     isabellaCan.obj (.data:isaRx)
+                  080065b8    00000048     LC3Task_DEFAULTTASK.obj (.data:LC_vg_Task_DEFAULTTASK)
+                  08006600    00000030     can_box_deliver.obj (.data:canDeliverLines)
+                  08006630    00000010     isabellaCan.obj (.data:isaTx)
+                  08006640    00000010     main.obj (.data)
+                  08006650    00000010     os_heap.obj (.data)
+                  08006660    0000000c     LC3Task_DEFAULTTASK.obj (.data:LC_vg_StringStack_DEFAULTTASK)
+                  0800666c    00000008     LC3GV_EPDB.obj (.data:LC_GV_CCED)
+                  08006674    00000008     LC3PI_CCED_PROGRAM1.obj (.data:LC_vg_CCED_PROGRAM1)
+                  0800667c    00000008     LC3_EPDB.obj (.data:LC_vg_EPDBTable)
+                  08006684    00000008     battStack.obj (.data)
+                  0800668c    00000008     os_port.obj (.data)
+                  08006694    00000006     plStack.obj (.data)
+                  0800669a    00000001     lcfu___safety_power.obj (.data)
+                  0800669b    00000001     --HOLE--
+                  0800669c    00000004     LC3Task.obj (.data:LC_vg_TaskTable)
+                  080066a0    00000004     can_box_deliver.obj (.data)
+                  080066a4    00000004     IS25.obj (.data:conf_IS25_spi)
+                  080066a8    00000004     tps65381.obj (.data:conf_tps_spi)
+                  080066ac    00000004     isabellaCan.obj (.data)
+                  080066b0    00000004     rtsv7R4_A_be_eabi.lib : errno.c.obj (.data)
+
+__llvm_prf_cnts 
+*          0    08002800    00000000     UNINITIALIZED
+
+MODULE SUMMARY
+
+       Module                              code     ro data   rw data
+       ------                              ----     -------   -------
+    .\
+       sci.obj                             900      0         20     
+       sys_intvecs.obj                     32       0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              932      0         20     
+                                                                     
+    .\ADC_TMS\
+       adc_tms.obj                         1536     0         240    
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              1536     0         240    
+                                                                     
+    .\BATTERY1\PL455\
+       bq76pl455.obj                       11323    568       0      
+       plStack.obj                         3312     0         318    
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              14635    568       318    
+                                                                     
+    .\BATTERY1\batt_OS\
+       battStack.obj                       3012     0         184    
+       battStackOsPort.obj                 316      0         8      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              3328     0         192    
+                                                                     
+    .\CAN\src\
+       canbus.obj                          2376     32        0      
+       can_box_deliver.obj                 712      0         156    
+       can64_bit_opr.obj                   332      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              3420     32        156    
+                                                                     
+    .\FLASH\FLASH_IS25\
+       IS25.obj                            1492     0         516    
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              1492     0         516    
+                                                                     
+    .\FLASH\MEM_OPR\
+       memOpr.obj                          148      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              148      0         0      
+                                                                     
+    .\FLASH\flashTask\
+       flash_task.obj                      688      0         35     
+       flash_box_deliver.obj               160      0         4      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              848      0         39     
+                                                                     
+    .\FLASH\flashmutex\
+       flashMutex.obj                      48       0         4      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              48       0         4      
+                                                                     
+    .\ISABEL\
+       isabellaCan.obj                     2472     30        100    
+       isabelcfg.obj                       760      0         144    
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              3232     30        244    
+                                                                     
+    .\LOGICAD\LOGI.CALS\nRTS\
+       LCAPI_GenCode.obj                   1008     0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              1008     0         0      
+                                                                     
+    .\LOGICAD\LOGI.CALS\uRTS3\
+       MBRTMain.obj                        28       0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              28       0         0      
+                                                                     
+    .\LOGICAD\com.logicals.lc3.library.standard__3.2.2\SOURCES\
+       lcfu_iec61131__CONVERT.obj          668      0         0      
+       lcfu_iec61131__ENDIAN.obj           336      0         0      
+       lcfu_iec61131__TP.obj               308      0         0      
+       lcfu_iec61131__TOF.obj              256      0         0      
+       lcfu_iec61131__TON.obj              256      0         0      
+       lcfu_iec61131__CTU.obj              240      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              2064     0         0      
+                                                                     
+    .\LS0432_rtos_bmsmu\source\
+       os_heap.obj                         1512     0         8216   
+       os_tasks.obj                        6016     0         260    
+       sys_selftest.obj                    5060     0         0      
+       os_queue.obj                        3112     0         0      
+       spi.obj                             2288     0         72     
+       os_port.obj                         1340     0         8      
+       het.obj                             396      928       0      
+       sys_vim.obj                         888      384       0      
+       os_portasm.obj                      944      0         0      
+       adc.obj                             896      12        0      
+       system.obj                          848      0         0      
+       errata_SSWF021_45.obj               772      0         0      
+       sys_core.obj                        720      0         0      
+       os_mpu_wrappers.obj                 616      0         0      
+       esm.obj                             580      0         0      
+       os_list.obj                         568      0         0      
+       sys_startup.obj                     536      0         0      
+       gio.obj                             436      0         0      
+       dabort.obj                          232      0         0      
+       sys_pmu.obj                         224      0         0      
+       pinmux.obj                          196      0         0      
+       notification.obj                    120      0         0      
+       sys_phantom.obj                     4        0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              28304    1324      8556   
+                                                                     
+    .\TPS\
+       tps65381.obj                        124      0         4      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              124      0         4      
+                                                                     
+    .\UART1\
+       chUart_qrbCom.obj                   240      0         348    
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              240      0         348    
+                                                                     
+    .\UART1\uart_ex\
+       uart_ext.obj                        1072     0         16     
+       qrb_ex.obj                          724      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              1796     0         16     
+                                                                     
+    .\logi\src-gen\
+       lcpu___hemabattery.obj              32624    0         0      
+       lcfu___bcu_fault_codes.obj          7272     0         0      
+       lcfu___cms_ivt.obj                  5868     0         0      
+       lcfu___essstate1.obj                3104     0         0      
+       lcfu___bcu_state_message.obj        2464     0         0      
+       lcfu___chargestate.obj              1684     0         0      
+       lcfu___gui.obj                      1672     0         0      
+       lcfu___max_min_voltage_status.obj   1512     0         0      
+       lcfu___bcu_status2.obj              1448     0         0      
+       lcfu___socstate.obj                 1320     0         0      
+       lcfu___bcu_cell_status.obj          1288     0         0      
+       lcfu___balance_isz.obj              1284     0         0      
+       lcfu___bcu_id.obj                   1192     0         0      
+       lcfu___bcu_battery_status.obj       1128     0         0      
+       lcfu___hvcu_control_state.obj       968      0         0      
+       lcfu___wflt.obj                     956      0         0      
+       lcfu___can_test.obj                 940      0         0      
+       lcfu___ampmulttempdis.obj           920      0         0      
+       lcfu___dgtin.obj                    836      0         0      
+       lcfu___hvcu_config.obj              808      0         0      
+       lcfu___ampmulttemp.obj              800      0         0      
+       lcfu___ampmultvoltchar.obj          748      0         0      
+       lcfu___ampmultvoltdisc.obj          744      0         0      
+       lcfu___wbit.obj                     704      0         0      
+       lcfu___rbit.obj                     440      0         0      
+       lcfu___socisz.obj                   316      0         0      
+       lcfu___flash.obj                    312      0         0      
+       lcfu___numofcells.obj               272      0         0      
+       lcfu___tbuffer.obj                  168      0         0      
+       lcfu___buffer.obj                   160      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              73952    0         0      
+                                                                     
+    .\logi\src-gen\localconfiguration\local.builtinplc\
+       LC3AppInfo.obj                      176      108       0      
+       LC3GV_EPDB.obj                      0        15        144    
+       LC3_EPDB.obj                        60       0         8      
+       LC3Task.obj                         60       0         4      
+       LC3GV.obj                           36       0         1      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              332      123       157    
+                                                                     
+    .\logi\src-gen\localconfiguration\local.builtinplc\instances\
+       LC3PI_INSTANCE_DATA_PROGRAM1.obj    0        0         13112  
+       LC3PI_EPDB_PROGRAM1.obj             0        12        136    
+       LC3PI_CCED_PROGRAM1.obj             0        0         8      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              0        12        13256  
+                                                                     
+    .\logi\src-gen\localconfiguration\local.builtinplc\tasks\
+       LC3Task_DEFAULTTASK.obj             0        12        148    
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              0        12        148    
+                                                                     
+    .\logi\src-gen\localconfiguration\local.builtinplc\types\
+       LC3PT_HEMABATTERY.obj               72796    0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              72796    0         0      
+                                                                     
+    .\logi\src\srcBCU\
+       lcfu___battstackinfo.obj            1624     0         0      
+       lcfu___battstack.obj                1300     0         128    
+       lcfu___safety_power.obj             816      64        11     
+       lcfu___updowncnttim.obj             404      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              4144     64        139    
+                                                                     
+    .\logi\src\srcCommon\
+       lcfu___bamtx.obj                    1508     0         0      
+       lcfu___canrecv.obj                  1420     0         0      
+       lcfu___cansend.obj                  1256     0         0      
+       lcfu___ntc.obj                      352      0         0      
+       lcfu___iowr.obj                     196      0         0      
+       lcfu___isabelinit.obj               180      0         0      
+       lcfu___iord.obj                     112      0         0      
+       lcfu___anlg.obj                     92       0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              5116     0         0      
+                                                                     
+    .\logi\src\srcCommon\GUIcfg\
+       lcfu___guicfg_int.obj               160      0         0      
+       lcfu___guicfg_real.obj              160      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              320      0         0      
+                                                                     
+    .\logi\src\srcCommon\MEM\
+       lcfu___rmem_real.obj                264      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              264      0         0      
+                                                                     
+    .\logi\src\srcCommon\flashMem_v2\
+       lcfu___fmemw_real.obj               924      28        0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              924      28        0      
+                                                                     
+    .\spicustom\
+       spiRxTx.obj                         612      0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              612      0         0      
+                                                                     
+    .\src\
+       main.obj                            2712     0         104    
+       ConfigRead.obj                      1868     0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              4580     0         104    
+                                                                     
+    .\tmsOS\
+       tmsOsPeripheral.obj                 460      0         40     
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              460      0         40     
+                                                                     
+    C:\ti\ccs1281\ccs\tools\compiler\ti-cgt-arm_20.2.7.LTS\lib\rtsv7R4_A_be_eabi.lib
+       _scanfi.c.obj                       4600     13        0      
+       e_pow.c.obj                         3724     48        0      
+       strtod.c.obj                        1636     200       0      
+       e_log.c.obj                         1420     0         0      
+       e_logf.c.obj                        908      0         0      
+       e_fmod.c.obj                        804      16        0      
+       strtoll.c.obj                       712      0         0      
+       ull_div32.asm.obj                   692      0         0      
+       strtoull.c.obj                      576      0         0      
+       fd_add32.asm.obj                    532      0         0      
+       strtol.c.obj                        500      0         0      
+       e_sqrt.c.obj                        492      0         0      
+       fd_cmp32.asm.obj                    448      0         0      
+       strtoul.c.obj                       440      0         0      
+       e_fmodf.c.obj                       404      8         0      
+       fd_div32.asm.obj                    400      0         0      
+       memcpy32.asm.obj                    384      0         0      
+       s_floor.c.obj                       344      0         0      
+       sscanf.c.obj                        332      0         0      
+       fs_add32.asm.obj                    308      0         0      
+       fd_mul32.asm.obj                    296      0         0      
+       s_scalbn.c.obj                      288      0         0      
+       fs_cmp32.asm.obj                    272      0         0      
+       ctype.c.obj                         0        257       0      
+       s_modf.c.obj                        232      0         0      
+       fs_div32.asm.obj                    212      0         0      
+       memset32.asm.obj                    176      0         0      
+       fs_mul32.asm.obj                    168      0         0      
+       fd_tos32.asm.obj                    156      0         0      
+       ll_div32.asm.obj                    152      0         0      
+       copy_decompress_lzss.c.obj          144      0         0      
+       fd_toll32.asm.obj                   140      0         0      
+       s_modff.c.obj                       140      0         0      
+       atoi.c.obj                          132      0         0      
+       fs_toll32.asm.obj                   132      0         0      
+       autoinit.c.obj                      104      0         0      
+       fd_toi32.asm.obj                    92       0         0      
+       fs_tod32.asm.obj                    92       0         0      
+       fd_tou32.asm.obj                    88       0         0      
+       i_div32.asm.obj                     84       0         0      
+       u_div32.asm.obj                     80       0         0      
+       fs_toi32.asm.obj                    76       0         0      
+       i_tofs32.asm.obj                    76       0         0      
+       ull_tofd32.asm.obj                  64       0         0      
+       i_tofd32.asm.obj                    60       0         0      
+       u_tofs32.asm.obj                    56       0         0      
+       memcmp.c.obj                        52       0         0      
+       strncmp.c.obj                       52       0         0      
+       u_tofd32.asm.obj                    52       0         0      
+       strrchr.c.obj                       44       0         0      
+       strchr.c.obj                        40       0         0      
+       ll_lsl32.asm.obj                    36       0         0      
+       ll_lsr32.asm.obj                    36       0         0      
+       strlen.c.obj                        32       0         0      
+       strcpy.c.obj                        24       0         0      
+       copy_decompress_none.c.obj          20       0         0      
+       copy_zero_init.c.obj                16       0         0      
+       errno.c.obj                         12       0         4      
+       s_copysign.c.obj                    12       0         0      
+       exit.c.obj                          8        0         0      
+       div0.asm.obj                        4        0         0      
+    +--+-----------------------------------+--------+---------+---------+
+       Total:                              23608    542       4      
+                                                                     
+       Linker Generated:                   0        283       0      
+    +--+-----------------------------------+--------+---------+---------+
+       Grand Total:                        250291   3018      24501  
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 0000ee80 records: 4, size/record: 8, table size: 32
+	.data: load addr=0000ed80, load size=000000d6 bytes, run addr=08006458, run size=0000025c bytes, compression=lzss
+	.kernelBSS: load addr=0000ee64, load size=00000009 bytes, run addr=08000400, run size=00000104 bytes, compression=lzss
+	.bss: load addr=0000ee70, load size=00000008 bytes, run addr=08002800, run size=00003c56 bytes, compression=zero_init
+	.kernelHEAP: load addr=0000ee78, load size=00000008 bytes, run addr=08000600, run size=00002000 bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 0000ee58 records: 3, size/record: 4, table size: 12
+	index: 0, handler: __TI_decompress_lzss
+	index: 1, handler: __TI_decompress_none
+	index: 2, handler: __TI_zero_init
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address   name                                          
+-------   ----                                          
+00030fd0  BATTSTACK                                     
+0004a43c  C$$EXIT                                       
+00046ec8  CRC16                                         
+000335e0  ConfigRead                                    
+0004a378  Dprintf                                       
+00047d20  Flash_Que_Init                                
+0003eb20  Flash_Task_Handler                            
+00048e90  Flash_Task_Init                               
+00047d94  IS25_init                                     
+0003eef8  IS25_progMem_reduced                          
+00048274  IS25_readMem                                  
+00049ab8  IS25_receive                                  
+000496ec  IS25_rxBuffer                                 
+00048ee0  IS25_sectorErase                              
+000498ac  IS25_transmit                                 
+0004972c  IS25_txBuffer                                 
+00049edc  IS25_waitWIP                                  
+0003fd2c  IS25_writeMem                                 
+080066ac  ISABELCAN                                     
+0003d994  ISABELLA_init                                 
+0004743c  ISA_getConfigResult                           
+0004574c  ISA_getDeviceID                               
+000463cc  ISA_getSerialNumber                           
+00049598  ISA_rxCan                                     
+000476d0  ISA_rxCanWithTmt                              
+00046478  ISA_setMode                                   
+00046524  ISA_setconfigResult                           
+000451b8  ISA_storeConfigItems                          
+00049aec  ISA_txCan                                     
+0004a1dc  LC3_qw_get_current_time_ep                    
+00049020  LC_GC_EP_callEntry                            
+00048f30  LC_GC_EP_callInitCold                         
+00049280  LC_GC_EP_getName                              
+000492c8  LC_GC_EP_getTask                              
+0004906c  LC_GC_Task_getInterval                        
+00049310  LC_GC_Task_getName                            
+00049358  LC_GC_Task_getPriority                        
+000498e8  LC_GC_getCodeImageInfo                        
+0004976c  LC_GC_getFingerprint                          
+00049d5c  LC_GC_getNumEPs                               
+00049d8c  LC_GC_getNumTasks                             
+00049924  LC_GC_getResourceName                         
+000499d8  LC_GC_getTimerFreq                            
+000490b8  LC_GC_queryEP                                 
+00049104  LC_GC_queryTask                               
+0800666c  LC_GV_CCED                                    
+0004a084  LC_GV_Init                                    
+00049960  LC_PT_Exec_HEMABATTERY                        
+00010024  LC_PT_Init_HEMABATTERY                        
+08002800  LC_ProgramInstanceData_PROGRAM1               
+08006248  LC_TASK_StringStackBuffer_DEFAULTTASK         
+080062e4  LC_minPriority                                
+00044cc4  LC_task                                       
+08006674  LC_vg_CCED_PROGRAM1                           
+0800667c  LC_vg_EPDBTable                               
+08006458  LC_vg_GV_EPDB                                 
+080064e0  LC_vg_PI_EPDB_PROGRAM1                        
+08006660  LC_vg_StringStack_DEFAULTTASK                 
+0800669c  LC_vg_TaskTable                               
+080065b8  LC_vg_Task_DEFAULTTASK                        
+000493a0  LCfu_iec61131__CONVERT_roundhalfevenF         
+00049b20  LCfu_iec61131__CONVERT_roundhalfevenF_unsigned
+000495dc  LCfu_iec61131__CONVERT_roundhalfeven_unsigned 
+0004a0a8  LCfu_iec61131__ENDIAN_Swap2                   
+000497ac  LCfu_iec61131__ENDIAN_Swap4                   
+00043af0  LCfu_iec61131__ENDIAN_Swap8                   
+00049b54  LCocc_queryEP                                 
+0004a42c  LCocc_queryEPCount                            
+00049b88  LCocc_queryTASK                               
+0004a434  LCocc_queryTASKCount                          
+0004a1f8  LED1_off                                      
+0004a444  LED2_off                                      
+0004a15c  LEDs_init                                     
+00049f08  MPU_vTaskDelay                                
+00049bbc  MPU_vTaskDelayUntil                           
+0004a0cc  MPU_vTaskSuspendAll                           
+00049bf0  MPU_xQueueCreateMutex                         
+00049150  MPU_xQueueGenericCreate                       
+00048c98  MPU_xQueueGenericReceive                      
+00048cec  MPU_xQueueGenericSend                         
+000487d8  MPU_xTaskCreate                               
+00049f34  MPU_xTaskGetTickCount                         
+00049f60  MPU_xTaskResumeAll                            
+00045ee4  NTC_tempSteinhartK                            
+00045284  NTCtemp                                       
+00040b18  PL455_frmFsmDecode                            
+0004a300  PL455_intSet                                  
+00041090  PL455_readReg                                 
+00047750  PL455_rxFrame                                 
+00047f64  PL455_rxFrameWithTimeout                      
+0003f0dc  PL455_writeFrame                              
+000375ac  PL455_writeReg                                
+00049dbc  PL_channel2V                                  
+00049dec  PL_channel2mv                                 
+000444ec  PLchain_avCellSense                           
+00047fd4  PLchain_clrCellBal                            
+00041a98  PLchain_displayChannelVoltages                
+000477d0  PLchain_getBalReg                             
+000482e0  PLchain_handleFault                           
+0002fbb8  PLchain_init                                  
+000421dc  PLchain_maxAuxSense                           
+00042e2c  PLchain_maxCellSense                          
+000411dc  PLchain_minAuxSense                           
+000427b4  PLchain_minCellSense                          
+0004243c  PLchain_sampleAndReadNodeChannels             
+00047950  PLchain_setCellBalThres                       
+000465d0  PLchain_shutDown                              
+0004667c  PLchain_totalCellSense                        
+0003215c  PLfaults                                      
+00049620  PLnode_getCellBalancing                       
+0003e2e8  PLnode_getChannels                            
+00045be4  PLnode_setCellBalThres                        
+0004721c  PLnode_setCellBalancing                       
+00043638  PLstack_aux2CellTab                           
+0004a2a0  PLstack_avCellV                               
+000493e8  PLstack_boardBalReg                           
+00049430  PLstack_boardCellNum                          
+00049478  PLstack_boardFault                            
+0004834c  PLstack_cell2AuxTab                           
+000479cc  PLstack_cellV                                 
+00045350  PLstack_channelV                              
+0004a314  PLstack_clrBalThres                           
+0004a388  PLstack_commTimeoutMsShutdown                 
+000483b8  PLstack_countNodes                            
+0004a0f0  PLstack_fault                                 
+0004a328  PLstack_getBalReg                             
+00040820  PLstack_getFault                              
+0003f804  PLstack_init                                  
+00049fe4  PLstack_maxCellV                              
+000445cc  PLstack_maxTempAux                            
+00049e1c  PLstack_measurement                           
+0004a00c  PLstack_minCellV                              
+000446ac  PLstack_minTempAux                            
+0004a398  PLstack_numofBoards                           
+0004a214  PLstack_setBalThres                           
+0004a408  PLstack_shutdown                              
+00045810  PLstack_tempAux                               
+00048424  PLstack_totalCellNum                          
+0004a2b8  PLstack_totalCellV                            
+UNDEFED   SHT$$INIT_ARRAY$$Base                         
+UNDEFED   SHT$$INIT_ARRAY$$Limit                        
+00042564  SPI_rxBuffer                                  
+000416e4  SPI_txBuffer                                  
+00048568  SpiRxStatus                                   
+000485d0  SpiTxStatus                                   
+00043820  UARTx_initHW                                  
+0003f484  UARTx_sendData                                
+00046d98  UARTx_writeChar                               
+0000ee80  __TI_CINIT_Base                               
+0000eea0  __TI_CINIT_Limit                              
+0000ee58  __TI_Handler_Table_Base                       
+0000ee64  __TI_Handler_Table_Limit                      
+0003cc30  __TI_PINIT_Base                               
+0003cc34  __TI_PINIT_Limit                              
+00048638  __TI_auto_init_nobinit_nopinit                
+00046f5c  __TI_decompress_lzss                          
+0004a350  __TI_decompress_none                          
+ffffffff  __TI_pprof_out_hndl                           
+ffffffff  __TI_prof_data_size                           
+ffffffff  __TI_prof_data_start                          
+0002cf04  __TI_scanfi                                   
+0000ed80  __TI_static_base__                            
+0004a3b8  __TI_zero_init                                
+0004478c  __aeabi_cdcmpeq                               
+0004478c  __aeabi_cdcmple                               
+0004486c  __aeabi_cdrcmple                              
+000472a4  __aeabi_cfcmpeq                               
+000472a4  __aeabi_cfcmple                               
+0004732c  __aeabi_cfrcmple                              
+00046cfc  __aeabi_d2f                                   
+00048a80  __aeabi_d2iz                                  
+00047104  __aeabi_d2lz                                  
+00048b90  __aeabi_d2uiz                                 
+0003e724  __aeabi_dadd                                  
+00040388  __aeabi_ddiv                                  
+0004268c  __aeabi_dmul                                  
+0003e718  __aeabi_dsub                                  
+0004a414  __aeabi_errno_addr                            
+00048adc  __aeabi_f2d                                   
+0004919c  __aeabi_f2iz                                  
+0004764c  __aeabi_f2lz                                  
+00041e44  __aeabi_fadd                                  
+00044e74  __aeabi_fdiv                                  
+000469d0  __aeabi_fmul                                  
+00041e40  __aeabi_fsub                                  
+0004999c  __aeabi_i2d                                   
+000491e8  __aeabi_i2f                                   
+00048d94  __aeabi_idiv                                  
+0004a454  __aeabi_idiv0                                 
+00048d94  __aeabi_idivmod                               
+0004a454  __aeabi_ldiv0                                 
+00046e30  __aeabi_ldivmod                               
+0004a114  __aeabi_llsl                                  
+0004a138  __aeabi_llsr                                  
+0004626c  __aeabi_memclr                                
+0004626c  __aeabi_memclr4                               
+0004626c  __aeabi_memclr8                               
+000406a0  __aeabi_memcpy                                
+000406a0  __aeabi_memcpy4                               
+000406a0  __aeabi_memcpy8                               
+00046270  __aeabi_memset                                
+00046270  __aeabi_memset4                               
+00046270  __aeabi_memset8                               
+00049cf4  __aeabi_ui2d                                  
+00049a80  __aeabi_ui2f                                  
+00048fd0  __aeabi_uidiv                                 
+00048fd0  __aeabi_uidivmod                              
+0004982c  __aeabi_ul2d                                  
+0003d1c0  __aeabi_uldivmod                              
+ffffffff  __binit__                                     
+ffffffff  __c_args__                                    
+08002800  __start___llvm_prf_cnts                       
+08002800  __stop___llvm_prf_cnts                        
+0003e504  _c_int00                                      
+0003cb58  _coreClearAuxiliaryDataFault_                 
+0003cb6c  _coreClearAuxiliaryInstructionFault_          
+0003cb30  _coreClearDataFaultAddress_                   
+0003cb08  _coreClearDataFault_                          
+0003cb44  _coreClearInstructionFaultAddress_            
+0003cb1c  _coreClearInstructionFault_                   
+0003ca9c  _coreDisableEventBusExport_                   
+0003cae0  _coreDisableFlashEcc_                         
+0003cabc  _coreDisableRamEcc_                           
+0003ca8c  _coreEnableEventBusExport_                    
+0003cacc  _coreEnableFlashEcc_                          
+0003caf0  _coreEnableIrqVicOffset_                      
+0003caac  _coreEnableRamEcc_                            
+0003cb50  _coreGetAuxiliaryDataFault_                   
+0003cb64  _coreGetAuxiliaryInstructionFault_            
+0003cb28  _coreGetDataFaultAddress_                     
+0003cb00  _coreGetDataFault_                            
+0003cb3c  _coreGetInstructionFaultAddress_              
+0003cb14  _coreGetInstructionFault_                     
+0003c968  _coreInitRegisters_                           
+0003ca20  _coreInitStackPointer_                        
+0004ab78  _ctypes_                                      
+00043ea0  _dabort                                       
+0003cb80  _disable_FIQ_interrupt_                       
+0003cb88  _disable_IRQ_interrupt_                       
+0003cb78  _disable_interrupt_                           
+0003cb90  _enable_interrupt_                            
+0003cc20  _errata_CORTEXR4_66_                          
+00040518  _errata_SSWF021_45_pll1                       
+0003cb98  _esmCcmErrorsClear_                           
+0003ca6c  _getCPSRValue_                                
+0003ca74  _gotoCPUIdle_                                 
+00044a88  _pmuDisableCountersGlobal_                    
+00044a78  _pmuEnableCountersGlobal_                     
+00044ae4  _pmuGetCycleCount_                            
+00044aec  _pmuGetEventCount_                            
+00044af8  _pmuGetOverflow_                              
+00044a2c  _pmuInit_                                     
+00044ab8  _pmuResetCounters_                            
+00044a98  _pmuResetCycleCounter_                        
+00044aa8  _pmuResetEventCounters_                       
+00044ad8  _pmuSetCountEvent_                            
+00044ac8  _pmuStartCounters_                            
+00044ad0  _pmuStopCounters_                             
+UNDEFED   _system_post_cinit                            
+0004a43c  abort                                         
+00045fa0  adc1ParityCheck                               
+08005fac  adcData                                       
+000401f8  adcGetData                                    
+000348e4  adcGroupGetData                               
+0003f644  adcInit                                       
+00049e4c  adcIsConversionComplete                       
+080061a0  anlgData                                      
+000474c0  atoi                                          
+080063e8  battMailbox                                   
+08005e70  battStack                                     
+080063ec  battStackMutex                                
+00049664  battStackPort_init                            
+00047850  battStackPort_readMail                        
+00047b40  battStackPort_sendMail                        
+00044328  battStackTask                                 
+080063f0  bcuMailbox                                    
+ffffffff  binit                                         
+08006338  boxBuf1                                       
+080063b8  boxBuf2                                       
+08006288  boxQue                                        
+00044b0c  can1ParityCheck                               
+00044be8  can2ParityCheck                               
+00048968  can64toCanBytes                               
+00043bdc  canBytesToCan64                               
+0004372c  canbusGetBox                                  
+00041324  canbusInit                                    
+0004099c  canbusReceive                                 
+0004230c  canbusSend                                    
+00041820  canbusSetBoxRx                                
+00043cc8  canbusSetBoxTx                                
+0003f2c0  canbusTx                                      
+00047a48  canbusWaitForBox                              
+0003d474  checkRAMECC                                   
+000467d4  checkefcSelfTest                              
+080063f4  codeImageInfo                                 
+0004ade0  commTimeoutShutdown                           
+080066a4  conf_IS25_spi                                 
+080066a8  conf_tps_spi                                  
+0004a420  copysign                                      
+0004a420  copysignl                                     
+08006694  countTime                                     
+0004a7f8  crc16_table                                   
+08006452  currentTokenValue                             
+0004a33c  customTrimLPO                                 
+0004a448  custom_dabort                                 
+0004883c  disableParity                                 
+00049c24  edgeNotification                              
+00046fec  efcCheck                                      
+00049a10  efcSelfTest                                   
+00045ca4  efcStuckZeroTest                              
+00046880  emptyIsabelRxCan                              
+000488a0  enableParity                                  
+080063f8  ep                                            
+08006648  epCnt                                         
+080063fc  epIdx                                         
+08006400  epTask                                        
+08006688  errFrameCount                                 
+0003a254  errata_PBIST_4                                
+080066b0  errno                                         
+0004a3c8  esmGroup1Notification                         
+0004a3d8  esmGroup2Notification                         
+00043db4  esmHighInterrupt                              
+00040de0  esmInit                                       
+08006404  fingerprint                                   
+08006408  flashMutex                                    
+0800640c  flashTaskQueueMailBox                         
+08006410  flashTaskResponse                             
+08006453  flashTaskState                                
+08006414  flashboxes                                    
+00040f38  floor                                         
+00040f38  floorl                                        
+0003ba58  fmod                                          
+0003fed0  fmodf                                         
+0003ba58  fmodl                                         
+080063cc  fromBattStack                                 
+08006454  g_LC3_GVInstanceData                          
+000454e8  getLine                                       
+00047bb8  getNodeChannel                                
+0004a034  gioGetBit                                     
+000458d4  gioInit                                       
+00048f80  gioSetBit                                     
+0004a17c  gioSetDirection                               
+00048b38  gioToggleBit                                  
+0004a44c  handlePLLLockFail                             
+000473b4  het1HighLevelInterrupt                        
+0004610c  het1ParityCheck                               
+0004303c  hetInit                                       
+00045d64  htu1ParityCheck                               
+08006640  i                                             
+0004494c  initCellCom_qrb                               
+000455b4  initSystemCanBoxStorage                       
+00048044  initSystemFlashBoxStorage                     
+000480b4  init_BATTSTACK                                
+00031950  init_LOGICAD                                  
+00049e7c  init_flashMutex                               
+00043910  initializeStack                               
+000497ec  isLegalAddr                                   
+00048124  isTimeout                                     
+00044d9c  isaGetCfgResultData                           
+08006568  isaRx                                         
+00046a78  isaSetCfgResultData                           
+08006630  isaTx                                         
+0003c09c  isabelConfig                                  
+08005f1c  isabelcfg                                     
+08006418  j                                             
+0800641c  lastMeasurement                               
+08006420  lastMeasurement1                              
+08006424  lastMeasurement11                             
+08006428  lastMeasurement12                             
+000461bc  lc_get_application_info                       
+0003bd7c  lcfu___AMPMULTTEMP                            
+0003a998  lcfu___AMPMULTTEMPDIS                         
+0003c394  lcfu___AMPMULTVOLTCHAR                        
+0003c680  lcfu___AMPMULTVOLTDISC                        
+000489c8  lcfu___ANLG                                   
+00037fc4  lcfu___BALANCE_ISZ                            
+000354cc  lcfu___BAMTX                                  
+00037098  lcfu___BATTSTACK                              
+00034290  lcfu___BATTSTACKINFO                          
+00038e58  lcfu___BCU_BATTERY_STATUS                     
+00037ad4  lcfu___BCU_CELL_STATUS                        
+00029bb0  lcfu___BCU_FAULT_CODES                        
+000389b0  lcfu___BCU_ID                                 
+00030630  lcfu___BCU_STATE_MESSAGE                      
+00035ab0  lcfu___BCU_STATUS2                            
+00046b1c  lcfu___BUFFER                                 
+00036058  lcfu___CANRECV                                
+000384c8  lcfu___CANSEND                                
+00039ea8  lcfu___CAN_TEST                               
+000328a0  lcfu___CHARGESTATE                            
+0002b818  lcfu___CMS_IVT                                
+0003b0bc  lcfu___DGTIN                                  
+0002ef90  lcfu___ESSSTATE1                              
+00041bd4  lcfu___FLASH                                  
+0003a5fc  lcfu___FMEMW_REAL                             
+00032f28  lcfu___GUI                                    
+00046bbc  lcfu___GUICFG_INT                             
+00046c5c  lcfu___GUICFG_REAL                            
+0003b730  lcfu___HVCU_CONFIG                            
+00039724  lcfu___HVCU_CONTROL_STATE                     
+00048194  lcfu___IORD                                   
+00045998  lcfu___IOWR                                   
+00046058  lcfu___ISABELINIT                             
+00034ee4  lcfu___MAX_MIN_VOLTAGE_STATUS                 
+00040c80  lcfu___NTC                                    
+000429f4  lcfu___NUMOFCELLS                             
+0003f9bc  lcfu___RBIT                                   
+00042f34  lcfu___RMEM_REAL                              
+0003b400  lcfu___SAFETY_POWER                           
+0004195c  lcfu___SOCISZ                                 
+00036b70  lcfu___SOCSTATE                               
+00046928  lcfu___TBUFFER                                
+00040064  lcfu___UPDOWNCNTTIM                           
+0003cf00  lcfu___WBIT                                   
+00039aec  lcfu___WFLT                                   
+00043a00  lcfu_iec61131__CTU                            
+00043244  lcfu_iec61131__TOF                            
+00043344  lcfu_iec61131__TON                            
+00041d0c  lcfu_iec61131__TP                             
+00021c58  lcpu___HEMABATTERY                            
+000428d4  ldexp                                         
+000428d4  ldexpl                                        
+00043140  linHighLevelInterrupt                         
+00036624  log                                           
+0003ad30  logf                                          
+080062e8  logiTask                                      
+00036624  logl                                          
+00042c14  main                                          
+00043f88  mapClocks                                     
+00048d40  memRd_F32                                     
+00049c58  memcmp                                        
+000406a0  memcpy                                        
+000496a8  memoryInit                                    
+0004a24c  memoryPort0TestFailNotification               
+0004627c  memset                                        
+00042d20  mibspi1ParityCheck                            
+00044070  modf                                          
+00047078  modff                                         
+00044070  modfl                                         
+00045a5c  muxInit                                       
+08006644  nValidTask                                    
+00047e08  pbistFail                                     
+00049f8c  pbistIsTestCompleted                          
+00049a48  pbistIsTestPassed                             
+00048a24  pbistPortTestStatus                           
+00044158  pbistRun                                      
+0003e0b0  pbistSelfCheck                                
+00049c8c  pbistStop                                     
+00048904  periphInit                                    
+0004a450  phantomInterrupt                              
+08006698  pl455Fault                                    
+08005d38  plStack                                       
+0002e124  pow                                           
+0002e124  powl                                          
+0000c3a8  prvMpuDisable                                 
+0000c390  prvMpuEnable                                  
+0000c378  prvMpuSetRegion                               
+00048204  pullBoxFromCh                                 
+00049eac  pullBoxFromFlash                              
+000494c0  pullBoxFromNode                               
+000475c8  pushBoxToCh                                   
+00049508  pushBoxToNode                                 
+0000cc18  pvPortMalloc                                  
+0000ecd0  pvTaskIncrementMutexHeldCount                 
+0004a2d0  pwmNotification                               
+080004d0  pxCurrentTCB                                  
+0000e39c  pxPortInitialiseStack                         
+00047e7c  qrbx_dequeue                                  
+00049cc0  qrbx_empty                                    
+000478d0  qrbx_enqueue                                  
+00043540  qrbx_find_char                                
+000484fc  qrbx_full                                     
+00049550  qrbx_init                                     
+0000c000  resetEntry                                    
+0800642c  resourceName                                  
+080062b8  rsCom                                         
+08006374  rs_in                                         
+0800602c  rs_inBuf                                      
+0800638c  rs_out                                        
+080060ac  rs_outBuf                                     
+0800669a  safetyPowerState                              
+08006430  safetyTick                                    
+000428d4  scalbn                                        
+000428d4  scalbnl                                       
+0004986c  sciEnableNotification                         
+00041f74  sciInit                                       
+0004a268  sciIsTxReady                                  
+00044240  sciNotification                               
+000450e8  sciSetBaudrate                                
+0004a19c  sciSetFunctional                              
+0004a3e8  selftestFailNotification                      
+00048de8  setupFlash                                    
+00048be8  setupPLL                                      
+0003d70c  spi3HighInterruptLevel                        
+0004a3f8  spiEndNotification                            
+000392c0  spiInit                                       
+0004a364  spiNotification                               
+000420a8  spiSendAndGetData                             
+0003ed0c  sqrt                                          
+0003ed0c  sqrtl                                         
+00048e3c  sscanf                                        
+0004a05c  strchr                                        
+0004a2e8  strcpy                                        
+0004a1bc  strlen                                        
+00049d28  strncmp                                       
+00049fb8  strrchr                                       
+00033c28  strtod                                        
+0003e92c  strtol                                        
+00033c28  strtold                                       
+0003cc38  strtoll                                       
+0003fb74  strtoul                                       
+0003de70  strtoull                                      
+08006699  stt                                           
+00045680  systemInit                                    
+08006434  task                                          
+0800664c  taskCnt                                       
+08006438  taskIdx                                       
+08006684  testFrameCount                                
+0800643c  testTick                                      
+080063e0  ticksPerSec                                   
+0004631c  tmsMutex_getModule                            
+00049234  tmsMutex_give                                 
+00048708  tmsMutex_init                                 
+00048770  tmsMutex_take                                 
+08006310  tmsPrpMutex                                   
+0800612c  toBattStack                                   
+0004ada0  tokenAnswers                                  
+00047ac4  tps65381_readWrite                            
+08006455  tpsstate                                      
+00047ca8  trimLPO                                       
+0800668c  ulCriticalNesting                             
+0000c2b4  ulPortCountLeadingZeros                       
+08006690  ulTaskHasFPUContext                           
+08006440  usart1in                                      
+08006444  usart1out                                     
+08006448  usart2in                                      
+0800644c  usart2out                                     
+00047190  uxListRemove                                  
+00048c40  vListInitialise                               
+0004a284  vListInitialiseItem                           
+00045b20  vListInsert                                   
+00047ef0  vListInsertEnd                                
+0000e1a8  vPortFree                                     
+0000c1f4  vPortPreemptiveTick                           
+0000c2bc  vPortSWI                                      
+0000c024  vPortStartFirstTask                           
+0000c9a4  vPortStoreTaskMPUSettings                     
+0000c140  vPortYeildWithinAPI                           
+0000c094  vPortYieldProcessor                           
+0000e8ec  vTaskDelay                                    
+0000d660  vTaskDelayUntil                               
+0000ed68  vTaskMissedYield                              
+0000eb7c  vTaskPlaceOnEventList                         
+0000d944  vTaskPriorityInherit                          
+0000ebc4  vTaskSetTimeOutState                          
+0000e6dc  vTaskStartScheduler                           
+0000ed50  vTaskSuspendAll                               
+0000e2a8  vTaskSwitchContext                            
+00042b04  vimInit                                       
+00045e24  vimParityCheck                                
+0003dc08  vimParityErrorHandler                         
+0000ed08  xPortStartScheduler                           
+0000ec50  xQueueCreateMutex                             
+0000e790  xQueueGenericCreate                           
+0000c3d0  xQueueGenericReceive                          
+0000de6c  xQueueGenericReset                            
+0000c6e4  xQueueGenericSend                             
+0000daac  xTaskCheckForTimeOut                          
+0000e48c  xTaskCreate                                   
+0000ead0  xTaskGetSchedulerState                        
+0000ed30  xTaskGetTickCount                             
+0000ce80  xTaskIncrementTick                            
+0000d7d4  xTaskPriorityDisinherit                       
+0000e0a0  xTaskRemoveFromEventList                      
+0000d318  xTaskResumeAll                                
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address   name                                          
+-------   ----                                          
+0000c000  resetEntry                                    
+0000c024  vPortStartFirstTask                           
+0000c094  vPortYieldProcessor                           
+0000c140  vPortYeildWithinAPI                           
+0000c1f4  vPortPreemptiveTick                           
+0000c2b4  ulPortCountLeadingZeros                       
+0000c2bc  vPortSWI                                      
+0000c378  prvMpuSetRegion                               
+0000c390  prvMpuEnable                                  
+0000c3a8  prvMpuDisable                                 
+0000c3d0  xQueueGenericReceive                          
+0000c6e4  xQueueGenericSend                             
+0000c9a4  vPortStoreTaskMPUSettings                     
+0000cc18  pvPortMalloc                                  
+0000ce80  xTaskIncrementTick                            
+0000d318  xTaskResumeAll                                
+0000d660  vTaskDelayUntil                               
+0000d7d4  xTaskPriorityDisinherit                       
+0000d944  vTaskPriorityInherit                          
+0000daac  xTaskCheckForTimeOut                          
+0000de6c  xQueueGenericReset                            
+0000e0a0  xTaskRemoveFromEventList                      
+0000e1a8  vPortFree                                     
+0000e2a8  vTaskSwitchContext                            
+0000e39c  pxPortInitialiseStack                         
+0000e48c  xTaskCreate                                   
+0000e6dc  vTaskStartScheduler                           
+0000e790  xQueueGenericCreate                           
+0000e8ec  vTaskDelay                                    
+0000ead0  xTaskGetSchedulerState                        
+0000eb7c  vTaskPlaceOnEventList                         
+0000ebc4  vTaskSetTimeOutState                          
+0000ec50  xQueueCreateMutex                             
+0000ecd0  pvTaskIncrementMutexHeldCount                 
+0000ed08  xPortStartScheduler                           
+0000ed30  xTaskGetTickCount                             
+0000ed50  vTaskSuspendAll                               
+0000ed68  vTaskMissedYield                              
+0000ed80  __TI_static_base__                            
+0000ee58  __TI_Handler_Table_Base                       
+0000ee64  __TI_Handler_Table_Limit                      
+0000ee80  __TI_CINIT_Base                               
+0000eea0  __TI_CINIT_Limit                              
+00010024  LC_PT_Init_HEMABATTERY                        
+00021c58  lcpu___HEMABATTERY                            
+00029bb0  lcfu___BCU_FAULT_CODES                        
+0002b818  lcfu___CMS_IVT                                
+0002cf04  __TI_scanfi                                   
+0002e124  pow                                           
+0002e124  powl                                          
+0002ef90  lcfu___ESSSTATE1                              
+0002fbb8  PLchain_init                                  
+00030630  lcfu___BCU_STATE_MESSAGE                      
+00030fd0  BATTSTACK                                     
+00031950  init_LOGICAD                                  
+0003215c  PLfaults                                      
+000328a0  lcfu___CHARGESTATE                            
+00032f28  lcfu___GUI                                    
+000335e0  ConfigRead                                    
+00033c28  strtod                                        
+00033c28  strtold                                       
+00034290  lcfu___BATTSTACKINFO                          
+000348e4  adcGroupGetData                               
+00034ee4  lcfu___MAX_MIN_VOLTAGE_STATUS                 
+000354cc  lcfu___BAMTX                                  
+00035ab0  lcfu___BCU_STATUS2                            
+00036058  lcfu___CANRECV                                
+00036624  log                                           
+00036624  logl                                          
+00036b70  lcfu___SOCSTATE                               
+00037098  lcfu___BATTSTACK                              
+000375ac  PL455_writeReg                                
+00037ad4  lcfu___BCU_CELL_STATUS                        
+00037fc4  lcfu___BALANCE_ISZ                            
+000384c8  lcfu___CANSEND                                
+000389b0  lcfu___BCU_ID                                 
+00038e58  lcfu___BCU_BATTERY_STATUS                     
+000392c0  spiInit                                       
+00039724  lcfu___HVCU_CONTROL_STATE                     
+00039aec  lcfu___WFLT                                   
+00039ea8  lcfu___CAN_TEST                               
+0003a254  errata_PBIST_4                                
+0003a5fc  lcfu___FMEMW_REAL                             
+0003a998  lcfu___AMPMULTTEMPDIS                         
+0003ad30  logf                                          
+0003b0bc  lcfu___DGTIN                                  
+0003b400  lcfu___SAFETY_POWER                           
+0003b730  lcfu___HVCU_CONFIG                            
+0003ba58  fmod                                          
+0003ba58  fmodl                                         
+0003bd7c  lcfu___AMPMULTTEMP                            
+0003c09c  isabelConfig                                  
+0003c394  lcfu___AMPMULTVOLTCHAR                        
+0003c680  lcfu___AMPMULTVOLTDISC                        
+0003c968  _coreInitRegisters_                           
+0003ca20  _coreInitStackPointer_                        
+0003ca6c  _getCPSRValue_                                
+0003ca74  _gotoCPUIdle_                                 
+0003ca8c  _coreEnableEventBusExport_                    
+0003ca9c  _coreDisableEventBusExport_                   
+0003caac  _coreEnableRamEcc_                            
+0003cabc  _coreDisableRamEcc_                           
+0003cacc  _coreEnableFlashEcc_                          
+0003cae0  _coreDisableFlashEcc_                         
+0003caf0  _coreEnableIrqVicOffset_                      
+0003cb00  _coreGetDataFault_                            
+0003cb08  _coreClearDataFault_                          
+0003cb14  _coreGetInstructionFault_                     
+0003cb1c  _coreClearInstructionFault_                   
+0003cb28  _coreGetDataFaultAddress_                     
+0003cb30  _coreClearDataFaultAddress_                   
+0003cb3c  _coreGetInstructionFaultAddress_              
+0003cb44  _coreClearInstructionFaultAddress_            
+0003cb50  _coreGetAuxiliaryDataFault_                   
+0003cb58  _coreClearAuxiliaryDataFault_                 
+0003cb64  _coreGetAuxiliaryInstructionFault_            
+0003cb6c  _coreClearAuxiliaryInstructionFault_          
+0003cb78  _disable_interrupt_                           
+0003cb80  _disable_FIQ_interrupt_                       
+0003cb88  _disable_IRQ_interrupt_                       
+0003cb90  _enable_interrupt_                            
+0003cb98  _esmCcmErrorsClear_                           
+0003cc20  _errata_CORTEXR4_66_                          
+0003cc30  __TI_PINIT_Base                               
+0003cc34  __TI_PINIT_Limit                              
+0003cc38  strtoll                                       
+0003cf00  lcfu___WBIT                                   
+0003d1c0  __aeabi_uldivmod                              
+0003d474  checkRAMECC                                   
+0003d70c  spi3HighInterruptLevel                        
+0003d994  ISABELLA_init                                 
+0003dc08  vimParityErrorHandler                         
+0003de70  strtoull                                      
+0003e0b0  pbistSelfCheck                                
+0003e2e8  PLnode_getChannels                            
+0003e504  _c_int00                                      
+0003e718  __aeabi_dsub                                  
+0003e724  __aeabi_dadd                                  
+0003e92c  strtol                                        
+0003eb20  Flash_Task_Handler                            
+0003ed0c  sqrt                                          
+0003ed0c  sqrtl                                         
+0003eef8  IS25_progMem_reduced                          
+0003f0dc  PL455_writeFrame                              
+0003f2c0  canbusTx                                      
+0003f484  UARTx_sendData                                
+0003f644  adcInit                                       
+0003f804  PLstack_init                                  
+0003f9bc  lcfu___RBIT                                   
+0003fb74  strtoul                                       
+0003fd2c  IS25_writeMem                                 
+0003fed0  fmodf                                         
+00040064  lcfu___UPDOWNCNTTIM                           
+000401f8  adcGetData                                    
+00040388  __aeabi_ddiv                                  
+00040518  _errata_SSWF021_45_pll1                       
+000406a0  __aeabi_memcpy                                
+000406a0  __aeabi_memcpy4                               
+000406a0  __aeabi_memcpy8                               
+000406a0  memcpy                                        
+00040820  PLstack_getFault                              
+0004099c  canbusReceive                                 
+00040b18  PL455_frmFsmDecode                            
+00040c80  lcfu___NTC                                    
+00040de0  esmInit                                       
+00040f38  floor                                         
+00040f38  floorl                                        
+00041090  PL455_readReg                                 
+000411dc  PLchain_minAuxSense                           
+00041324  canbusInit                                    
+000416e4  SPI_txBuffer                                  
+00041820  canbusSetBoxRx                                
+0004195c  lcfu___SOCISZ                                 
+00041a98  PLchain_displayChannelVoltages                
+00041bd4  lcfu___FLASH                                  
+00041d0c  lcfu_iec61131__TP                             
+00041e40  __aeabi_fsub                                  
+00041e44  __aeabi_fadd                                  
+00041f74  sciInit                                       
+000420a8  spiSendAndGetData                             
+000421dc  PLchain_maxAuxSense                           
+0004230c  canbusSend                                    
+0004243c  PLchain_sampleAndReadNodeChannels             
+00042564  SPI_rxBuffer                                  
+0004268c  __aeabi_dmul                                  
+000427b4  PLchain_minCellSense                          
+000428d4  ldexp                                         
+000428d4  ldexpl                                        
+000428d4  scalbn                                        
+000428d4  scalbnl                                       
+000429f4  lcfu___NUMOFCELLS                             
+00042b04  vimInit                                       
+00042c14  main                                          
+00042d20  mibspi1ParityCheck                            
+00042e2c  PLchain_maxCellSense                          
+00042f34  lcfu___RMEM_REAL                              
+0004303c  hetInit                                       
+00043140  linHighLevelInterrupt                         
+00043244  lcfu_iec61131__TOF                            
+00043344  lcfu_iec61131__TON                            
+00043540  qrbx_find_char                                
+00043638  PLstack_aux2CellTab                           
+0004372c  canbusGetBox                                  
+00043820  UARTx_initHW                                  
+00043910  initializeStack                               
+00043a00  lcfu_iec61131__CTU                            
+00043af0  LCfu_iec61131__ENDIAN_Swap8                   
+00043bdc  canBytesToCan64                               
+00043cc8  canbusSetBoxTx                                
+00043db4  esmHighInterrupt                              
+00043ea0  _dabort                                       
+00043f88  mapClocks                                     
+00044070  modf                                          
+00044070  modfl                                         
+00044158  pbistRun                                      
+00044240  sciNotification                               
+00044328  battStackTask                                 
+000444ec  PLchain_avCellSense                           
+000445cc  PLstack_maxTempAux                            
+000446ac  PLstack_minTempAux                            
+0004478c  __aeabi_cdcmpeq                               
+0004478c  __aeabi_cdcmple                               
+0004486c  __aeabi_cdrcmple                              
+0004494c  initCellCom_qrb                               
+00044a2c  _pmuInit_                                     
+00044a78  _pmuEnableCountersGlobal_                     
+00044a88  _pmuDisableCountersGlobal_                    
+00044a98  _pmuResetCycleCounter_                        
+00044aa8  _pmuResetEventCounters_                       
+00044ab8  _pmuResetCounters_                            
+00044ac8  _pmuStartCounters_                            
+00044ad0  _pmuStopCounters_                             
+00044ad8  _pmuSetCountEvent_                            
+00044ae4  _pmuGetCycleCount_                            
+00044aec  _pmuGetEventCount_                            
+00044af8  _pmuGetOverflow_                              
+00044b0c  can1ParityCheck                               
+00044be8  can2ParityCheck                               
+00044cc4  LC_task                                       
+00044d9c  isaGetCfgResultData                           
+00044e74  __aeabi_fdiv                                  
+000450e8  sciSetBaudrate                                
+000451b8  ISA_storeConfigItems                          
+00045284  NTCtemp                                       
+00045350  PLstack_channelV                              
+000454e8  getLine                                       
+000455b4  initSystemCanBoxStorage                       
+00045680  systemInit                                    
+0004574c  ISA_getDeviceID                               
+00045810  PLstack_tempAux                               
+000458d4  gioInit                                       
+00045998  lcfu___IOWR                                   
+00045a5c  muxInit                                       
+00045b20  vListInsert                                   
+00045be4  PLnode_setCellBalThres                        
+00045ca4  efcStuckZeroTest                              
+00045d64  htu1ParityCheck                               
+00045e24  vimParityCheck                                
+00045ee4  NTC_tempSteinhartK                            
+00045fa0  adc1ParityCheck                               
+00046058  lcfu___ISABELINIT                             
+0004610c  het1ParityCheck                               
+000461bc  lc_get_application_info                       
+0004626c  __aeabi_memclr                                
+0004626c  __aeabi_memclr4                               
+0004626c  __aeabi_memclr8                               
+00046270  __aeabi_memset                                
+00046270  __aeabi_memset4                               
+00046270  __aeabi_memset8                               
+0004627c  memset                                        
+0004631c  tmsMutex_getModule                            
+000463cc  ISA_getSerialNumber                           
+00046478  ISA_setMode                                   
+00046524  ISA_setconfigResult                           
+000465d0  PLchain_shutDown                              
+0004667c  PLchain_totalCellSense                        
+000467d4  checkefcSelfTest                              
+00046880  emptyIsabelRxCan                              
+00046928  lcfu___TBUFFER                                
+000469d0  __aeabi_fmul                                  
+00046a78  isaSetCfgResultData                           
+00046b1c  lcfu___BUFFER                                 
+00046bbc  lcfu___GUICFG_INT                             
+00046c5c  lcfu___GUICFG_REAL                            
+00046cfc  __aeabi_d2f                                   
+00046d98  UARTx_writeChar                               
+00046e30  __aeabi_ldivmod                               
+00046ec8  CRC16                                         
+00046f5c  __TI_decompress_lzss                          
+00046fec  efcCheck                                      
+00047078  modff                                         
+00047104  __aeabi_d2lz                                  
+00047190  uxListRemove                                  
+0004721c  PLnode_setCellBalancing                       
+000472a4  __aeabi_cfcmpeq                               
+000472a4  __aeabi_cfcmple                               
+0004732c  __aeabi_cfrcmple                              
+000473b4  het1HighLevelInterrupt                        
+0004743c  ISA_getConfigResult                           
+000474c0  atoi                                          
+000475c8  pushBoxToCh                                   
+0004764c  __aeabi_f2lz                                  
+000476d0  ISA_rxCanWithTmt                              
+00047750  PL455_rxFrame                                 
+000477d0  PLchain_getBalReg                             
+00047850  battStackPort_readMail                        
+000478d0  qrbx_enqueue                                  
+00047950  PLchain_setCellBalThres                       
+000479cc  PLstack_cellV                                 
+00047a48  canbusWaitForBox                              
+00047ac4  tps65381_readWrite                            
+00047b40  battStackPort_sendMail                        
+00047bb8  getNodeChannel                                
+00047ca8  trimLPO                                       
+00047d20  Flash_Que_Init                                
+00047d94  IS25_init                                     
+00047e08  pbistFail                                     
+00047e7c  qrbx_dequeue                                  
+00047ef0  vListInsertEnd                                
+00047f64  PL455_rxFrameWithTimeout                      
+00047fd4  PLchain_clrCellBal                            
+00048044  initSystemFlashBoxStorage                     
+000480b4  init_BATTSTACK                                
+00048124  isTimeout                                     
+00048194  lcfu___IORD                                   
+00048204  pullBoxFromCh                                 
+00048274  IS25_readMem                                  
+000482e0  PLchain_handleFault                           
+0004834c  PLstack_cell2AuxTab                           
+000483b8  PLstack_countNodes                            
+00048424  PLstack_totalCellNum                          
+000484fc  qrbx_full                                     
+00048568  SpiRxStatus                                   
+000485d0  SpiTxStatus                                   
+00048638  __TI_auto_init_nobinit_nopinit                
+00048708  tmsMutex_init                                 
+00048770  tmsMutex_take                                 
+000487d8  MPU_xTaskCreate                               
+0004883c  disableParity                                 
+000488a0  enableParity                                  
+00048904  periphInit                                    
+00048968  can64toCanBytes                               
+000489c8  lcfu___ANLG                                   
+00048a24  pbistPortTestStatus                           
+00048a80  __aeabi_d2iz                                  
+00048adc  __aeabi_f2d                                   
+00048b38  gioToggleBit                                  
+00048b90  __aeabi_d2uiz                                 
+00048be8  setupPLL                                      
+00048c40  vListInitialise                               
+00048c98  MPU_xQueueGenericReceive                      
+00048cec  MPU_xQueueGenericSend                         
+00048d40  memRd_F32                                     
+00048d94  __aeabi_idiv                                  
+00048d94  __aeabi_idivmod                               
+00048de8  setupFlash                                    
+00048e3c  sscanf                                        
+00048e90  Flash_Task_Init                               
+00048ee0  IS25_sectorErase                              
+00048f30  LC_GC_EP_callInitCold                         
+00048f80  gioSetBit                                     
+00048fd0  __aeabi_uidiv                                 
+00048fd0  __aeabi_uidivmod                              
+00049020  LC_GC_EP_callEntry                            
+0004906c  LC_GC_Task_getInterval                        
+000490b8  LC_GC_queryEP                                 
+00049104  LC_GC_queryTask                               
+00049150  MPU_xQueueGenericCreate                       
+0004919c  __aeabi_f2iz                                  
+000491e8  __aeabi_i2f                                   
+00049234  tmsMutex_give                                 
+00049280  LC_GC_EP_getName                              
+000492c8  LC_GC_EP_getTask                              
+00049310  LC_GC_Task_getName                            
+00049358  LC_GC_Task_getPriority                        
+000493a0  LCfu_iec61131__CONVERT_roundhalfevenF         
+000493e8  PLstack_boardBalReg                           
+00049430  PLstack_boardCellNum                          
+00049478  PLstack_boardFault                            
+000494c0  pullBoxFromNode                               
+00049508  pushBoxToNode                                 
+00049550  qrbx_init                                     
+00049598  ISA_rxCan                                     
+000495dc  LCfu_iec61131__CONVERT_roundhalfeven_unsigned 
+00049620  PLnode_getCellBalancing                       
+00049664  battStackPort_init                            
+000496a8  memoryInit                                    
+000496ec  IS25_rxBuffer                                 
+0004972c  IS25_txBuffer                                 
+0004976c  LC_GC_getFingerprint                          
+000497ac  LCfu_iec61131__ENDIAN_Swap4                   
+000497ec  isLegalAddr                                   
+0004982c  __aeabi_ul2d                                  
+0004986c  sciEnableNotification                         
+000498ac  IS25_transmit                                 
+000498e8  LC_GC_getCodeImageInfo                        
+00049924  LC_GC_getResourceName                         
+00049960  LC_PT_Exec_HEMABATTERY                        
+0004999c  __aeabi_i2d                                   
+000499d8  LC_GC_getTimerFreq                            
+00049a10  efcSelfTest                                   
+00049a48  pbistIsTestPassed                             
+00049a80  __aeabi_ui2f                                  
+00049ab8  IS25_receive                                  
+00049aec  ISA_txCan                                     
+00049b20  LCfu_iec61131__CONVERT_roundhalfevenF_unsigned
+00049b54  LCocc_queryEP                                 
+00049b88  LCocc_queryTASK                               
+00049bbc  MPU_vTaskDelayUntil                           
+00049bf0  MPU_xQueueCreateMutex                         
+00049c24  edgeNotification                              
+00049c58  memcmp                                        
+00049c8c  pbistStop                                     
+00049cc0  qrbx_empty                                    
+00049cf4  __aeabi_ui2d                                  
+00049d28  strncmp                                       
+00049d5c  LC_GC_getNumEPs                               
+00049d8c  LC_GC_getNumTasks                             
+00049dbc  PL_channel2V                                  
+00049dec  PL_channel2mv                                 
+00049e1c  PLstack_measurement                           
+00049e4c  adcIsConversionComplete                       
+00049e7c  init_flashMutex                               
+00049eac  pullBoxFromFlash                              
+00049edc  IS25_waitWIP                                  
+00049f08  MPU_vTaskDelay                                
+00049f34  MPU_xTaskGetTickCount                         
+00049f60  MPU_xTaskResumeAll                            
+00049f8c  pbistIsTestCompleted                          
+00049fb8  strrchr                                       
+00049fe4  PLstack_maxCellV                              
+0004a00c  PLstack_minCellV                              
+0004a034  gioGetBit                                     
+0004a05c  strchr                                        
+0004a084  LC_GV_Init                                    
+0004a0a8  LCfu_iec61131__ENDIAN_Swap2                   
+0004a0cc  MPU_vTaskSuspendAll                           
+0004a0f0  PLstack_fault                                 
+0004a114  __aeabi_llsl                                  
+0004a138  __aeabi_llsr                                  
+0004a15c  LEDs_init                                     
+0004a17c  gioSetDirection                               
+0004a19c  sciSetFunctional                              
+0004a1bc  strlen                                        
+0004a1dc  LC3_qw_get_current_time_ep                    
+0004a1f8  LED1_off                                      
+0004a214  PLstack_setBalThres                           
+0004a24c  memoryPort0TestFailNotification               
+0004a268  sciIsTxReady                                  
+0004a284  vListInitialiseItem                           
+0004a2a0  PLstack_avCellV                               
+0004a2b8  PLstack_totalCellV                            
+0004a2d0  pwmNotification                               
+0004a2e8  strcpy                                        
+0004a300  PL455_intSet                                  
+0004a314  PLstack_clrBalThres                           
+0004a328  PLstack_getBalReg                             
+0004a33c  customTrimLPO                                 
+0004a350  __TI_decompress_none                          
+0004a364  spiNotification                               
+0004a378  Dprintf                                       
+0004a388  PLstack_commTimeoutMsShutdown                 
+0004a398  PLstack_numofBoards                           
+0004a3b8  __TI_zero_init                                
+0004a3c8  esmGroup1Notification                         
+0004a3d8  esmGroup2Notification                         
+0004a3e8  selftestFailNotification                      
+0004a3f8  spiEndNotification                            
+0004a408  PLstack_shutdown                              
+0004a414  __aeabi_errno_addr                            
+0004a420  copysign                                      
+0004a420  copysignl                                     
+0004a42c  LCocc_queryEPCount                            
+0004a434  LCocc_queryTASKCount                          
+0004a43c  C$$EXIT                                       
+0004a43c  abort                                         
+0004a444  LED2_off                                      
+0004a448  custom_dabort                                 
+0004a44c  handlePLLLockFail                             
+0004a450  phantomInterrupt                              
+0004a454  __aeabi_idiv0                                 
+0004a454  __aeabi_ldiv0                                 
+0004a7f8  crc16_table                                   
+0004ab78  _ctypes_                                      
+0004ada0  tokenAnswers                                  
+0004ade0  commTimeoutShutdown                           
+080004d0  pxCurrentTCB                                  
+08002800  LC_ProgramInstanceData_PROGRAM1               
+08002800  __start___llvm_prf_cnts                       
+08002800  __stop___llvm_prf_cnts                        
+08005d38  plStack                                       
+08005e70  battStack                                     
+08005f1c  isabelcfg                                     
+08005fac  adcData                                       
+0800602c  rs_inBuf                                      
+080060ac  rs_outBuf                                     
+0800612c  toBattStack                                   
+080061a0  anlgData                                      
+08006248  LC_TASK_StringStackBuffer_DEFAULTTASK         
+08006288  boxQue                                        
+080062b8  rsCom                                         
+080062e4  LC_minPriority                                
+080062e8  logiTask                                      
+08006310  tmsPrpMutex                                   
+08006338  boxBuf1                                       
+08006374  rs_in                                         
+0800638c  rs_out                                        
+080063b8  boxBuf2                                       
+080063cc  fromBattStack                                 
+080063e0  ticksPerSec                                   
+080063e8  battMailbox                                   
+080063ec  battStackMutex                                
+080063f0  bcuMailbox                                    
+080063f4  codeImageInfo                                 
+080063f8  ep                                            
+080063fc  epIdx                                         
+08006400  epTask                                        
+08006404  fingerprint                                   
+08006408  flashMutex                                    
+0800640c  flashTaskQueueMailBox                         
+08006410  flashTaskResponse                             
+08006414  flashboxes                                    
+08006418  j                                             
+0800641c  lastMeasurement                               
+08006420  lastMeasurement1                              
+08006424  lastMeasurement11                             
+08006428  lastMeasurement12                             
+0800642c  resourceName                                  
+08006430  safetyTick                                    
+08006434  task                                          
+08006438  taskIdx                                       
+0800643c  testTick                                      
+08006440  usart1in                                      
+08006444  usart1out                                     
+08006448  usart2in                                      
+0800644c  usart2out                                     
+08006452  currentTokenValue                             
+08006453  flashTaskState                                
+08006454  g_LC3_GVInstanceData                          
+08006455  tpsstate                                      
+08006458  LC_vg_GV_EPDB                                 
+080064e0  LC_vg_PI_EPDB_PROGRAM1                        
+08006568  isaRx                                         
+080065b8  LC_vg_Task_DEFAULTTASK                        
+08006630  isaTx                                         
+08006640  i                                             
+08006644  nValidTask                                    
+08006648  epCnt                                         
+0800664c  taskCnt                                       
+08006660  LC_vg_StringStack_DEFAULTTASK                 
+0800666c  LC_GV_CCED                                    
+08006674  LC_vg_CCED_PROGRAM1                           
+0800667c  LC_vg_EPDBTable                               
+08006684  testFrameCount                                
+08006688  errFrameCount                                 
+0800668c  ulCriticalNesting                             
+08006690  ulTaskHasFPUContext                           
+08006694  countTime                                     
+08006698  pl455Fault                                    
+08006699  stt                                           
+0800669a  safetyPowerState                              
+0800669c  LC_vg_TaskTable                               
+080066a4  conf_IS25_spi                                 
+080066a8  conf_tps_spi                                  
+080066ac  ISABELCAN                                     
+080066b0  errno                                         
+ffffffff  __TI_pprof_out_hndl                           
+ffffffff  __TI_prof_data_size                           
+ffffffff  __TI_prof_data_start                          
+ffffffff  __binit__                                     
+ffffffff  __c_args__                                    
+ffffffff  binit                                         
+UNDEFED   SHT$$INIT_ARRAY$$Base                         
+UNDEFED   SHT$$INIT_ARRAY$$Limit                        
+UNDEFED   _system_post_cinit                            
+
+[575 symbols]
