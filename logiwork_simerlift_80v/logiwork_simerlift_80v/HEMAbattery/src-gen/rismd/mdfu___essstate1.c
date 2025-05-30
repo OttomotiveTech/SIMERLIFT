@@ -45,6 +45,10 @@ static char const lcmd_var_name_ESSSTATE1_CONTACTFBKNEG[] = "contactFbkNeg";
 static RISMDInterfaceVariable const lcmd_var_ESSSTATE1_CONTACTFBKNEG =
 INIT_RISMDInterfaceVariable(lcmd_var_name_ESSSTATE1_CONTACTFBKNEG, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_ESSSTATE1,LC_VD_CONTACTFBKNEG), RISMD_VARIABLE_SECTION_INPUT);
 
+static char const lcmd_var_name_ESSSTATE1_CONTACTFBKTIMER[] = "contactFbkTimer";
+static RISMDStdVariable const lcmd_var_ESSSTATE1_CONTACTFBKTIMER =
+INIT_RISMDStdVariable(lcmd_var_name_ESSSTATE1_CONTACTFBKTIMER, &lcmd_type_TON, offsetof(LC_TD_FunctionBlock_ESSSTATE1,LC_VD_CONTACTFBKTIMER));
+
 static char const lcmd_var_name_ESSSTATE1_CONTACTNEG[] = "contactNeg";
 static RISMDInterfaceVariable const lcmd_var_ESSSTATE1_CONTACTNEG =
 INIT_RISMDInterfaceVariable(lcmd_var_name_ESSSTATE1_CONTACTNEG, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_ESSSTATE1,LC_VD_CONTACTNEG), RISMD_VARIABLE_SECTION_OUTPUT);
@@ -105,6 +109,7 @@ static RISMDReference const lcmd_var_list_ESSSTATE1[] =
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_CONTACT),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_CONTACTFBK),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_CONTACTFBKNEG),
+  INIT_RISMDReference(&lcmd_var_ESSSTATE1_CONTACTFBKTIMER),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_CONTACTNEG),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_DISCHARGE),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_DISCHARGEPROTECT),
@@ -120,4 +125,4 @@ static RISMDReference const lcmd_var_list_ESSSTATE1[] =
 };
 
 static char const lcmd_type_name_ESSSTATE1[] = "ESSSTATE1";
-RISMDPOUType const lcmd_type_ESSSTATE1 = INIT_RISMDPOUType(lcmd_type_name_ESSSTATE1, sizeof(LC_TD_FunctionBlock_ESSSTATE1), 22, lcmd_var_list_ESSSTATE1);
+RISMDPOUType const lcmd_type_ESSSTATE1 = INIT_RISMDPOUType(lcmd_type_name_ESSSTATE1, sizeof(LC_TD_FunctionBlock_ESSSTATE1), 23, lcmd_var_list_ESSSTATE1);

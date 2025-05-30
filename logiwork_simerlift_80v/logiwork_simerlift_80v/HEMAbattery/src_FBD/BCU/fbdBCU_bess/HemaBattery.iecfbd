@@ -160,7 +160,7 @@ PROGRAM HemaBattery
     CMD_Voltage_Sense_1 : REAL := 0;
     Measure_All : BOOL := 0;
     Measure_Aux : BOOL := 0;
-    tauxCells : ARRAY[0..15] OF USINT := [0,0,1,1,1,2,2,3,3,3,4,4,5,5,5,5];
+    tauxCells : ARRAY[0..15] OF USINT := [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,4];
     BCU_Fault_Danger : BOOL := 0;
     CMD_Current_Sense : REAL := 0;
     Fault_DMDC_Exceed : BOOL := 0;
@@ -342,8 +342,7 @@ PROGRAM HemaBattery
     chargeProtect : BOOL;
     dischargeProtect : BOOL;
     essState11 : essState1;
-    shutdownEnb : BOOL;
-    TON3 : TON;
+    shutdownEnb : BOOL := BOOL#FALSE;
     prechargeBoardErr : BOOL;
     sim100NotFound : BOOL;
     BatteryWatt : REAL;
@@ -351,7 +350,6 @@ PROGRAM HemaBattery
     F_TRIG3 : F_TRIG;
     F_TRIG4 : F_TRIG;
     R_TRIG9 : R_TRIG;
-    TON15 : TON;
     socChComp : REAL;
     R_TRIG2 : R_TRIG;
     socDchComp : REAL;
@@ -439,6 +437,9 @@ PROGRAM HemaBattery
     Number_Of_MaxCell2 : USINT;
     ARR2VAL2 : ARR2VAL;
     NEWBMU_RESET : BOOL := FALSE;
+    prechargeCAN1 : prechargeCAN;
+    TON26 : TON;
+    TON27 : TON;
   END_VAR
 
   (*
@@ -546,9 +547,6 @@ PROGRAM HemaBattery
     EQ(IN1 := HVCU_State, IN2 := BATTSTATE#CHARGE, EQ => (@C(1658).EQ, chargeCMD));
     EQ(IN1 := HVCU_State, IN2 := BATTSTATE#DISCHARGE, EQ => (@C(1713).EQ, dischargeCMD));
     OR(IN1 := @C(1658).EQ, IN2 := @C(1713).EQ, OR => IGNITION);
-    EQ(IN1 := HVCU_State, IN2 := BATTSTATE#SHUTDOWN, EQ => @C(1268).EQ);
-    TON15(IN := emergencyBtn, PT := T#250ms);
-    OR(IN1 := @C(1268).EQ, IN2 := TON15.Q, OR => shutdownCMD);
 
     // Network 27:
     GUICFG_INT13(CODE := 107, R := 1);
@@ -677,39 +675,53 @@ PROGRAM HemaBattery
     Tbuffer4(I := @C(917).GE, D := T#100ms, O => OC_fault);
 
     // Network 51:
+    TO_TIME(IN := prechargeInterval, TO_TIME => @C(3224).TO_TIME);
+    DIV_TIME(IN1 := @C(3224).TO_TIME, IN2 := 1000, DIV_TIME => @C(3225).DIV_TIME);
+    GT(IN1 := BatteryVoltage, IN2 := Pack_CutoffLow_Voltage, GT => @C(3228).GT);
+    SUB(IN1 := BatteryVoltage, IN2 := OutputVoltage, SUB => @C(3231).SUB);
+    ABS(IN := @C(3231).SUB, ABS => @C(3229).ABS);
+    LT(IN1 := @C(3229).ABS, IN2 := 8, LT => @C(3232).LT);
+    TON26(IN := @C(3232).LT, PT := @C(3225).DIV_TIME);
+    AND(IN1 := @C(3228).GT, IN2 := TON26.Q, AND => prechargeComplete);
+    GT(IN1 := BatteryVoltage, IN2 := Pack_CutoffLow_Voltage, GT => @C(3233).GT);
+    SUB(IN1 := BatteryVoltage, IN2 := ChargeInVoltage, SUB => @C(3236).SUB);
+    ABS(IN := @C(3236).SUB, ABS => @C(3235).ABS);
+    LT(IN1 := @C(3235).ABS, IN2 := 8, LT => @C(3237).LT);
+    TON27(IN := @C(3237).LT, PT := @C(3225).DIV_TIME);
+    AND(IN1 := @C(3233).GT, IN2 := TON27.Q, AND => prechargeCompleteCharge);
+
+    // Network 52:
     ABS(IN := BatteryCurrent, ABS => @C(1258).ABS);
     LT(IN1 := @C(1258).ABS, IN2 := 3, LT => shutdownComplete);
 
-    // Network 52:
+    // Network 53:
     IOWR13(PORT := TMS570_GIO#HET1, PIN := 24, VAL := 1);
 
-    // Network 53:
+    // Network 54:
     ANLG8(ADC := TMSADC#A1, GRP := TMSADCGRP#G1, CH := 10);
 
-    // Network 54:
+    // Network 55:
     IOWR22(PORT := TMS570_GIO#A, PIN := 7);
 
-    // Network 55:
+    // Network 56:
     IOWR23(PORT := TMS570_GIO#A, PIN := 6);
 
-    // Network 56:
+    // Network 57:
     IOWR7(PORT := TMS570_GIO#HET1, PIN := 22);
 
-    // Network 57:
-    IOWR9(PORT := TMS570_GIO#HET1, PIN := 8);
-
     // Network 58:
-    EQ(IN1 := HW_version, IN2 := 1, EQ => @C(1957).EQ);
-    SEL(G := @C(1957).EQ, IN0 := 0, IN1 := 1, SEL => @C(1958).SEL);
-    IOWR19(PORT := TMS570_GIO#SPI2, PIN := 10, VAL := @C(1958).SEL);
+    IOWR9(PORT := TMS570_GIO#HET1, PIN := 8);
 
     // Network 59:
     dgtIn4(ch := 2);
-    TO_BOOL(IN := dgtIn4.stat, TO_BOOL => contactFbkCharge);
+    EQ(IN1 := 1, IN2 := dgtIn4.stat, EQ => contactFbkDischarge);
+    dgtIn3(ch := 3);
+    EQ(IN1 := dgtIn3.stat, IN2 := 1, EQ => contactFbkCharge);
 
     // Network 60:
-    dgtIn3(ch := 3);
-    TO_BOOL(IN := dgtIn3.stat, TO_BOOL => contactFbkDischarge);
+    EQ(IN1 := HW_version, IN2 := 1, EQ => @C(1957).EQ);
+    SEL(G := @C(1957).EQ, IN0 := 0, IN1 := 1, SEL => @C(1958).SEL);
+    IOWR19(PORT := TMS570_GIO#SPI2, PIN := 10, VAL := @C(1958).SEL);
 
     // Network 61:
     dgtIn8(ch := 4);
@@ -810,8 +822,6 @@ PROGRAM HemaBattery
     AND(IN1 := NOT currentProtection, IN2 := @C(1642).SEL, AND => dischargeENB);
     SEL(G := slaveMode, IN0 := batteryInCharge, IN1 := chargeCMD, SEL => @C(1648).SEL);
     AND(IN1 := NOT currentProtection, IN2 := @C(1648).SEL, AND => chargeENB);
-    TON3(IN := emergencyBtn, PT := T#250ms);
-    SEL(G := slaveMode, IN0 := TON3.Q, IN1 := shutdownCMD, SEL => shutdownEnb);
 
     // Network 85:
     TO_REAL(IN := ntcBETA, TO_REAL => @C(265).TO_REAL);
@@ -932,38 +942,33 @@ PROGRAM HemaBattery
     SEL(G := @C(672).AND, IN0 := contactEnableCharge_batt, IN1 := forceCharge, SEL => contactEnableCharge);
 
     // Network 106:
-    NE(IN1 := contactEnableCharge, IN2 := contactFbkCharge, NE => @C(1109).NE);
-    Buffer23(I := @C(1109).NE);
-    TOF9(IN := Buffer23.O, PT := T#3s, Q => Fault_Pack_Charge_Contactor);
-
-    // Network 107:
     GUI1(Voltage := CMD_Voltage_Sense_1, Current := CMD_Current_Sense, Temp := Pack_Temperature, Humidity := BMSdmcc_final, Fault := GUI_Fault, SoC := SoC_CC, SoH := SoH, Cycle := Duty_Cycle, State := BMS_State, ID := Selected_Pack_Number, CH := BCU_CAN_CH);
 
-    // Network 108:
+    // Network 107:
     MUL(IN1 := Number_Of_Cell, IN2 := Number_Of_Parallel_Cell, IN3 := Cell_Current_Nominal, IN4 := cellVolt_nominal, MUL => @C(74).MUL);
     TO_REAL(IN := @C(74).MUL, TO_REAL => @C(73).TO_REAL);
     DIV(IN1 := @C(73).TO_REAL, IN2 := 1000000, DIV => kWhCapacity);
     MUL(IN1 := kWhCapacity, IN2 := SoCreal, MUL => @C(2073).MUL);
     DIV(IN1 := @C(2073).MUL, IN2 := 100, DIV => PackRemCap_kWh);
 
-    // Network 109:
+    // Network 108:
     MUL(IN1 := DoD_rate, IN2 := kWhCapacity, MUL => (@C(1367).MUL, usableCapkwh));
     MUL(IN1 := @C(1367).MUL, IN2 := 1000, MUL => usableCapwh);
 
-    // Network 110:
+    // Network 109:
     DIV(IN1 := CMD_Overall_Power, IN2 := kWhCapacity, DIV => @C(1978).DIV);
     TO_USINT(IN := @C(1978).DIV, TO_USINT => Duty_Cycle);
 
-    // Network 111:
+    // Network 110:
     DIV(IN1 := Duty_Cycle, IN2 := cyclesPerSOH, DIV => @C(1985).DIV);
     SUB(IN1 := 100, IN2 := @C(1985).DIV, SUB => @C(1990).SUB);
     LIMIT(MN := 0, IN := @C(1990).SUB, MX := 100, LIMIT => @C(1993).LIMIT);
     TO_USINT(IN := @C(1993).LIMIT, TO_USINT => SoH);
 
-    // Network 112:
+    // Network 111:
     ARR2VAL2(MaxBMU := Number_Of_BMU_cfg, indx := Selected_BMU_Loc, Map := NumOfCells, CellCounter := Selected_Cell_Loc, numofCell => Number_Of_MaxCell, Reset => NEWBMU_RESET);
 
-    // Network 113:
+    // Network 112:
     FLASH1(IN := 1, PER := T#250ms, OUT => selClock);
     TO_USINT(IN := Number_Of_MaxCell, TO_USINT => @C(1002).TO_USINT);
     CTU2(CU := CTU1.Q, R := NEWBMU_RESET, PV := Number_Of_BMU_cfg);
@@ -971,10 +976,10 @@ PROGRAM HemaBattery
     TO_USINT(IN := CTU2.CV, TO_USINT => Selected_BMU_Loc);
     TO_USINT(IN := CTU1.CV, TO_USINT => Selected_Cell_Loc);
 
-    // Network 114:
+    // Network 113:
     BCU_Fault_Codes1(CAN_ID := CAN_ID_16, Fault_00 := BCU_Fault_Warning, Fault_01 := BCU_Fault_Danger, Fault_02 := Fault_Cell_Over_Voltage_Warning, Fault_03 := Fault_Cell_Over_Voltage_Danger, Fault_04 := Fault_Cell_Under_Voltage_Warning, Fault_05 := Fault_Cell_Under_Voltage_Danger, Fault_06 := Fault_Cell_Over_Temp_Warning, Fault_07 := Fault_Cell_Over_Temp_Danger, Fault_08 := Fault_Cell_Under_Temp_Warning, Fault_09 := Fault_Cell_Under_Temp_Danger, Fault_10 := OC_warning, Fault_11 := OC_fault, Fault_12 := Fault_Pack_CMS, Fault_13 := Fault_Pack_Discharge_Contactor, Fault_14 := Fault_Pack_Charge_Contactor, Fault_15 := Fault_Pack_HVIL_1, Fault_16 := Fault_Pack_HVIL_2, Fault_20 := Fault_Pack_BMU, Fault_21 := Fault_Pack_Negative_Contactor, Fault_22 := prechargeError, Fault_25 := warningMdlBalT, Fault_26 := faultMdlBalT, Fault_33 := Fault_CAN_Communication, Fault_Byte_5 := Board_Error_Messages, CAN_CH := BCU_CAN_CH, Fault_Byte_6_7 := Board_Fault_Messages, GUI_Fault => GUI_Fault, sum => faultsWord);
 
-    // Network 115:
+    // Network 114:
     GE(IN1 := Total_Voltage, IN2 := ChargeOK_Voltage_PACK, GE => @C(887).GE);
     GE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_chargeOK, GE => @C(544).GE);
     OR(IN1 := @C(887).GE, IN2 := @C(544).GE, OR => @C(542).OR);
@@ -985,7 +990,7 @@ PROGRAM HemaBattery
     TON16(IN := @C(1702).AND, PT := T#15s);
     SR1(S1 := TON16.Q, R := @C(742).GT, Q1 => mainChargeComplete);
 
-    // Network 116:
+    // Network 115:
     F_TRIG1(CLK := IGNITION);
     F_TRIG2(CLK := IGNITION_KL15);
     OR(IN1 := F_TRIG1.Q, IN2 := F_TRIG2.Q, OR => @C(223).OR);
@@ -993,11 +998,11 @@ PROGRAM HemaBattery
     TO_USINT(IN := SOCisz1.SOC, TO_USINT => SoC_CC);
     DIV(IN1 := SOCisz1.remainingWh, IN2 := 1000, DIV => usableRemkwh);
 
-    // Network 117:
+    // Network 116:
     R_TRIG2(CLK := mainChargeComplete);
     SEL(G := R_TRIG2.Q, IN0 := socChComp, IN1 := SoCreal, SEL => socChComp);
 
-    // Network 118:
+    // Network 117:
     LT(IN1 := Cell_Voltage_Min, IN2 := cellVolt_dischargeOK, LT => @C(246).LT);
     LT(IN1 := Total_Voltage, IN2 := DichargeOK_Voltage_PACK, LT => @C(1324).LT);
     OR(IN1 := @C(246).LT, IN2 := @C(1324).LT, OR => @C(906).OR);
@@ -1008,28 +1013,32 @@ PROGRAM HemaBattery
     Tbuffer6(I := @C(328).AND, D := T#500ms);
     SR2(S1 := Tbuffer6.O, R := @C(926).GT, Q1 => dischargeComplete);
 
-    // Network 119:
+    // Network 118:
     R_TRIG3(CLK := dischargeComplete);
     SEL(G := R_TRIG3.Q, IN0 := socDchComp, IN1 := SoCreal, SEL => socDchComp);
 
-    // Network 120:
+    // Network 119:
     OR(IN1 := Fault_Cell_Over_Temp_Danger, IN2 := Fault_Cell_Under_Temp_Danger, IN3 := Fault_CAN_Communication, IN4 := Fault_Pack_HVIL_1, IN5 := Fault_Pack_BMU, IN6 := Fault_Pack_Discharge_Contactor, IN7 := Fault_Cell_Over_Voltage_Danger, IN8 := Fault_Cell_Under_Voltage_Danger, IN9 := OC_fault, IN10 := faultMdlBalT, IN11 := Fault_Pack_HVIL_2, IN12 := Fault_Pack_Negative_Contactor, IN13 := Fault_Pack_Charge_Contactor, IN14 := Fault_Pack_CMS, OR => BCU_Fault_Danger);
 
-    // Network 121:
+    // Network 120:
     EQ(IN1 := BMS_State, IN2 := BATTSTATE#CHARGE, EQ => @C(793).EQ);
     chargeState1(chargeOn := @C(793).EQ, mainComplete := mainChargeComplete, dmcc := BMSdmcc_main, battAmpr := BatteryCurrent, balAmpr := 1, balDiff := BalanceDiff_Threshold, maxCell := Cell_Voltage_Max, minCell := Cell_Voltage_Min, complete => BCU_Charge_Complete, balance => BalanceStateEnb, chargeAmpr => BMSdmcc_final, chState => balChargeSt);
 
-    // Network 122:
+    // Network 121:
     Balance_isz1(Max_Cell_Voltage := Cell_Voltage_Max, Min_Cell_Voltage := Cell_Voltage_Min, Avarage_Cell_Voltage := Cell_Voltage_Average, Charge_Status := BalanceStateEnb, Ballance_Interval := T#15s, Difference_Tolerance := 10, Balance_Threshold := cellVolt_balThres, Balance_Enable => Balance_Enable_Rq, Measure_All => Measure_All, Measure_Aux => Measure_Aux, Ballance_Voltage => Balance_Voltage);
 
-    // Network 123:
+    // Network 122:
     TO_UINT(IN := BMSdmcc_final, TO_UINT => Pack_DMCC);
 
-    // Network 124:
+    // Network 123:
     OR(IN1 := Fault_Cell_Over_Temp_Danger, IN2 := Fault_Cell_Under_Temp_Danger, IN3 := Fault_CAN_Communication, IN4 := Fault_Pack_HVIL_1, IN5 := Fault_Pack_BMU, IN6 := Fault_Pack_Discharge_Contactor, IN7 := OV_fault, IN8 := UV_fault, IN9 := OC_fault, IN11 := Fault_Pack_Negative_Contactor, IN12 := Fault_Pack_Charge_Contactor, IN13 := Fault_Pack_CMS, OR => FaultForState);
 
+    // Network 124:
+    OR(IN1 := prechargeEnable, IN2 := prechargeEnableCharge, OR => @C(3223).OR);
+    prechargeCAN1(CAN_CH := PDUCAN, ENB := @C(3223).OR, RST := NOT @C(3223).OR, CANerr => prechargeBoardErr);
+
     // Network 125:
-    essState11(discharge := dischargeENB, charge := chargeENB, shutdown := shutdownEnb, prechargeOk := prechargeComplete, contactFbk := contactFbk, contactFbkNeg := contactFbkDischarge, dischargeProtect := dischargeProtect, chargeProtect := chargeProtect, shutdownComplete := shutdownComplete, fault := FaultForState, STATE => BMS_State, prechargeOn => prechargeEnable, contact => contactEnable_batt, contactNeg => contactNegEnable_batt);
+    essState11(discharge := dischargeENB, charge := chargeENB, shutdown := shutdownEnb, prechargeOk := prechargeComplete, contactFbk := contactFbkCharge, contactFbkNeg := contactFbkDischarge, dischargeProtect := dischargeProtect, chargeProtect := chargeProtect, shutdownComplete := shutdownComplete, fault := BOOL#FALSE, STATE => BMS_State, prechargeOn => prechargeEnable, contact => contactEnable_batt, contactNeg => contactNegEnable_batt);
 
     // Network 126:
     new_CHG_CONTACT := contactEnable_batt;
@@ -1041,56 +1050,56 @@ PROGRAM HemaBattery
     prechargeComplete := prechargeEnable;
 
     // Network 129:
-    contactFbkDischarge := contactNegEnable_batt;
+    contactFbkCharge := new_CHG_CONTACT;
 
     // Network 130:
+    NE(IN1 := contactEnableCharge, IN2 := contactFbkCharge, NE => @C(1109).NE);
+    Buffer23(I := @C(1109).NE);
+    TOF9(IN := Buffer23.O, PT := T#3s, Q => Fault_Pack_Charge_Contactor);
+
+    // Network 131:
+    contactFbkDischarge := new_DCHG_CONTACT;
+
+    // Network 132:
     NE(IN1 := contactNegEnable, IN2 := contactFbkDischarge, NE => @C(1092).NE);
     Buffer22(I := @C(1092).NE);
     TOF8(IN := Buffer22.O, PT := T#3s, Q => Fault_Pack_Negative_Contactor);
 
-    // Network 131:
-    IOWR24(PORT := TMS570_GIO#HET1, PIN := 2, VAL := new_CHG_CONTACT);
-
-    // Network 132:
-    IOWR10(PORT := TMS570_GIO#HET1, PIN := 0, VAL := new_DCHG_CONTACT);
-
     // Network 133:
+    IOWR24(PORT := TMS570_GIO#HET1, PIN := 2, VAL := new_DCHG_CONTACT);
+
+    // Network 134:
+    IOWR10(PORT := TMS570_GIO#HET1, PIN := 0, VAL := new_CHG_CONTACT);
+
+    // Network 135:
     EQ(IN1 := BMS_State, IN2 := BATTSTATE#DISCHARGE, EQ => @C(303).EQ);
     TON21(IN := @C(303).EQ, PT := T#5s, Q => dischargeAmpEnb);
 
-    // Network 134:
+    // Network 136:
     EQ(IN1 := BMS_State, IN2 := BATTSTATE#CHARGE, EQ => @C(1795).EQ);
     TON22(IN := @C(1795).EQ, PT := T#5s, Q => chargeAmpEnb);
 
-    // Network 135:
+    // Network 137:
     GE(IN1 := Cell_Voltage_Min, IN2 := cellVolt_dischargeOK, GE => @C(874).GE);
     AND(IN1 := @C(874).GE, IN2 := dischargeAmpEnb, AND => increaseDischargeAmp);
 
-    // Network 136:
+    // Network 138:
     LE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_chargeOK, LE => @C(1847).LE);
     AND(IN1 := @C(1847).LE, IN2 := chargeAmpEnb, IN3 := NOT Balance_Enable_Rq, AND => increaseChargeAmp);
 
-    // Network 137:
+    // Network 139:
     LT(IN1 := BatteryVoltage, IN2 := Pack_Discharge_Voltage, LT => @C(1274).LT);
     OR(IN1 := OT_danger_risk, IN2 := UT_danger_risk, OR => @C(1450).OR);
     LE(IN1 := Cell_Voltage_Min, IN2 := cellVolt_minDischarge, LE => @C(1319).LE);
     AND(IN1 := @C(1319).LE, IN2 := dischargeAmpEnb, AND => @C(1640).AND);
     OR(IN1 := @C(1274).LT, IN2 := @C(1450).OR, IN3 := @C(1640).AND, OR => decreaseDischargeAmp);
 
-    // Network 138:
+    // Network 140:
     GT(IN1 := BatteryVoltage, IN2 := Pack_Charge_Voltage, GT => @C(2092).GT);
     GE(IN1 := Cell_Voltage_Max, IN2 := cellVolt_maxCharge, GE => @C(2028).GE);
     AND(IN1 := @C(2028).GE, IN2 := chargeAmpEnb, IN3 := NOT Balance_Enable_Rq, AND => @C(2103).AND);
     OR(IN1 := OT_danger_risk, IN2 := UT_danger_risk, OR => @C(2110).OR);
     OR(IN1 := @C(2092).GT, IN2 := @C(2103).AND, IN3 := @C(2110).OR, OR => decreaseChargeAmp);
-
-    // Network 139:
-    OR(IN1 := contactFbkCharge, IN2 := contactFbkDischarge, OR => contactFbk);
-
-    // Network 140:
-    NE(IN1 := contactEnable, IN2 := contactFbk, NE => @C(243).NE);
-    Buffer21(I := @C(243).NE);
-    TOF7(IN := Buffer21.O, PT := T#3s, Q => Fault_Pack_Discharge_Contactor);
 
     // Network 141:
     DIV(IN1 := maxDischargeAmp, IN2 := dischargeUnitAmp, DIV => @C(1762).DIV);
@@ -1105,6 +1114,14 @@ PROGRAM HemaBattery
     SEL(G := dischargeAmpEnb, IN0 := 2, IN1 := @C(64).MAX, SEL => BMSdmdc_final);
 
     // Network 142:
+    OR(IN1 := contactFbkCharge, IN2 := contactFbkDischarge, OR => contactFbk);
+
+    // Network 143:
+    NE(IN1 := contactEnable, IN2 := contactFbk, NE => @C(243).NE);
+    Buffer21(I := @C(243).NE);
+    TOF7(IN := Buffer21.O, PT := T#3s, Q => Fault_Pack_Discharge_Contactor);
+
+    // Network 144:
     DIV(IN1 := maxChargeAmp, IN2 := chargeUnitAmp, DIV => @C(1770).DIV);
     TO_INT(IN := @C(1770).DIV, TO_INT => @C(1772).TO_INT);
     R_TRIG8(CLK := chargeAmpEnb);
@@ -1116,7 +1133,7 @@ PROGRAM HemaBattery
     MAX(IN1 := 2, IN2 := @C(1782).MUL, MAX => @C(1848).MAX);
     SEL(G := chargeAmpEnb, IN0 := 2, IN1 := @C(1848).MAX, SEL => BMSdmcc_main);
 
-    // Network 143:
+    // Network 145:
     TO_UINT(IN := BMSdmdc_final, TO_UINT => Pack_DMDC);
 
   *)
@@ -1149,21 +1166,21 @@ PROGRAM HemaBattery
   @C(368) : @FB(TOF4), @R(2300.0, 2480.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
   @C(364) : @F(GE), @R(2160.0, 1710.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GE), @R(9.5));
   @C(366) : @FB(TOF3), @R(2300.0, 2360.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
-  @C(415) : @F(TO_UINT), @R(1460.0, 2100.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(415) : @F(TO_UINT), @R(1460.0, 1610.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
   @C(413) : @FB(Balance_isz1), @R(430.0, 1870.0, 460.0, 138.0), @I(@N(Max_Cell_Voltage), @L(29.5)), @I(@N(Min_Cell_Voltage), @L(49.5)), @I(@N(Avarage_Cell_Voltage), @L(69.5)), @I(@N(Charge_Status), @L(9.5)), @I(@N(Ballance_Interval), @L(129.5)), @I(@N(Difference_Tolerance), @L(109.5)), @I(@N(Balance_Threshold), @L(89.5)), @O(@N(Balance_Enable), @R(9.5)), @O(@N(Measure_All), @R(49.5)), @O(@N(Measure_Aux), @R(69.5)), @O(@N(Ballance_Voltage), @R(29.5));
   @C(404) : @F(LE), @R(2160.0, 1790.0, 40.0, 38.0), UDINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LE), @R(9.5));
   @C(405) : @FB(TOF2), @R(2300.0, 2400.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
-  @C(395) : @FB(CAN_Test2), @R(1640.0, 2180.0, 200.0, 118.0), @I(@N(IN_1), @L(49.5)), @I(@N(IN_2), @L(69.5)), @I(@N(IN_3), @L(89.5)), @I(@N(IN_4), @L(109.5)), @I(@N(CAN_CH), @L(9.5)), @I(@N(CAN_ID), @L(29.5));
+  @C(395) : @FB(CAN_Test2), @R(1640.0, 1690.0, 200.0, 118.0), @I(@N(IN_1), @L(49.5)), @I(@N(IN_2), @L(69.5)), @I(@N(IN_3), @L(89.5)), @I(@N(IN_4), @L(109.5)), @I(@N(CAN_CH), @L(9.5)), @I(@N(CAN_ID), @L(29.5));
   @C(394) : @FB(Buffer12), @R(2170.0, 2200.0, 100.0, 18.0), @I(@N(I), @L(9.5)), @O(@N(O), @R(9.5));
   @C(393) : @FB(TOF1), @R(2300.0, 2200.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
-  @C(388) : @FB(CAN_Test1), @R(1640.0, 2060.0, 200.0, 118.0), @I(@N(IN_1), @L(49.5)), @I(@N(IN_2), @L(69.5)), @I(@N(IN_3), @L(89.5)), @I(@N(IN_4), @L(109.5)), @I(@N(CAN_CH), @L(9.5)), @I(@N(CAN_ID), @L(29.5));
-  @C(425) : @F(TO_UINT), @R(1460.0, 2280.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
-  @C(424) : @F(TO_UINT), @R(1460.0, 2260.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
-  @C(419) : @F(TO_UINT), @R(1460.0, 2120.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
-  @C(421) : @F(TO_UINT), @R(1460.0, 2160.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
-  @C(420) : @F(TO_UINT), @R(1460.0, 2140.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
-  @C(423) : @F(TO_UINT), @R(1460.0, 2240.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
-  @C(422) : @F(TO_UINT), @R(1460.0, 2220.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(388) : @FB(CAN_Test1), @R(1640.0, 1570.0, 200.0, 118.0), @I(@N(IN_1), @L(49.5)), @I(@N(IN_2), @L(69.5)), @I(@N(IN_3), @L(89.5)), @I(@N(IN_4), @L(109.5)), @I(@N(CAN_CH), @L(9.5)), @I(@N(CAN_ID), @L(29.5));
+  @C(425) : @F(TO_UINT), @R(1460.0, 1790.0, 120.0, 18.0), BOOL, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(424) : @F(TO_UINT), @R(1460.0, 1770.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(419) : @F(TO_UINT), @R(1460.0, 1630.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(421) : @F(TO_UINT), @R(1460.0, 1670.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(420) : @F(TO_UINT), @R(1460.0, 1650.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(423) : @F(TO_UINT), @R(1460.0, 1750.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
+  @C(422) : @F(TO_UINT), @R(1460.0, 1730.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_UINT), @R(9.5));
   @C(466) : @FB(CMS_IVT1), @R(140.0, 2760.0, 300.0, 278.0), @I(@N(CAN_CH), @L(9.5)), @O(@N(Current_mA), @R(9.5)), @O(@N(Voltage1_mV), @R(29.5)), @O(@N(Voltage2_mV), @R(49.5)), @O(@N(Voltage3_mV), @R(69.5)), @O(@N(Temp), @R(109.5)), @O(@N(Power_kWh), @R(129.5)), @O(@N(Current_Counter_Ah), @R(169.5)), @O(@N(Power_Counter_Wh), @R(189.5)), @O(@N(CMS_Error), @R(249.5)), @O(@N(CAN_Error), @R(269.5)), @O(@N(Overall_Power_kWh), @R(209.5));
   @C(509) : @F(DIV), @R(760.0, 750.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV), @R(9.5));
   @C(502) : @F(MUL), @R(660.0, 750.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(MUL), @R(9.5));
@@ -1308,7 +1325,7 @@ PROGRAM HemaBattery
   @VF(190) : @E(CAN_ID_12), @R(1960.0, 530.0, 220.0, 19.0);
   @VF(188) : @E(CAN_ID_11), @R(1960.0, 370.0, 220.0, 19.0);
   @VF(182) : @E(BatteryCurrent), @R(430.0, 2480.0, 130.0, 19.0);
-  @VF(205) : @E(contactEnable_batt), @R(860.0, 2090.0, 190.0, 19.0);
+  @VF(205) : @E(contactEnable_batt), @R(780.0, 2110.0, 190.0, 19.0);
   @VF(204) : @E(Cell_Temp_Min_Cell_Loc), @R(1960.0, 770.0, 220.0, 19.0);
   @VF(201) : @E(Balance_Enable_Rq), @R(1100.0, 900.0, 210.0, 19.0);
   @VF(203) : @E(Cell_Temp_Max_BMU_Loc), @R(1960.0, 750.0, 220.0, 19.0);
@@ -1364,12 +1381,11 @@ PROGRAM HemaBattery
   @VF(371) : @E(T#3s), @R(2170.0, 2460.0, 100.0, 19.0);
   @VF(370) : @E(T#3s), @R(2170.0, 2500.0, 100.0, 19.0);
   @VF(361) : @E(Fault_Pack_Discharge_Contactor), @R(2430.0, 2080.0, 260.0, 19.0);
-  @VF(363) : @E(contactFbk), @R(230.0, 2130.0, 160.0, 19.0);
   @VF(414) : @E(Balance_Enable_Rq), @R(910.0, 1870.0, 220.0, 19.0);
   @VF(398) : @E(T#3s), @R(2170.0, 2220.0, 100.0, 19.0);
-  @VF(391) : @E(16#10000002), @R(1460.0, 2200.0, 120.0, 19.0), UDINT;
-  @VF(390) : @E(16#10000001), @R(1460.0, 2080.0, 120.0, 19.0), UDINT;
-  @VF(389) : @E(BCU_CAN_CH), @R(1460.0, 2060.0, 120.0, 19.0);
+  @VF(391) : @E(16#10000002), @R(1460.0, 1710.0, 120.0, 19.0), UDINT;
+  @VF(390) : @E(16#10000001), @R(1460.0, 1590.0, 120.0, 19.0), UDINT;
+  @VF(389) : @E(BCU_CAN_CH), @R(1460.0, 1570.0, 120.0, 19.0);
   @VF(440) : @E(BMSdmcc_main), @R(250.0, 1740.0, 160.0, 19.0);
   @VF(441) : @E(CAN_ID_14), @R(1960.0, 890.0, 220.0, 19.0);
   @VF(445) : @E(Balance_Voltage), @R(1100.0, 880.0, 210.0, 19.0);
@@ -1454,7 +1470,7 @@ PROGRAM HemaBattery
   @VF(814) : @E(IGNITION), @R(30.0, 1650.0, 130.0, 19.0);
   @VF(786) : @E(Selected_Cell_Loc), @R(780.0, 1030.0, 160.0, 19.0);
   @VF(785) : @E(Selected_BMU_Loc), @R(780.0, 1010.0, 160.0, 19.0);
-  @VF(797) : @E(BMS_State), @R(860.0, 2030.0, 160.0, 19.0);
+  @VF(797) : @E(BMS_State), @R(780.0, 2050.0, 160.0, 19.0);
   @VF(792) : @E(BATTSTATE#CHARGE), @R(40.0, 1720.0, 150.0, 19.0), USINT;
   @VF(774) : @E(T#250ms), @R(80.0, 1010.0, 80.0, 19.0);
   @VF(772) : @E(BalanceStateEnb), @R(850.0, 1720.0, 170.0, 19.0);
@@ -1474,7 +1490,6 @@ PROGRAM HemaBattery
   @VF(928) : @E(Fault_Cell_Under_Voltage_Danger), @R(3060.0, 1540.0, 260.0, 19.0);
   @VF(924) : @E(Fault_Cell_Over_Voltage_Danger), @R(2430.0, 2240.0, 260.0, 19.0);
   @VF(925) : @E(Fault_Cell_Under_Voltage_Danger), @R(2430.0, 2320.0, 260.0, 19.0);
-  @VF(908) : @E(emergencyBtn), @R(3030.0, 500.0, 140.0, 19.0);
   @VF(993) : @E(CAN_ID_10), @R(1710.0, 30.0, 180.0, 19.0);
   @VF(992) : @E(CAN_ID_11), @R(1710.0, 50.0, 180.0, 19.0);
   @VF(995) : @E(CAN_ID_15), @R(1710.0, 130.0, 180.0, 19.0);
@@ -1511,7 +1526,7 @@ PROGRAM HemaBattery
   @VF(1389) : @E(Duty_Cycle), @R(1430.0, 1230.0, 220.0, 19.0);
   @VF(1390) : @E(BMS_State), @R(1430.0, 1250.0, 220.0, 19.0);
   @VF(1391) : @E(Selected_Pack_Number), @R(1430.0, 1270.0, 220.0, 19.0);
-  @VF(1290) : @E(prechargeEnable), @R(860.0, 2070.0, 190.0, 19.0);
+  @VF(1290) : @E(prechargeEnable), @R(780.0, 2090.0, 190.0, 19.0);
   @VF(1325) : @E(CAN_Fault_03), @R(2740.0, 490.0, 120.0, 19.0);
   @VF(1492) : @E(Pack_Temperature), @R(1430.0, 1170.0, 220.0, 19.0);
   @VF(1490) : @E(CMD_Current_Sense), @R(1430.0, 1150.0, 220.0, 19.0);
@@ -1673,7 +1688,7 @@ PROGRAM HemaBattery
   @VF(1230) : @E(16#00000004), @R(2950.0, 2580.0, 140.0, 19.0), DWORD;
   @VF(1950) : @E(T#3s), @R(3390.0, 2520.0, 50.0, 19.0);
   @VF(939) : @E(Fault_Pack_BMU), @R(3640.0, 2440.0, 140.0, 19.0);
-  @VF(585) : @E(prechargeComplete), @R(230.0, 2110.0, 160.0, 19.0);
+  @VF(585) : @E(prechargeComplete), @R(150.0, 2130.0, 160.0, 19.0);
   @VF(651) : @E(cellVolt_warningOV), @R(1640.0, 250.0, 220.0, 19.0);
   @VF(652) : @E(3650), @R(1530.0, 250.0, 80.0, 19.0), WORD;
   @VF(553) : @E(cellVolt_warningOV), @R(1900.0, 1730.0, 150.0, 19.0);
@@ -1700,7 +1715,7 @@ PROGRAM HemaBattery
   @VF(970) : @E(OC_fault), @R(2430.0, 1650.0, 110.0, 19.0);
   @VF(977) : @E(Fault_Pack_BMU), @R(3190.0, 1840.0, 140.0, 19.0);
   @VF(991) : @E(isolationStatus), @R(2040.0, 230.0, 140.0, 19.0);
-  @VF(999) : @E(contactNegEnable_batt), @R(860.0, 2110.0, 190.0, 19.0);
+  @VF(999) : @E(contactNegEnable_batt), @R(780.0, 2130.0, 190.0, 19.0);
   @VF(694) : @E(ChargeInVoltage), @R(800.0, 2900.0, 140.0, 19.0);
   @VF(1048) : @E(prechargeError), @R(3190.0, 1880.0, 140.0, 19.0);
   @C(1092) : @F(NE), @R(2090.0, 2120.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(NE), @R(9.5));
@@ -1720,16 +1735,12 @@ PROGRAM HemaBattery
   @VF(1127) : @E(Fault_Pack_Negative_Contactor), @R(3070.0, 1860.0, 260.0, 19.0);
   @VF(1130) : @E(contactFbkDischarge), @R(2030.0, 210.0, 150.0, 19.0);
   @VF(1131) : @E(contactFbkCharge), @R(2030.0, 130.0, 150.0, 19.0);
-  @VF(359) : @E(contactFbkDischarge), @R(720.0, 2440.0, 160.0, 19.0);
   @VF(362) : @E(dischargeCMD), @R(3440.0, 410.0, 140.0, 19.0);
   @C(1258) : @F(ABS), @R(580.0, 2480.0, 60.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(ABS), @R(9.5));
   @C(1259) : @F(LT), @R(660.0, 2480.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
   @VF(1262) : @E(3), @R(580.0, 2500.0, 60.0, 19.0), REAL;
   @VF(1264) : @E(shutdownComplete), @R(720.0, 2480.0, 160.0, 19.0);
-  @VF(1266) : @E(shutdownComplete), @R(230.0, 2250.0, 150.0, 19.0);
-  @C(1268) : @F(EQ), @R(3230.0, 450.0, 40.0, 38.0), USINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
-  @VF(1269) : @E(BATTSTATE#SHUTDOWN), @R(3000.0, 470.0, 170.0, 19.0), USINT;
-  @VF(1271) : @E(shutdownCMD), @R(3440.0, 450.0, 140.0, 19.0);
+  @VF(1266) : @E(shutdownComplete), @R(150.0, 2270.0, 150.0, 19.0);
   @VF(180) : @E(OC_fault), @R(3180.0, 1660.0, 140.0, 19.0);
   @VF(184) : @E(OC_warning), @R(3180.0, 1640.0, 140.0, 19.0);
   @OLT(1024) : @R(1010.0, 670.0, 80.0, 19.0), @S(954);
@@ -1754,7 +1765,6 @@ PROGRAM HemaBattery
   @C(1324) : @F(LT), @R(1200.0, 1400.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
   @VF(1338) : @E(DichargeOK_Voltage_PACK), @R(980.0, 1420.0, 200.0, 19.0);
   @CF(840) : @R(2960.0, 2780.0, 60.0, 19.0), @T("AIN8on");
-  @C(1412) : @F(OR), @R(3380.0, 450.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
   @VF(335) : @E(HVCU_State), @R(3040.0, 370.0, 130.0, 19.0);
   @VF(241) : @E(inputSgn1Status), @R(2040.0, 310.0, 140.0, 19.0);
   @VF(242) : @E(inputSgn2Status), @R(2040.0, 330.0, 140.0, 19.0);
@@ -1895,7 +1905,7 @@ PROGRAM HemaBattery
   @VF(2088) : @E(FaultForState), @R(2900.0, 1770.0, 140.0, 19.0);
   @VF(2090) : @E(Fault_Pack_Negative_Contactor), @R(2610.0, 1970.0, 220.0, 19.0);
   @VF(2095) : @E(Fault_Pack_Charge_Contactor), @R(2610.0, 1990.0, 220.0, 19.0);
-  @VF(195) : @E(FaultForState), @R(230.0, 2270.0, 150.0, 19.0);
+  @VF(195) : @E(FaultForState), @R(150.0, 2310.0, 150.0, 19.0);
   @VF(65) : @E(maxChargeAmprCfg), @R(500.0, 530.0, 150.0, 19.0);
   @VF(2135) : @E(HVIL2_status), @R(2410.0, 3400.0, 140.0, 19.0);
   @C(2152) : @FB(TOF10), @R(2300.0, 2630.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
@@ -1905,9 +1915,9 @@ PROGRAM HemaBattery
   @VF(2156) : @E(T#3s), @R(2220.0, 2650.0, 50.0, 19.0);
   @VF(2157) : @E(HVIL2_status), @R(1910.0, 2630.0, 140.0, 19.0);
   @VF(1237) : @E(Total_Voltage), @R(1920.0, 1440.0, 200.0, 19.0);
-  @VF(71) : @E(bmuCellVolt[4]), @R(1270.0, 2220.0, 140.0, 19.0);
-  @VF(685) : @E(bmuCellVolt[5]), @R(1270.0, 2240.0, 140.0, 19.0);
-  @VF(2116) : @E(bmuCellVolt[6]), @R(1270.0, 2260.0, 140.0, 19.0);
+  @VF(71) : @E(bmuCellVolt[4]), @R(1270.0, 1730.0, 140.0, 19.0);
+  @VF(685) : @E(bmuCellVolt[5]), @R(1270.0, 1750.0, 140.0, 19.0);
+  @VF(2116) : @E(bmuCellVolt[6]), @R(1270.0, 1770.0, 140.0, 19.0);
   @C(2168) : @FB(GUICFG_INT25), @R(690.0, 410.0, 180.0, 38.0), @I(@N(CODE), @L(9.5)), @I(@N(R), @L(29.5)), @O(@N(VAL), @R(9.5));
   @VF(2175) : @E(130), @R(630.0, 410.0, 50.0, 19.0), UDINT;
   @VF(2176) : @E(1), @R(630.0, 430.0, 50.0, 19.0), BOOL;
@@ -1929,12 +1939,11 @@ PROGRAM HemaBattery
   @C(2251) : @F(ABS), @R(2070.0, 1610.0, 60.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(ABS), @R(9.5));
   @VF(106) : @E(Fault_Pack_CMS), @R(2610.0, 2010.0, 220.0, 19.0);
   @VF(616) : @E(Fault_Pack_CMS), @R(2620.0, 1740.0, 220.0, 19.0);
-  @VF(109) : @E(bmuCellVolt[0]), @R(1270.0, 2100.0, 140.0, 19.0);
-  @VF(110) : @E(bmuCellVolt[3]), @R(1270.0, 2160.0, 140.0, 19.0);
-  @VF(192) : @E(bmuCellVolt[2]), @R(1270.0, 2140.0, 140.0, 19.0);
-  @VF(314) : @E(bmuCellVolt[1]), @R(1270.0, 2120.0, 140.0, 19.0);
-  @VF(703) : @E(contactNegEnable_batt), @R(430.0, 2440.0, 190.0, 19.0);
-  @VF(496) : @E(contactFbkDischarge), @R(230.0, 2150.0, 160.0, 19.0);
+  @VF(109) : @E(bmuCellVolt[0]), @R(1270.0, 1610.0, 140.0, 19.0);
+  @VF(110) : @E(bmuCellVolt[3]), @R(1270.0, 1670.0, 140.0, 19.0);
+  @VF(192) : @E(bmuCellVolt[2]), @R(1270.0, 1650.0, 140.0, 19.0);
+  @VF(314) : @E(bmuCellVolt[1]), @R(1270.0, 1630.0, 140.0, 19.0);
+  @VF(496) : @E(contactFbkDischarge), @R(150.0, 2170.0, 160.0, 19.0);
   @C(753) : @F(LT), @R(4080.0, 640.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
   @C(755) : @F(GT), @R(4080.0, 690.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GT), @R(9.5));
   @C(854) : @FB(Tbuffer15), @R(4200.0, 640.0, 120.0, 38.0), @I(@N(I), @L(9.5)), @I(@N(D), @L(29.5)), @O(@N(O), @R(9.5));
@@ -1976,8 +1985,8 @@ PROGRAM HemaBattery
   @VF(2194) : @E(contactNegEnable), @R(3600.0, 790.0, 160.0, 19.0);
   @VF(1876) : @E(forceCharge), @R(3280.0, 890.0, 160.0, 19.0);
   @VF(684) : @E(contactEnableCharge), @R(3600.0, 850.0, 170.0, 19.0);
-  @VF(621) : @E(dischargeENB), @R(230.0, 2030.0, 140.0, 19.0);
-  @VF(1323) : @E(chargeENB), @R(230.0, 2050.0, 140.0, 19.0);
+  @VF(621) : @E(dischargeENB), @R(150.0, 2050.0, 140.0, 19.0);
+  @VF(1323) : @E(chargeENB), @R(150.0, 2070.0, 140.0, 19.0);
   @C(1646) : @F(AND), @R(4320.0, 870.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
   @C(2630) : @F(AND), @R(4320.0, 930.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
   @VF(2633) : @E(currentProtection), @R(3960.0, 870.0, 160.0, 19.0), @ONEG;
@@ -2028,19 +2037,13 @@ PROGRAM HemaBattery
   @VF(2636) : @E(chargeProtect), @R(4620.0, 290.0, 150.0, 19.0);
   @VF(2638) : @E(dischargeProtect), @R(4610.0, 150.0, 150.0, 19.0);
   @CF(2640) : @R(4390.0, 950.0, 170.0, 59.0), @T("State selection for master(ESS)$Nand slave mode");
-  @C(70) : @FB(essState11), @R(430.0, 2030.0, 400.0, 258.0), @I(@N(discharge), @L(9.5)), @I(@N(charge), @L(29.5)), @I(@N(shutdown), @L(49.5)), @I(@N(prechargeOk), @L(89.5)), @I(@N(contactFbk), @L(109.5)), @I(@N(contactFbkNeg), @L(129.5)), @I(@N(dischargeProtect), @L(169.5)), @I(@N(chargeProtect), @L(189.5)), @I(@N(shutdownComplete), @L(229.5)), @I(@N(fault), @L(249.5)), @O(@N(STATE), @R(9.5)), @O(@N(prechargeOn), @R(49.5)), @O(@N(contact), @R(69.5)), @O(@N(contactNeg), @R(89.5));
-  @VF(564) : @E(chargeProtect), @R(230.0, 2210.0, 160.0, 19.0);
-  @VF(617) : @E(dischargeProtect), @R(230.0, 2190.0, 160.0, 19.0);
-  @VF(1265) : @E(emergencyBtn), @R(3830.0, 1030.0, 140.0, 19.0);
-  @C(2432) : @F(SEL), @R(4160.0, 1010.0, 120.0, 58.0), BOOL, @I(@N(G), @L(9.5)), @I(@N(IN0), @L(29.5)), @I(@N(IN1), @L(49.5)), @O(@N(SEL), @R(9.5));
-  @VF(2544) : @E(shutdownCMD), @R(3830.0, 1070.0, 140.0, 19.0);
-  @VF(2620) : @E(shutdownEnb), @R(4390.0, 1010.0, 140.0, 19.0);
-  @VF(360) : @E(shutdownEnb), @R(230.0, 2070.0, 140.0, 19.0);
-  @C(2433) : @FB(TON3), @R(4010.0, 1030.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
-  @VF(2642) : @E(T#250ms), @R(3880.0, 1050.0, 90.0, 19.0);
+  @C(70) : @FB(essState11), @R(350.0, 2050.0, 400.0, 258.0), @I(@N(discharge), @L(9.5)), @I(@N(charge), @L(29.5)), @I(@N(shutdown), @L(49.5)), @I(@N(prechargeOk), @L(89.5)), @I(@N(contactFbk), @L(109.5)), @I(@N(contactFbkNeg), @L(129.5)), @I(@N(dischargeProtect), @L(169.5)), @I(@N(chargeProtect), @L(189.5)), @I(@N(shutdownComplete), @L(229.5)), @I(@N(fault), @L(249.5)), @O(@N(STATE), @R(9.5)), @O(@N(prechargeOn), @R(49.5)), @O(@N(contact), @R(69.5)), @O(@N(contactNeg), @R(89.5));
+  @VF(564) : @E(chargeProtect), @R(150.0, 2230.0, 160.0, 19.0);
+  @VF(617) : @E(dischargeProtect), @R(150.0, 2210.0, 160.0, 19.0);
+  @VF(360) : @E(shutdownEnb), @R(150.0, 2090.0, 140.0, 19.0);
   @CF(2646) : @R(4460.0, 680.0, 170.0, 39.0), @T("ESS charge discharge decision");
   @VF(820) : @E(1), @R(2340.0, 3400.0, 60.0, 19.0), BOOL;
-  @VF(2130) : @E(sim100NotFound), @R(1270.0, 2280.0, 140.0, 19.0);
+  @VF(2130) : @E(sim100NotFound), @R(1270.0, 1790.0, 140.0, 19.0);
   @CF(1802) : @R(3800.0, 0.0, 200.0, 49.0), @T("charge/discharge transition$Nprotection$N");
   @CF(1863) : @R(1900.0, 0.0, 170.0, 39.0), @T("CAN communication");
   @CF(2086) : @R(1900.0, 1340.0, 160.0, 29.0), @T("Fault generation");
@@ -2054,8 +2057,6 @@ PROGRAM HemaBattery
   @C(2321) : @FB(R_TRIG9), @R(240.0, 3600.0, 140.0, 18.0), @I(@N(CLK), @L(9.5)), @O(@N(Q), @R(9.5));
   @C(2322) : @F(OR), @R(390.0, 3600.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
   @VF(2236) : @E(emergencyBtn), @R(4220.0, 490.0, 140.0, 19.0);
-  @C(1433) : @FB(TON15), @R(3230.0, 500.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
-  @VF(2333) : @E(T#250ms), @R(3030.0, 520.0, 140.0, 19.0);
   @VF(427) : @E(whInstant), @R(460.0, 2940.0, 140.0, 19.0);
   @C(1291) : @F(AND), @R(4190.0, 210.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
   @C(2358) : @F(AND), @R(4190.0, 250.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
@@ -2372,11 +2373,7 @@ PROGRAM HemaBattery
   @VF(1458) : @E(7000), @R(2330.0, 3510.0, 80.0, 19.0), REAL;
   @VF(1459) : @E(3950), @R(2330.0, 3550.0, 80.0, 19.0), REAL;
   @VF(1460) : @E(10000), @R(2330.0, 3590.0, 80.0, 19.0), REAL;
-  @VF(236) : @E(new_CHG_CONTACT), @R(1910.0, 2760.0, 160.0, 19.0);
-  @VF(253) : @E(new_DCHG_CONTACT), @R(1910.0, 2820.0, 160.0, 19.0);
   @VF(469) : @E(1), @R(2340.0, 3370.0, 60.0, 19.0), BOOL;
-  @C(330) : @F(TO_BOOL), @R(2260.0, 3190.0, 120.0, 18.0), USINT, @I(@N(IN), @L(9.5)), @O(@N(TO_BOOL), @R(9.5));
-  @C(453) : @F(TO_BOOL), @R(2260.0, 3210.0, 120.0, 18.0), USINT, @I(@N(IN), @L(9.5)), @O(@N(TO_BOOL), @R(9.5));
   @C(43) : @F(DIV), @R(740.0, 2930.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV), @R(9.5));
   @VF(46) : @E(emergencyBtn), @R(2040.0, 290.0, 140.0, 19.0);
   @VF(239) : @E(contactEnable_batt), @R(430.0, 2370.0, 190.0, 19.0);
@@ -2384,12 +2381,10 @@ PROGRAM HemaBattery
   @VF(756) : @E(new_CHG_CONTACT), @R(720.0, 2370.0, 160.0, 19.0);
   @VF(759) : @E(new_DCHG_CONTACT), @R(720.0, 2390.0, 160.0, 19.0);
   @VF(747) : @E(DischargeInVoltage), @R(800.0, 2930.0, 140.0, 19.0);
-  @VF(175) : @E(contactFbkCharge), @R(2400.0, 3190.0, 140.0, 19.0);
-  @VF(723) : @E(contactFbkDischarge), @R(2400.0, 3210.0, 140.0, 19.0);
-  @C(833) : @F(OR), @R(2560.0, 3250.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
-  @VF(834) : @E(contactFbk), @R(2610.0, 3250.0, 150.0, 19.0);
-  @VF(837) : @E(contactFbkCharge), @R(2400.0, 3250.0, 140.0, 19.0);
-  @VF(844) : @E(contactFbkDischarge), @R(2400.0, 3270.0, 140.0, 19.0);
+  @C(833) : @F(OR), @R(2780.0, 3580.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
+  @VF(834) : @E(contactFbk), @R(2830.0, 3580.0, 150.0, 19.0);
+  @VF(837) : @E(contactFbkCharge), @R(2620.0, 3580.0, 140.0, 19.0);
+  @VF(844) : @E(contactFbkDischarge), @R(2620.0, 3600.0, 140.0, 19.0);
   @VF(853) : @E(Number_Of_MaxCell), @R(20.0, 1030.0, 140.0, 19.0);
   @C(1002) : @F(TO_USINT), @R(180.0, 1030.0, 120.0, 18.0), UINT, @I(@N(IN), @L(9.5)), @O(@N(TO_USINT), @R(9.5));
   @C(804) : @FB(ARR2VAL2), @R(1070.0, 1130.0, 200.0, 78.0), @I(@N(MaxBMU), @L(9.5)), @I(@N(indx), @L(29.5)), @I(@N(Map), @L(49.5)), @I(@N(CellCounter), @L(69.5)), @O(@N(numofCell), @R(9.5)), @O(@N(Reset), @R(29.5));
@@ -2400,6 +2395,51 @@ PROGRAM HemaBattery
   @VF(1062) : @E(NEWBMU_RESET), @R(1280.0, 1150.0, 140.0, 19.0);
   @VF(1063) : @E(Number_Of_BMU_cfg), @R(920.0, 1130.0, 140.0, 19.0);
   @VF(231) : @E(NEWBMU_RESET), @R(380.0, 920.0, 140.0, 19.0);
+  @VF(557) : @E(BOOL#FALSE), @R(160.0, 2290.0, 140.0, 19.0);
+  @VF(359) : @E(contactFbkCharge), @R(150.0, 2150.0, 140.0, 19.0);
+  @C(3223) : @F(OR), @R(1360.0, 1900.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(OR), @R(9.5));
+  @C(3226) : @FB(prechargeCAN1), @R(1450.0, 1880.0, 250.0, 118.0), @I(@N(CAN_CH), @L(9.5)), @I(@N(ENB), @L(29.5)), @I(@N(RST), @L(49.5), @NEG), @O(@N(CANerr), @R(9.5)), @O(@N(outFbk), @R(29.5)), @O(@N(igbtFlt), @R(49.5)), @O(@N(igbtRdy), @R(69.5)), @O(@N(igbtRst), @R(89.5)), @O(@N(inVal), @R(109.5));
+  @VF(3241) : @E(PDUCAN), @R(1330.0, 1880.0, 80.0, 19.0);
+  @VF(3239) : @E(prechargeEnable), @R(1190.0, 1900.0, 140.0, 19.0);
+  @VF(3240) : @E(prechargeEnableCharge), @R(1140.0, 1920.0, 190.0, 19.0);
+  @VF(3249) : @E(prechargeBoardErr), @R(1710.0, 1880.0, 170.0, 19.0);
+  @C(3224) : @F(TO_TIME), @R(1230.0, 2160.0, 120.0, 18.0), UDINT, @I(@N(IN), @L(9.5)), @O(@N(TO_TIME), @R(9.5));
+  @C(3229) : @F(ABS), @R(1300.0, 2240.0, 60.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(ABS), @R(9.5));
+  @C(3225) : @F(DIV_TIME), @R(1380.0, 2160.0, 40.0, 38.0), UINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(DIV_TIME), @R(9.5));
+  @C(3228) : @F(GT), @R(1380.0, 2200.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GT), @R(9.5));
+  @C(3231) : @F(SUB), @R(1160.0, 2240.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(SUB), @R(9.5));
+  @C(3232) : @F(LT), @R(1380.0, 2240.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
+  @C(3233) : @F(GT), @R(1380.0, 2280.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(GT), @R(9.5));
+  @C(3230) : @FB(TON26), @R(1500.0, 2240.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(3235) : @F(ABS), @R(1300.0, 2320.0, 60.0, 18.0), REAL, @I(@N(IN), @L(9.5)), @O(@N(ABS), @R(9.5));
+  @C(3227) : @F(AND), @R(1630.0, 2200.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(3234) : @F(AND), @R(1630.0, 2280.0, 40.0, 38.0), BOOL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(AND), @R(9.5));
+  @C(3238) : @FB(TON27), @R(1500.0, 2320.0, 100.0, 38.0), @I(@N(IN), @L(9.5)), @I(@N(PT), @L(29.5)), @O(@N(Q), @R(9.5)), @O(@N(ET), @R(29.5));
+  @C(3237) : @F(LT), @R(1380.0, 2320.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(LT), @R(9.5));
+  @C(3236) : @F(SUB), @R(1160.0, 2320.0, 40.0, 38.0), REAL, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(SUB), @R(9.5));
+  @VF(3243) : @E(1000), @R(1150.0, 2180.0, 60.0, 19.0), UINT;
+  @VF(3242) : @E(prechargeInterval), @R(1050.0, 2160.0, 160.0, 19.0);
+  @VF(3244) : @E(Pack_CutoffLow_Voltage), @R(1160.0, 2220.0, 190.0, 19.0);
+  @VF(3245) : @E(BatteryVoltage), @R(990.0, 2240.0, 150.0, 19.0);
+  @VF(3247) : @E(8), @R(1320.0, 2260.0, 40.0, 19.0), REAL;
+  @VF(3246) : @E(OutputVoltage), @R(990.0, 2260.0, 150.0, 19.0);
+  @VF(3250) : @E(Pack_CutoffLow_Voltage), @R(1170.0, 2300.0, 190.0, 19.0);
+  @VF(3252) : @E(BatteryVoltage), @R(990.0, 2320.0, 150.0, 19.0);
+  @VF(3254) : @E(ChargeInVoltage), @R(990.0, 2340.0, 150.0, 19.0);
+  @VF(3253) : @E(8), @R(1320.0, 2340.0, 40.0, 19.0), REAL;
+  @VF(3248) : @E(prechargeComplete), @R(1690.0, 2200.0, 180.0, 19.0);
+  @VF(3251) : @E(prechargeCompleteCharge), @R(1690.0, 2280.0, 200.0, 19.0);
+  @VF(237) : @E(new_DCHG_CONTACT), @R(1930.0, 2760.0, 140.0, 19.0);
+  @VF(236) : @E(new_CHG_CONTACT), @R(1930.0, 2820.0, 140.0, 19.0);
+  @C(850) : @F(EQ), @R(2270.0, 3170.0, 40.0, 38.0), USINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
+  @C(175) : @F(EQ), @R(2270.0, 3210.0, 40.0, 38.0), USINT, @I(@N(IN1), @L(9.5)), @I(@N(IN2), @L(29.5)), @O(@N(EQ), @R(9.5));
+  @VF(310) : @E(1), @R(2110.0, 3120.0, 130.0, 19.0), USINT;
+  @VF(722) : @E(contactFbkDischarge), @R(2320.0, 3170.0, 140.0, 19.0);
+  @VF(723) : @E(contactFbkCharge), @R(2320.0, 3210.0, 140.0, 19.0);
+  @VF(196) : @E(new_CHG_CONTACT), @R(430.0, 2440.0, 160.0, 19.0);
+  @VF(810) : @E(new_DCHG_CONTACT), @R(430.0, 2460.0, 160.0, 19.0);
+  @VF(811) : @E(contactFbkCharge), @R(720.0, 2440.0, 140.0, 19.0);
+  @VF(821) : @E(contactFbkDischarge), @R(720.0, 2460.0, 160.0, 19.0);
   @CP(467) : 2199.5, 59.5;
   @CP(1326) : 2199.5, 359.5;
   @CP(640) : 2199.5, 519.5;
@@ -2410,7 +2450,7 @@ PROGRAM HemaBattery
   @CP(1590) : 2069.5, 1909.5;
   @CP(1664) : 2089.5, 1989.5;
   @CP(1601) : 2069.5, 2009.5;
-  @CP(399) : 1609.5, 2069.5;
+  @CP(399) : 1609.5, 1579.5;
   @CP(477) : 639.5, 679.5;
   @CP(787) : 459.5, 979.5;
   @CP(1714) : 3199.5, 379.5;
@@ -2443,6 +2483,11 @@ PROGRAM HemaBattery
   @CP(353) : 2199.5, 699.5;
   @CP(1926) : 1349.5, -110.5;
   @CP(1927) : 1119.5, -200.5;
+  @CP(3255) : 1429.5, 1909.5;
+  @CP(3256) : 1149.5, 2249.5;
+  @CP(3257) : 1479.5, 2269.5;
+  @CP(3258) : 1149.5, 2329.5;
+  @CP(436) : 2259.5, 3149.5;
 
   @G(1511) :
      @L(@VF(1476).o, @C(688).CODE)
@@ -3403,7 +3448,6 @@ PROGRAM HemaBattery
   @G(1700) :
      @L(@CP(1714), @C(1658).IN1),
      @L(@CP(1714), @C(1713).IN1),
-     @L(@CP(1714), @C(1268).IN1),
      @L(@VF(335).o, @CP(1714))
     ;
   @G(1708) :
@@ -3765,9 +3809,6 @@ PROGRAM HemaBattery
   @G(1263) :
      @L(@VF(1262).o, @C(1259).IN2)
     ;
-  @G(1270) :
-     @L(@VF(1269).o, @C(1268).IN2)
-    ;
   @G(181) :
      @L(@VF(180).o, @C(570).Fault_11)
     ;
@@ -3821,12 +3862,6 @@ PROGRAM HemaBattery
     ;
   @G(1272) :
      @L(@C(1719).OR, @VF(1718).i)
-    ;
-  @G(1432) :
-     @L(@C(1268).EQ, @C(1412).IN1)
-    ;
-  @G(1434) :
-     @L(@C(1412).OR, @VF(1271).i)
     ;
   @G(60) :
      @L(@C(1530).VAL, @C(23).IN)
@@ -4270,9 +4305,6 @@ PROGRAM HemaBattery
   @G(461) :
      @L(@VF(110).o, @C(421).IN)
     ;
-  @G(731) :
-     @L(@VF(703).o, @VF(359).i)
-    ;
   @G(1254) :
      @L(@VF(940).o, @C(753).IN2)
     ;
@@ -4331,8 +4363,7 @@ PROGRAM HemaBattery
   @G(1643) :
      @L(@VF(1641).o, @CP(1655)),
      @L(@CP(1655), @C(1642).G),
-     @L(@CP(1655), @C(1648).G),
-     @L(@CP(1655), @C(2432).G)
+     @L(@CP(1655), @C(1648).G)
     ;
   @G(1647) :
      @L(@VF(1644).o, @C(1642).IN1)
@@ -4515,26 +4546,14 @@ PROGRAM HemaBattery
      @L(@CP(2373), @C(1375).IN2),
      @L(@CP(2373), @C(1313).IN2)
     ;
-  @G(196) :
-     @L(@VF(621).o, @C(70).discharge)
-    ;
-  @G(358) :
-     @L(@VF(1323).o, @C(70).charge)
-    ;
   @G(373) :
      @L(@VF(585).o, @C(70).prechargeOk)
-    ;
-  @G(374) :
-     @L(@VF(363).o, @C(70).contactFbk)
     ;
   @G(375) :
      @L(@VF(496).o, @C(70).contactFbkNeg)
     ;
   @G(376) :
      @L(@VF(1266).o, @C(70).shutdownComplete)
-    ;
-  @G(557) :
-     @L(@VF(195).o, @C(70).fault)
     ;
   @G(607) :
      @L(@VF(564).o, @C(70).chargeProtect)
@@ -4557,23 +4576,8 @@ PROGRAM HemaBattery
   @G(1045) :
      @L(@C(70).contactNeg, @VF(999).i)
     ;
-  @G(2545) :
-     @L(@VF(2544).o, @C(2432).IN1)
-    ;
-  @G(2637) :
-     @L(@C(2432).SEL, @VF(2620).i)
-    ;
   @G(1273) :
      @L(@VF(360).o, @C(70).shutdown)
-    ;
-  @G(2639) :
-     @L(@C(2433).Q, @C(2432).IN0)
-    ;
-  @G(2641) :
-     @L(@VF(1265).o, @C(2433).IN)
-    ;
-  @G(2643) :
-     @L(@VF(2642).o, @C(2433).PT)
     ;
   @G(2167) :
      @L(@VF(2130).o, @C(425).IN)
@@ -4613,15 +4617,6 @@ PROGRAM HemaBattery
     ;
   @G(2326) :
      @L(@VF(2236).o, @C(2624).IN3)
-    ;
-  @G(2327) :
-     @L(@VF(908).o, @C(1433).IN)
-    ;
-  @G(2332) :
-     @L(@C(1433).Q, @C(1412).IN2)
-    ;
-  @G(2334) :
-     @L(@VF(2333).o, @C(1433).PT)
     ;
   @G(2335) :
      @L(@C(23).TO_UINT, @VF(610).i)
@@ -5531,20 +5526,8 @@ PROGRAM HemaBattery
   @G(704) :
      @L(@VF(820).o, @VF(2135).i)
     ;
-  @G(237) :
-     @L(@VF(236).o, @C(2228).VAL)
-    ;
-  @G(310) :
-     @L(@VF(253).o, @C(2227).VAL)
-    ;
   @G(719) :
      @L(@VF(469).o, @VF(149).i)
-    ;
-  @G(436) :
-     @L(@C(1362).stat, @C(330).IN)
-    ;
-  @G(721) :
-     @L(@C(1361).stat, @C(453).IN)
     ;
   @G(47) :
      @L(@VF(525).o, @C(43).IN1)
@@ -5560,12 +5543,6 @@ PROGRAM HemaBattery
     ;
   @G(771) :
      @L(@C(43).DIV, @VF(747).i)
-    ;
-  @G(722) :
-     @L(@C(330).TO_BOOL, @VF(175).i)
-    ;
-  @G(741) :
-     @L(@C(453).TO_BOOL, @VF(723).i)
     ;
   @G(846) :
      @L(@VF(844).o, @C(833).IN2)
@@ -5602,5 +5579,141 @@ PROGRAM HemaBattery
     ;
   @G(744) :
      @L(@VF(231).o, @C(762).R)
+    ;
+  @G(776) :
+     @L(@VF(557).o, @C(70).fault)
+    ;
+  @G(363) :
+     @L(@VF(359).o, @C(70).contactFbk)
+    ;
+  @G(3259) :
+     @L(@VF(3239).o, @C(3223).IN1)
+    ;
+  @G(3262) :
+     @L(@C(3223).OR, @CP(3255)),
+     @L(@CP(3255), @C(3226).ENB),
+     @L(@CP(3255), @C(3226).RST)
+    ;
+  @G(3261) :
+     @L(@VF(3241).o, @C(3226).CAN_CH)
+    ;
+  @G(3260) :
+     @L(@VF(3240).o, @C(3223).IN2)
+    ;
+  @G(3269) :
+     @L(@C(3226).CANerr, @VF(3249).i)
+    ;
+  @G(3264) :
+     @L(@VF(3242).o, @C(3224).IN)
+    ;
+  @G(3270) :
+     @L(@C(3231).SUB, @C(3229).IN)
+    ;
+  @G(3272) :
+     @L(@CP(3256), @C(3231).IN1),
+     @L(@CP(3256), @C(3228).IN1),
+     @L(@VF(3245).o, @CP(3256))
+    ;
+  @G(3263) :
+     @L(@C(3224).TO_TIME, @C(3225).IN1)
+    ;
+  @G(3265) :
+     @L(@VF(3243).o, @C(3225).IN2)
+    ;
+  @G(3267) :
+     @L(@VF(3244).o, @C(3228).IN2)
+    ;
+  @G(3271) :
+     @L(@C(3229).ABS, @C(3232).IN1)
+    ;
+  @G(3275) :
+     @L(@VF(3247).o, @C(3232).IN2)
+    ;
+  @G(3276) :
+     @L(@VF(3246).o, @C(3231).IN2)
+    ;
+  @G(3277) :
+     @L(@CP(3257), @C(3230).PT),
+     @L(@CP(3257), @C(3238).PT),
+     @L(@C(3225).DIV_TIME, @CP(3257))
+    ;
+  @G(3273) :
+     @L(@C(3232).LT, @C(3230).IN)
+    ;
+  @G(3280) :
+     @L(@VF(3250).o, @C(3233).IN2)
+    ;
+  @G(3281) :
+     @L(@CP(3258), @C(3236).IN1),
+     @L(@CP(3258), @C(3233).IN1),
+     @L(@VF(3252).o, @CP(3258))
+    ;
+  @G(3282) :
+     @L(@C(3236).SUB, @C(3235).IN)
+    ;
+  @G(3283) :
+     @L(@C(3235).ABS, @C(3237).IN1)
+    ;
+  @G(3284) :
+     @L(@C(3237).LT, @C(3238).IN)
+    ;
+  @G(3266) :
+     @L(@C(3228).GT, @C(3227).IN1)
+    ;
+  @G(3274) :
+     @L(@C(3230).Q, @C(3227).IN2)
+    ;
+  @G(3278) :
+     @L(@C(3233).GT, @C(3234).IN1)
+    ;
+  @G(3285) :
+     @L(@C(3238).Q, @C(3234).IN2)
+    ;
+  @G(3286) :
+     @L(@VF(3254).o, @C(3236).IN2)
+    ;
+  @G(3287) :
+     @L(@VF(3253).o, @C(3237).IN2)
+    ;
+  @G(3268) :
+     @L(@C(3227).AND, @VF(3248).i)
+    ;
+  @G(3279) :
+     @L(@C(3234).AND, @VF(3251).i)
+    ;
+  @G(358) :
+     @L(@VF(621).o, @C(70).discharge)
+    ;
+  @G(374) :
+     @L(@VF(1323).o, @C(70).charge)
+    ;
+  @G(253) :
+     @L(@VF(237).o, @C(2228).VAL)
+    ;
+  @G(453) :
+     @L(@VF(236).o, @C(2227).VAL)
+    ;
+  @G(330) :
+     @L(@VF(310).o, @CP(436)),
+     @L(@CP(436), @C(850).IN1),
+     @L(@CP(436), @C(175).IN2)
+    ;
+  @G(703) :
+     @L(@C(1361).stat, @C(175).IN1)
+    ;
+  @G(721) :
+     @L(@C(1362).stat, @C(850).IN2)
+    ;
+  @G(731) :
+     @L(@C(850).EQ, @VF(722).i)
+    ;
+  @G(741) :
+     @L(@C(175).EQ, @VF(723).i)
+    ;
+  @G(908) :
+     @L(@VF(196).o, @VF(811).i)
+    ;
+  @G(1006) :
+     @L(@VF(810).o, @VF(821).i)
     ;
 END_PROGRAM

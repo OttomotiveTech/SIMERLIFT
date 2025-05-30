@@ -118,6 +118,7 @@ logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwor
 logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___max_min_voltage_status.h
 logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___ntc.h
 logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___numofcells.h
+logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___prechargecan.h
 logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___safety_power.h
 logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___socisz.h
 logi/src-gen/lcpu___hemabattery.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___fmemw_real.h
@@ -371,6 +372,8 @@ C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___ntc.h:
 
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___numofcells.h:
+
+C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___prechargecan.h:
 
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcfu___safety_power.h:
 

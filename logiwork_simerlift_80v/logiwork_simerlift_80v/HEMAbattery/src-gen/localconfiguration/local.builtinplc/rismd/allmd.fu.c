@@ -27,6 +27,7 @@
 #include "src-gen/rismd/mdfu___hvcu_control_state.c"
 #include "src-gen/rismd/mdfu___max_min_voltage_status.c"
 #include "src-gen/rismd/mdfu___numofcells.c"
+#include "src-gen/rismd/mdfu___prechargecan.c"
 #include "src-gen/rismd/mdfu___socisz.c"
 #include "src-gen/rismd/mdfu___socstate.c"
 #include "src-gen/rismd/mdfu___tbuffer.c"

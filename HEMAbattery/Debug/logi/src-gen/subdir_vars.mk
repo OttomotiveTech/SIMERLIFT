@@ -119,6 +119,7 @@ C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___max_min_voltage_status.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___mosfet_btt60302.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___numofcells.c \
+C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___prechargecan.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___rbit.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___rflt.c \
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___select_12.c \
@@ -248,6 +249,7 @@ C_DEPS += \
 ./logi/src-gen/lcfu___max_min_voltage_status.d \
 ./logi/src-gen/lcfu___mosfet_btt60302.d \
 ./logi/src-gen/lcfu___numofcells.d \
+./logi/src-gen/lcfu___prechargecan.d \
 ./logi/src-gen/lcfu___rbit.d \
 ./logi/src-gen/lcfu___rflt.d \
 ./logi/src-gen/lcfu___select_12.d \
@@ -377,6 +379,7 @@ OBJS += \
 ./logi/src-gen/lcfu___max_min_voltage_status.obj \
 ./logi/src-gen/lcfu___mosfet_btt60302.obj \
 ./logi/src-gen/lcfu___numofcells.obj \
+./logi/src-gen/lcfu___prechargecan.obj \
 ./logi/src-gen/lcfu___rbit.obj \
 ./logi/src-gen/lcfu___rflt.obj \
 ./logi/src-gen/lcfu___select_12.obj \
@@ -506,6 +509,7 @@ OBJS__QUOTED += \
 "logi\src-gen\lcfu___max_min_voltage_status.obj" \
 "logi\src-gen\lcfu___mosfet_btt60302.obj" \
 "logi\src-gen\lcfu___numofcells.obj" \
+"logi\src-gen\lcfu___prechargecan.obj" \
 "logi\src-gen\lcfu___rbit.obj" \
 "logi\src-gen\lcfu___rflt.obj" \
 "logi\src-gen\lcfu___select_12.obj" \
@@ -635,6 +639,7 @@ C_DEPS__QUOTED += \
 "logi\src-gen\lcfu___max_min_voltage_status.d" \
 "logi\src-gen\lcfu___mosfet_btt60302.d" \
 "logi\src-gen\lcfu___numofcells.d" \
+"logi\src-gen\lcfu___prechargecan.d" \
 "logi\src-gen\lcfu___rbit.d" \
 "logi\src-gen\lcfu___rflt.d" \
 "logi\src-gen\lcfu___select_12.d" \
@@ -764,6 +769,7 @@ C_SRCS__QUOTED += \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___max_min_voltage_status.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___mosfet_btt60302.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___numofcells.c" \
+"C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___prechargecan.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___rbit.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___rflt.c" \
 "C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___select_12.c" \

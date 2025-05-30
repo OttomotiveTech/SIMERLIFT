@@ -331,6 +331,7 @@
 "./logi/src-gen/lcfu___max_min_voltage_status.obj"
 "./logi/src-gen/lcfu___mosfet_btt60302.obj"
 "./logi/src-gen/lcfu___numofcells.obj"
+"./logi/src-gen/lcfu___prechargecan.obj"
 "./logi/src-gen/lcfu___rbit.obj"
 "./logi/src-gen/lcfu___rflt.obj"
 "./logi/src-gen/lcfu___select_12.obj"

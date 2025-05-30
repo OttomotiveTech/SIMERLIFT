@@ -30,6 +30,7 @@ typedef struct _LC_TD_FunctionBlock_ESSSTATE1
   LC_TD_TIME LC_VD_STANDBYINTERVAL;
   LC_TD_DataType_BATTSTATE LC_VD_BATTERYSTATE;
   LC_TD_FunctionBlock_TON LC_VD_BATTIMER;
+  LC_TD_FunctionBlock_TON LC_VD_CONTACTFBKTIMER;
   LC_TD_DataType_BATTSTATE LC_VD_PREVSTATE;
 } LCCG_StructAttrib LC_TD_FunctionBlock_ESSSTATE1;
 
@@ -57,6 +58,7 @@ typedef struct _LC_TD_FunctionBlock_ESSSTATE1
   LC_INIT_BOOL(&((p)->LC_VD_BATSTATETIMEOUT)); \
   LC_INIT_TIME(&((p)->LC_VD_BATSTATEELAPSEDTIME)); \
   (p)->LC_VD_STANDBYINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(2),RT_CC_CONST_LL(0)); \
+  LC_INIT_FunctionBlock_TON(&((p)->LC_VD_CONTACTFBKTIMER)); \
 }
 
 /*                   WarmBoot Initialization Macro             */
@@ -83,6 +85,7 @@ typedef struct _LC_TD_FunctionBlock_ESSSTATE1
   LC_WINIT_BOOL(&((p)->LC_VD_BATSTATETIMEOUT),RF); \
   LC_WINIT_TIME(&((p)->LC_VD_BATSTATEELAPSEDTIME),RF); \
   if (RF==0) (p)->LC_VD_STANDBYINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(2),RT_CC_CONST_LL(0)); \
+  LC_WINIT_FunctionBlock_TON(&((p)->LC_VD_CONTACTFBKTIMER),0); \
 }
 
 /*                            Prototype                        */

@@ -20,9 +20,9 @@ build lcpu___hemabattery.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_sim
 
 build lcfu___cansend.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcCommon\lcfu___cansend.c
 
-build lcfu___fmemw_real.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcCommon\flashMem_v2\lcfu___fmemw_real.c
-
 build lcfu___battstack.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcBCU\lcfu___battstack.c
+
+build lcfu___fmemw_real.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcCommon\flashMem_v2\lcfu___fmemw_real.c
 
 build lcfu___guicfg_real.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcCommon\GUIcfg\lcfu___guicfg_real.c
 
@@ -44,9 +44,9 @@ build lcfu___updowncnttim.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_si
 
 build lcfu___battstackinfo.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcBCU\lcfu___battstackinfo.c
 
-build lcfu___safety_power.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcBCU\lcfu___safety_power.c
-
 build lcfu___iowr.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcCommon\lcfu___iowr.c
+
+build lcfu___safety_power.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcBCU\lcfu___safety_power.c
 
 build lcfu___bamtx.o: cc C$:\Users\ARGE13\Documents\SIMERLIFT\logiwork_simerlift_80v\logiwork_simerlift_80v\HEMAbattery\src\srcCommon\lcfu___bamtx.c
 
@@ -93,7 +93,7 @@ build LCAPI_GenCode.o: cc C$:\LC3\configuration\org.eclipse.osgi\135\0\.cp\API\n
 build MBRTMain_rts2.o: cc C$:\LC3\configuration\org.eclipse.osgi\135\0\.cp\API\RTS2\MBRTMain_rts2.c
 
 ### linker call
-build RTSCode.dll: link lcpu___hemabattery.o lcfu___cansend.o lcfu___fmemw_real.o lcfu___battstack.o lcfu___guicfg_real.o lcfu___isabelinit.o lcfu___canrecv.o lcfu___anlg.o lcfu___guicfg_int.o lcfu___rmem_real.o lcfu___ntc.o lcfu___iord.o lcfu___updowncnttim.o lcfu___battstackinfo.o lcfu___safety_power.o lcfu___iowr.o lcfu___bamtx.o all.src-gen.o all.dt.o all.res.o all.res.pt.o LC3GV_EPDB.o LC3AppInfo.o LC3GV.o all.sys-gen.o allmd.pu.o allmd.fu.o allmd.extern.o allmd.sys-gen.o allmd.dt.o allmd.res-ns.o mdres___localconfiguration_local.o RISMDIntegrTypes.o MDFingerprint.o RISMDRoot.o MBRTMain.o LCAPI_GenCode.o MBRTMain_rts2.o
+build RTSCode.dll: link lcpu___hemabattery.o lcfu___cansend.o lcfu___battstack.o lcfu___fmemw_real.o lcfu___guicfg_real.o lcfu___isabelinit.o lcfu___canrecv.o lcfu___anlg.o lcfu___guicfg_int.o lcfu___rmem_real.o lcfu___ntc.o lcfu___iord.o lcfu___updowncnttim.o lcfu___battstackinfo.o lcfu___iowr.o lcfu___safety_power.o lcfu___bamtx.o all.src-gen.o all.dt.o all.res.o all.res.pt.o LC3GV_EPDB.o LC3AppInfo.o LC3GV.o all.sys-gen.o allmd.pu.o allmd.fu.o allmd.extern.o allmd.sys-gen.o allmd.dt.o allmd.res-ns.o mdres___localconfiguration_local.o RISMDIntegrTypes.o MDFingerprint.o RISMDRoot.o MBRTMain.o LCAPI_GenCode.o MBRTMain_rts2.o
   LINKER = C$:\LC3\plugins\com.logicals.compiler.gcc.win32.win32_7.1.0.1\bin\mingw\bin\g++
   LINKER_FLAGS = -Wl,--no-undefined -Wl,--enable-stdcall-fixup -static-libgcc -static-libstdc++ -static "C:\LC3\plugins\com.logicals.lc3.ptk.win32.win_2.6.0\api\bin\RTS3.dll" -shared
   LINK_DIRECTORIES =

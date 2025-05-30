@@ -27,6 +27,7 @@
 #include "src-gen/lcfu___hvcu_control_state.c"
 #include "src-gen/lcfu___max_min_voltage_status.c"
 #include "src-gen/lcfu___numofcells.c"
+#include "src-gen/lcfu___prechargecan.c"
 #include "src-gen/lcfu___rbit.c"
 #include "src-gen/lcfu___socisz.c"
 #include "src-gen/lcfu___socstate.c"

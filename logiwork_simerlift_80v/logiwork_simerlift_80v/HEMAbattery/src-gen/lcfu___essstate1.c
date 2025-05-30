@@ -45,12 +45,15 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
           }
           else
           {
+            if (LC_this->LC_VD_DISCHARGE)
             {
-              LC_TD_BOOL conditionResult = LC_EL_false;
-              conditionResult = (lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_DISCHARGE,(lcfu_iec61131__AND__BOOL__2__INL(LC_this->LC_VD_CHARGE,(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CHARGEPROTECT))))));
-              if (conditionResult)
+              LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__DISCHARGE;
+            }
+            else
+            {
+              if (LC_this->LC_VD_CHARGE)
               {
-                LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__PRECHARGE;
+                LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__CHARGE;
               }
             }
           }
@@ -79,7 +82,7 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
           LC_TD_Function_NOT__BOOL lFunction__leftOp__leftOp__rightOp_NOT;
           LC_INIT_Function_NOT__BOOL(&lFunction__leftOp__leftOp__rightOp_NOT);
           lFunction__leftOp__leftOp__rightOp_NOT.LC_VD_ENO = LC_EL_true;
-          lcfu_iec61131__NOT__BOOL(&lFunction__leftOp__leftOp__rightOp_NOT, (lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_DISCHARGE,LC_this->LC_VD_CHARGE)), pEPDB);
+          lcfu_iec61131__NOT__BOOL(&lFunction__leftOp__leftOp__rightOp_NOT, LC_this->LC_VD_DISCHARGE, pEPDB);
           conditionResult = (lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_FAULT,lFunction__leftOp__leftOp__rightOp_NOT.LC_VD_NOT)),LC_this->LC_VD_SHUTDOWN)),LC_this->LC_VD_BATSTATETIMEOUT));
         }
         if (conditionResult)
@@ -90,17 +93,10 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
         {
           {
             LC_TD_BOOL conditionResult = LC_EL_false;
-            conditionResult = (lcfu_iec61131__AND__BOOL__2__INL((lcfu_iec61131__AND__BOOL__2__INL(LC_this->LC_VD_PRECHARGEOK,LC_this->LC_VD_CONTACTFBK)),LC_this->LC_VD_CONTACTFBKNEG));
+            conditionResult = (lcfu_iec61131__AND__BOOL__2__INL(LC_this->LC_VD_PRECHARGEOK,LC_this->LC_VD_CONTACTFBKNEG));
             if (conditionResult)
             {
-              if (LC_this->LC_VD_CHARGE)
-              {
-                LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__CHARGE;
-              }
-              else
-              {
-                LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__DISCHARGE;
-              }
+              LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__DISCHARGE;
             }
           }
         }
@@ -113,35 +109,67 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
       LC_this->LC_VD_PRECHARGEON = LC_EL_false;
       LC_this->LC_VD_CONTACT = LC_EL_false;
       LC_this->LC_VD_CONTACTNEG = LC_EL_true;
+      if (LC_this->LC_VD_DISCHARGE)
       {
-        LC_TD_BOOL conditionResult = LC_EL_false;
-        conditionResult = (lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_FAULT,LC_this->LC_VD_SHUTDOWN)),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBK)))),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBKNEG))));
-        if (conditionResult)
         {
-          LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+          LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_ENO = LC_EL_true;
+          LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_IN = (lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBKNEG));
+          LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_PT = LC_TIME_VALUE(RT_CC_CONST_LL(2),RT_CC_CONST_LL(0));
+          lcfu_iec61131__TON(&(LC_this->LC_VD_CONTACTFBKTIMER), pEPDB);
         }
-        else
+        if (LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_Q)
         {
           {
             LC_TD_BOOL conditionResult = LC_EL_false;
-            conditionResult = (lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_DISCHARGE));
+            conditionResult = (lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_FAULT,LC_this->LC_VD_SHUTDOWN)),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBKNEG))));
             if (conditionResult)
+            {
+              LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+            }
+            else
             {
               {
                 LC_TD_BOOL conditionResult = LC_EL_false;
-                conditionResult = (lcfu_iec61131__AND__BOOL__2__INL(LC_this->LC_VD_CHARGE,(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CHARGEPROTECT))));
+                conditionResult = (lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_DISCHARGE));
                 if (conditionResult)
                 {
-                  LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__CHARGE;
-                }
-                else
-                {
-                  LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+                  {
+                    LC_TD_BOOL conditionResult = LC_EL_false;
+                    conditionResult = (lcfu_iec61131__AND__BOOL__2__INL(LC_this->LC_VD_CHARGE,(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CHARGEPROTECT))));
+                    if (conditionResult)
+                    {
+                      LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__CHARGE;
+                    }
+                    else
+                    {
+                      LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+                    }
+                  }
                 }
               }
             }
           }
         }
+      }
+      else
+      {
+        {
+          LC_TD_BOOL conditionResult = LC_EL_false;
+          conditionResult = (lcfu_iec61131__AND__BOOL__2__INL(LC_this->LC_VD_CHARGE,(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CHARGEPROTECT))));
+          if (conditionResult)
+          {
+            LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__CHARGE;
+          }
+          else
+          {
+            LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+          }
+        }
+      }
+      {
+        LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_ENO = LC_EL_true;
+        LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_IN = LC_EL_false;
+        lcfu_iec61131__TON(&(LC_this->LC_VD_CONTACTFBKTIMER), pEPDB);
       }
     }
     else if ((caseSelector==LC_ED__BATTSTATE__CHARGE))
@@ -151,31 +179,59 @@ void  lcfu___ESSSTATE1(LC_TD_FunctionBlock_ESSSTATE1* LC_this, struct _lcoplck_e
       LC_this->LC_VD_PRECHARGEON = LC_EL_false;
       LC_this->LC_VD_CONTACT = LC_EL_true;
       LC_this->LC_VD_CONTACTNEG = LC_EL_false;
+      if (LC_this->LC_VD_CHARGE)
       {
-        LC_TD_BOOL conditionResult = LC_EL_false;
-        conditionResult = (lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_FAULT,LC_this->LC_VD_SHUTDOWN)),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBK)))),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBKNEG))));
-        if (conditionResult)
         {
-          LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+          LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_ENO = LC_EL_true;
+          LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_IN = (lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBK));
+          LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_PT = LC_TIME_VALUE(RT_CC_CONST_LL(2),RT_CC_CONST_LL(0));
+          lcfu_iec61131__TON(&(LC_this->LC_VD_CONTACTFBKTIMER), pEPDB);
         }
-        else
+        if (LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_Q)
         {
           {
             LC_TD_BOOL conditionResult = LC_EL_false;
-            conditionResult = (lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CHARGE));
+            conditionResult = (lcfu_iec61131__OR__BOOL__2__INL((lcfu_iec61131__OR__BOOL__2__INL(LC_this->LC_VD_FAULT,LC_this->LC_VD_SHUTDOWN)),(lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CONTACTFBK))));
             if (conditionResult)
             {
-              if (LC_this->LC_VD_DISCHARGE)
+              LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+            }
+            else
+            {
               {
-                LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__DISCHARGE;
-              }
-              else
-              {
-                LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+                LC_TD_BOOL conditionResult = LC_EL_false;
+                conditionResult = (lcfu_iec61131__NOT__BOOL__INL(LC_this->LC_VD_CHARGE));
+                if (conditionResult)
+                {
+                  if (LC_this->LC_VD_DISCHARGE)
+                  {
+                    LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__DISCHARGE;
+                  }
+                  else
+                  {
+                    LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+                  }
+                }
               }
             }
           }
         }
+      }
+      else
+      {
+        if (LC_this->LC_VD_DISCHARGE)
+        {
+          LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__DISCHARGE;
+        }
+        else
+        {
+          LC_this->LC_VD_BATTERYSTATE = LC_ED__BATTSTATE__SHUTDOWN;
+        }
+      }
+      {
+        LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_ENO = LC_EL_true;
+        LC_this->LC_VD_CONTACTFBKTIMER.LC_VD_IN = LC_EL_false;
+        lcfu_iec61131__TON(&(LC_this->LC_VD_CONTACTFBKTIMER), pEPDB);
       }
     }
     else if ((caseSelector==LC_ED__BATTSTATE__SHUTDOWN))

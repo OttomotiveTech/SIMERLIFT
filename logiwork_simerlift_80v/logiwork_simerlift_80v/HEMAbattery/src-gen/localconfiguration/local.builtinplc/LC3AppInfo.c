@@ -4,8 +4,8 @@
 
 void const* lc_get_application_info(LcApplicationInfoType infoType)
 {
-  static uint32_t const lc_fingerprint = 2174413556;
-  static char const* const lc_code_image_info = "\"AAAAAAAAAAEABkFSR0UxMwAAAZcXWLRH\"";
+  static uint32_t const lc_fingerprint = 2349992310;
+  static char const* const lc_code_image_info = "\"AAAAAAAAAAEABkFSR0UxMwAAAZchCOLy\"";
   static char const* const lc_project_name = "HEMAbattery";
   static char const* const lc_configuration_name = "LocalConfiguration";
   static char const* const lc_resource_name = "local";

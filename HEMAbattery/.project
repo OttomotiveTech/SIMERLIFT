@@ -28,67 +28,67 @@
 		<link>
 			<name>ADC_TMS</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/ADC_TMS</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/ADC_TMS</locationURI>
 		</link>
 		<link>
 			<name>BATTERY1</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/BATTERY1</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/BATTERY1</locationURI>
 		</link>
 		<link>
 			<name>CAN</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/CAN</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/CAN</locationURI>
 		</link>
 		<link>
 			<name>FLASH</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/FLASH</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/FLASH</locationURI>
 		</link>
 		<link>
 			<name>ISABEL</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/ISABEL</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/ISABEL</locationURI>
 		</link>
 		<link>
 			<name>LOGICAD</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/LOGICAD</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/LOGICAD</locationURI>
 		</link>
 		<link>
 			<name>LS0432_rtos_bmsmu</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/HALCOGEN/LS0432_rtos_bmsmu</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/HALCOGEN/LS0432_rtos_bmsmu</locationURI>
 		</link>
 		<link>
 			<name>TPS</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/TPS</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/TPS</locationURI>
 		</link>
 		<link>
 			<name>UART1</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/UART1</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/UART1</locationURI>
 		</link>
 		<link>
 			<name>include</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/include</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/include</locationURI>
 		</link>
 		<link>
 			<name>spicustom</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/spicustom</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/spicustom</locationURI>
 		</link>
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/src</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/src</locationURI>
 		</link>
 		<link>
 			<name>tmsOS</name>
 			<type>2</type>
-			<location>C:/TMS570_RTOS/tmsOS</location>
+			<locationURI>PARENT-5-PROJECT_LOC/TMS570_RTOS/tmsOS</locationURI>
 		</link>
 		<link>
 			<name>logi/src</name>
