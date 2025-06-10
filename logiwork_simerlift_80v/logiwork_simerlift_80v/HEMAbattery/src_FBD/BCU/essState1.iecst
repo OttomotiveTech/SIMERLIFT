@@ -49,6 +49,7 @@ BATSTATEINTERVAL:TIME:=T#10s;
 BATSTATETIMEOUT:BOOL;
 BATSTATEELAPSEDTIME:TIME;
 STANDBYINTERVAL:TIME:=T#2s;
+FaultCounter: USINT;
 
 contactFbkTimer : TON;
 END_VAR
@@ -63,10 +64,9 @@ CASE BATTERYSTATE OF
 	BATTSTATE#STANDBY:  // standby
 		STATE:=BATTSTATE#STANDBY;
 		BATSTATEINTERVAL:=T#12s;
-
+		FaultCounter := 0;
 		contact:=0;
 		contactNeg:=0;
-		prechargeOn:=0;
 		
         IF BATSTATEELAPSEDTIME>STANDBYINTERVAL THEN
         	STANDBYINTERVAL:=T#500ms;
@@ -75,54 +75,58 @@ CASE BATTERYSTATE OF
 			ELSIF shutdown THEN
 				BATTERYSTATE:=BATTSTATE#SHUTDOWN;
 			ELSIF discharge THEN
-				BATTERYSTATE:=BATTSTATE#DISCHARGE;
+				IF prechargeOk THEN
+					BATTERYSTATE:=BATTSTATE#DISCHARGE;
+				ELSE
+					BATTERYSTATE:=BATTSTATE#PRECHARGE;
+				END_IF;
 			ELSIF charge THEN
 				BATTERYSTATE:=BATTSTATE#CHARGE;
 			END_IF;	
         END_IF;
 
-
-		
-	BATTSTATE#PRECHARGE:  //discharge
-		STATE:=BATTSTATE#PRECHARGE;
-		BATSTATEINTERVAL:=T#5s;
-		
-		//contactNeg:=1;
-
-		IF BATSTATEELAPSEDTIME>T#50ms AND contactFbkNeg THEN
-			prechargeOn:=1;
+	BATTSTATE#PRECHARGE:
+		IF prechargeOk AND discharge THEN
+			BATTERYSTATE := BATTSTATE#DISCHARGE;
+		ELSIF discharge AND NOT prechargeOk THEN
+			STATE := BATTSTATE#PRECHARGE;
+			//BATSTATEINTERVAL:=T#5s;
+			contact := 0;
+			contactNeg := 0;
+			prechargeOn := discharge;
+			FaultCounter:=0;
+	
+			contactFbkTimer(IN := TRUE, PT := T#5s);
+			IF contactFbkTimer.Q THEN
+				IF fault OR shutdown OR BATSTATETIMEOUT THEN
+					BATTERYSTATE := BATTSTATE#SHUTDOWN;
+				ELSE
+					BATTERYSTATE := BATTSTATE#DISCHARGE;
+				END_IF;
+			END_IF;
+		ELSE
+			BATTERYSTATE := BATTSTATE#SHUTDOWN;
 		END_IF;
-		
-		IF prechargeOk THEN
-			contactNeg:=1;
-		END_IF;
-		
-		IF fault OR NOT(discharge) OR shutdown OR BATSTATETIMEOUT THEN
-			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
-		ELSIF prechargeOk AND contactFbkNeg THEN
-			BATTERYSTATE:=BATTSTATE#DISCHARGE;
-		END_IF;
-		
 		
 	BATTSTATE#DISCHARGE:  //discharge
 		STATE:=BATTSTATE#DISCHARGE;
 		BATSTATEINTERVAL:=T#120s;
 		
-		prechargeOn:=0;
+		prechargeOn:=1;
 		contact:=0;
 		contactNeg:=1;
 		
 		IF discharge THEN
-			contactFbkTimer(IN := NOT contactFbkNeg, PT := T#2s);
+			contactFbkTimer(IN := NOT contactFbkNeg, PT := T#5s);
 			IF contactFbkTimer.Q THEN
 				IF fault OR shutdown OR NOT contactFbkNeg THEN
-					BATTERYSTATE:=BATTSTATE#SHUTDOWN;
-				ELSIF NOT discharge THEN
-					IF charge AND NOT chargeProtect THEN
-						BATTERYSTATE:=BATTSTATE#CHARGE;
+					IF FaultCounter<2 THEN
+						FaultCounter:=Faultcounter+1;
 					ELSE
 						BATTERYSTATE:=BATTSTATE#SHUTDOWN;
 					END_IF;
+				ELSE
+					FaultCounter:=0;
 				END_IF;
 			END_IF;
 		ELSIF charge AND NOT chargeProtect THEN 
@@ -139,6 +143,7 @@ CASE BATTERYSTATE OF
 		prechargeOn:=0;
 		contact:=1;
 		contactNeg:=0;
+		FaultCounter:=0;
 		
 		IF charge THEN
 			contactFbkTimer(IN := NOT contactFbk, PT := T#2s);
@@ -147,14 +152,14 @@ CASE BATTERYSTATE OF
 					BATTERYSTATE:=BATTSTATE#SHUTDOWN;
 				ELSIF NOT charge THEN
 					IF discharge THEN
-						BATTERYSTATE:=BATTSTATE#DISCHARGE;
+						BATTERYSTATE:=BATTSTATE#PRECHARGE;
 					ELSE
 						BATTERYSTATE:=BATTSTATE#SHUTDOWN;
 					END_IF;
 				END_IF;
 			END_IF;
 		ELSIF discharge THEN 
-			BATTERYSTATE:=BATTSTATE#DISCHARGE;
+			BATTERYSTATE:=BATTSTATE#PRECHARGE;
 		ELSE
 			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
 		END_IF;
@@ -166,6 +171,7 @@ CASE BATTERYSTATE OF
 		BATSTATEINTERVAL:=T#5000ms; 
 		
 		prechargeOn:=0;
+		FaultCounter:=0;
 		
 		IF shutdown OR BATSTATEELAPSEDTIME>T#2000ms OR (shutdownComplete AND (BATSTATEELAPSEDTIME>T#500ms))  THEN
 			contact:=0;
@@ -193,6 +199,7 @@ CASE BATTERYSTATE OF
 		contact:=0;
 		contactNeg:=0;
 		prechargeOn:=0;
+		FaultCounter:=0;
 		
 		IF NOT fault AND BATSTATETIMEOUT THEN
 			BATTERYSTATE:=BATTSTATE#SHUTDOWN;
@@ -206,6 +213,7 @@ CASE BATTERYSTATE OF
 		prechargeOn:=0;
 		contact:=0;
 		contactNeg:=0;
+		FaultCounter:=0;		
 		
 		IF fault THEN
 			BATTERYSTATE:=BATTSTATE#FAULT;
@@ -223,6 +231,7 @@ CASE BATTERYSTATE OF
 		prechargeOn:=0;
 		contact:=0;
 		contactNeg:=0;
+		FaultCounter:=0;
 		
 		IF fault THEN
 			BATTERYSTATE:=BATTSTATE#FAULT;

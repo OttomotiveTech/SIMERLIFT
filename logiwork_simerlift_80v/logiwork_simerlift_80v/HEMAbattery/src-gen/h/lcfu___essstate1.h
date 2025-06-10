@@ -3,7 +3,6 @@
 
 #include <LC3CGBase.h>
 #include <lcdt___battstate.h>
-#include <lcfu_iec61131__NOT.h>
 #include <lcfu_iec61131__TON.h>
 
 /*                            Typedefs                         */
@@ -25,6 +24,7 @@ typedef struct _LC_TD_FunctionBlock_ESSSTATE1
   LC_TD_BOOL LC_VD_PRECHARGEON;
   LC_TD_DataType_BATTSTATE LC_VD_STATE;
   LC_TD_BOOL LC_VD_BATSTATETIMEOUT;
+  LC_TD_USINT LC_VD_FAULTCOUNTER;
   LC_TD_TIME LC_VD_BATSTATEELAPSEDTIME;
   LC_TD_TIME LC_VD_BATSTATEINTERVAL;
   LC_TD_TIME LC_VD_STANDBYINTERVAL;
@@ -58,6 +58,7 @@ typedef struct _LC_TD_FunctionBlock_ESSSTATE1
   LC_INIT_BOOL(&((p)->LC_VD_BATSTATETIMEOUT)); \
   LC_INIT_TIME(&((p)->LC_VD_BATSTATEELAPSEDTIME)); \
   (p)->LC_VD_STANDBYINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(2),RT_CC_CONST_LL(0)); \
+  LC_INIT_USINT(&((p)->LC_VD_FAULTCOUNTER)); \
   LC_INIT_FunctionBlock_TON(&((p)->LC_VD_CONTACTFBKTIMER)); \
 }
 
@@ -85,6 +86,7 @@ typedef struct _LC_TD_FunctionBlock_ESSSTATE1
   LC_WINIT_BOOL(&((p)->LC_VD_BATSTATETIMEOUT),RF); \
   LC_WINIT_TIME(&((p)->LC_VD_BATSTATEELAPSEDTIME),RF); \
   if (RF==0) (p)->LC_VD_STANDBYINTERVAL = LC_TIME_VALUE(RT_CC_CONST_LL(2),RT_CC_CONST_LL(0)); \
+  LC_WINIT_USINT(&((p)->LC_VD_FAULTCOUNTER),RF); \
   LC_WINIT_FunctionBlock_TON(&((p)->LC_VD_CONTACTFBKTIMER),0); \
 }
 

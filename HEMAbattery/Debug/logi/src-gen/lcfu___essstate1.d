@@ -31,9 +31,9 @@ logi/src-gen/lcfu___essstate1.obj: C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_2
 logi/src-gen/lcfu___essstate1.obj: C:/TMS570_RTOS/LOGICAD/LOGI.CALS/uRTS3/RTSTrace.h
 logi/src-gen/lcfu___essstate1.obj: C:/TMS570_RTOS/LOGICAD/LOGI.CALS/uRTS3/LC3CGPointer.h
 logi/src-gen/lcfu___essstate1.obj: C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcdt___battstate.h
-logi/src-gen/lcfu___essstate1.obj: C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__NOT.h
 logi/src-gen/lcfu___essstate1.obj: C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__TON.h
 logi/src-gen/lcfu___essstate1.obj: C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__AND.h
+logi/src-gen/lcfu___essstate1.obj: C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__NOT.h
 logi/src-gen/lcfu___essstate1.obj: C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__OR.h
 
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/lcfu___essstate1.c:
@@ -98,11 +98,11 @@ C:/TMS570_RTOS/LOGICAD/LOGI.CALS/uRTS3/LC3CGPointer.h:
 
 C:/Users/ARGE13/Documents/SIMERLIFT/logiwork_simerlift_80v/logiwork_simerlift_80v/HEMAbattery/src-gen/h/lcdt___battstate.h:
 
-C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__NOT.h:
-
 C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__TON.h:
 
 C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__AND.h:
+
+C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__NOT.h:
 
 C:/TMS570_RTOS/LOGICAD/com.logicals.lc3.library.standard__3.2.2/INCLUDES/lcfu_iec61131__OR.h:
 

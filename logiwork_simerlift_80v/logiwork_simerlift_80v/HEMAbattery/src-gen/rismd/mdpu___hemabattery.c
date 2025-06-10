@@ -10,6 +10,10 @@ static char const lcmd_var_name_HEMABATTERY_ADDRBIT1[] = "ADDRbit1";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_ADDRBIT1 =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_ADDRBIT1, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_ADDRBIT1));
 
+static char const lcmd_var_name_HEMABATTERY_ALLCONTACSTENABLE[] = "AllcontacstEnable";
+static RISMDStdVariable const lcmd_var_HEMABATTERY_ALLCONTACSTENABLE =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_ALLCONTACSTENABLE, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_ALLCONTACSTENABLE));
+
 extern RISMDPOUType const lcmd_type_AMPMULTTEMP;
 static char const lcmd_var_name_HEMABATTERY_AMPMULTTEMP1[] = "ampMultTemp1";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_AMPMULTTEMP1 =
@@ -526,6 +530,12 @@ RISMDArrayType const lcmd_type_HEMABATTERY_CHANNELSELECT_ARR = INIT_RISMDArrayTy
 static char const lcmd_var_name_HEMABATTERY_CHANNELSELECT[] = "ChannelSelect";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_CHANNELSELECT =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_CHANNELSELECT, &lcmd_type_HEMABATTERY_CHANNELSELECT_ARR, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_CHANNELSELECT));
+
+#include <lcdt___plchannel.h>
+RISMDArrayType const lcmd_type_HEMABATTERY_CHANNELSELECT2_ARR = INIT_RISMDArrayType(0,15,sizeof(LC_TD_DataType_PLCHANNEL),&lcmd_type_PLCHANNEL);
+static char const lcmd_var_name_HEMABATTERY_CHANNELSELECT2[] = "ChannelSelect2";
+static RISMDStdVariable const lcmd_var_HEMABATTERY_CHANNELSELECT2 =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY_CHANNELSELECT2, &lcmd_type_HEMABATTERY_CHANNELSELECT2_ARR, offsetof(LC_TD_Program_HEMABATTERY,LC_VD_CHANNELSELECT2));
 
 static char const lcmd_var_name_HEMABATTERY_CHARGEAMPENB[] = "chargeAmpEnb";
 static RISMDStdVariable const lcmd_var_HEMABATTERY_CHARGEAMPENB =
@@ -1843,6 +1853,18 @@ static char const lcmd_var_name_HEMABATTERY___1073_LE[] = "__1073_LE";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___1073_LE =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___1073_LE, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___1073_LE));
 
+static char const lcmd_var_name_HEMABATTERY___1079_TO_USINT[] = "__1079_TO_USINT";
+static RISMDStdVariable const lcmd_var_HEMABATTERY___1079_TO_USINT =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___1079_TO_USINT, &risMdType_USINT, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___1079_TO_USINT));
+
+static char const lcmd_var_name_HEMABATTERY___1082_SEL[] = "__1082_SEL";
+static RISMDStdVariable const lcmd_var_HEMABATTERY___1082_SEL =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___1082_SEL, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___1082_SEL));
+
+static char const lcmd_var_name_HEMABATTERY___1083_AND[] = "__1083_AND";
+static RISMDStdVariable const lcmd_var_HEMABATTERY___1083_AND =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___1083_AND, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___1083_AND));
+
 static char const lcmd_var_name_HEMABATTERY___1092_NE[] = "__1092_NE";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___1092_NE =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___1092_NE, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___1092_NE));
@@ -1975,10 +1997,6 @@ INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___1324_LT, &risMdType_BOOL, offs
 static char const lcmd_var_name_HEMABATTERY___132_AND[] = "__132_AND";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___132_AND =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___132_AND, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___132_AND));
-
-static char const lcmd_var_name_HEMABATTERY___1345_TO_REAL[] = "__1345_TO_REAL";
-static RISMDStdVariable const lcmd_var_HEMABATTERY___1345_TO_REAL =
-INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___1345_TO_REAL, &risMdType_REAL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___1345_TO_REAL));
 
 static char const lcmd_var_name_HEMABATTERY___1352_DIV[] = "__1352_DIV";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___1352_DIV =
@@ -2409,10 +2427,6 @@ static char const lcmd_var_name_HEMABATTERY___303_EQ[] = "__303_EQ";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___303_EQ =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___303_EQ, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___303_EQ));
 
-static char const lcmd_var_name_HEMABATTERY___3223_OR[] = "__3223_OR";
-static RISMDStdVariable const lcmd_var_HEMABATTERY___3223_OR =
-INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___3223_OR, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___3223_OR));
-
 static char const lcmd_var_name_HEMABATTERY___3224_TO_TIME[] = "__3224_TO_TIME";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___3224_TO_TIME =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___3224_TO_TIME, &risMdType_TIME, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___3224_TO_TIME));
@@ -2693,6 +2707,10 @@ static char const lcmd_var_name_HEMABATTERY___906_OR[] = "__906_OR";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___906_OR =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___906_OR, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___906_OR));
 
+static char const lcmd_var_name_HEMABATTERY___908_OR[] = "__908_OR";
+static RISMDStdVariable const lcmd_var_HEMABATTERY___908_OR =
+INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___908_OR, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___908_OR));
+
 static char const lcmd_var_name_HEMABATTERY___917_GE[] = "__917_GE";
 static RISMDStdVariable const lcmd_var_HEMABATTERY___917_GE =
 INIT_RISMDStdVariable(lcmd_var_name_HEMABATTERY___917_GE, &risMdType_BOOL, offsetof(LC_TD_Program_HEMABATTERY,LC_VD___917_GE));
@@ -2761,6 +2779,7 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
 {
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_ADDRBIT0),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_ADDRBIT1),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY_ALLCONTACSTENABLE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_AMPMULTTEMP1),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_AMPMULTTEMP2),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_AMPMULTTEMPDIS1),
@@ -2882,6 +2901,7 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CELL_VOLTAGE_MIN_CELL_LOC),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CELL_VOLTAGE_MIN_DISHARGE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CHANNELSELECT),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY_CHANNELSELECT2),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CHARGEAMPENB),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CHARGECMD),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY_CHARGEENB),
@@ -3203,6 +3223,9 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1002_TO_USINT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1016_MUL),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1073_LE),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY___1079_TO_USINT),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY___1082_SEL),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY___1083_AND),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1092_NE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1109_NE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1139_EQ),
@@ -3236,7 +3259,6 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1319_LE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1324_LT),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___132_AND),
-  INIT_RISMDReference(&lcmd_var_HEMABATTERY___1345_TO_REAL),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1352_DIV),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1353_MUL),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___1367_MUL),
@@ -3344,7 +3366,6 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___286_LE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___288_GE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___303_EQ),
-  INIT_RISMDReference(&lcmd_var_HEMABATTERY___3223_OR),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___3224_TO_TIME),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___3225_DIV_TIME),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___3227_AND),
@@ -3415,6 +3436,7 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___897_GE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___904_AND),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___906_OR),
+  INIT_RISMDReference(&lcmd_var_HEMABATTERY___908_OR),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___917_GE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___919_LE),
   INIT_RISMDReference(&lcmd_var_HEMABATTERY___91_MUX_USINT),
@@ -3434,4 +3456,4 @@ static RISMDReference const lcmd_var_list_HEMABATTERY[] =
 };
 
 static char const lcmd_type_name_HEMABATTERY[] = "HEMABATTERY";
-RISMDPOUType const lcmd_type_HEMABATTERY = INIT_RISMDPOUType(lcmd_type_name_HEMABATTERY, sizeof(LC_TD_Program_HEMABATTERY), 672, lcmd_var_list_HEMABATTERY);
+RISMDPOUType const lcmd_type_HEMABATTERY = INIT_RISMDPOUType(lcmd_type_name_HEMABATTERY, sizeof(LC_TD_Program_HEMABATTERY), 676, lcmd_var_list_HEMABATTERY);

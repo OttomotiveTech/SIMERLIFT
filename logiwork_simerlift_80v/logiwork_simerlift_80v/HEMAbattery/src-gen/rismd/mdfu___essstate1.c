@@ -69,6 +69,11 @@ static char const lcmd_var_name_ESSSTATE1_FAULT[] = "fault";
 static RISMDInterfaceVariable const lcmd_var_ESSSTATE1_FAULT =
 INIT_RISMDInterfaceVariable(lcmd_var_name_ESSSTATE1_FAULT, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_ESSSTATE1,LC_VD_FAULT), RISMD_VARIABLE_SECTION_INPUT);
 
+extern RISMDSimpleNumType const risMdType_USINT;
+static char const lcmd_var_name_ESSSTATE1_FAULTCOUNTER[] = "FaultCounter";
+static RISMDStdVariable const lcmd_var_ESSSTATE1_FAULTCOUNTER =
+INIT_RISMDStdVariable(lcmd_var_name_ESSSTATE1_FAULTCOUNTER, &risMdType_USINT, offsetof(LC_TD_FunctionBlock_ESSSTATE1,LC_VD_FAULTCOUNTER));
+
 static char const lcmd_var_name_ESSSTATE1_PRECHARGEOK[] = "prechargeOk";
 static RISMDInterfaceVariable const lcmd_var_ESSSTATE1_PRECHARGEOK =
 INIT_RISMDInterfaceVariable(lcmd_var_name_ESSSTATE1_PRECHARGEOK, &risMdType_BOOL, offsetof(LC_TD_FunctionBlock_ESSSTATE1,LC_VD_PRECHARGEOK), RISMD_VARIABLE_SECTION_INPUT);
@@ -115,6 +120,7 @@ static RISMDReference const lcmd_var_list_ESSSTATE1[] =
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_DISCHARGEPROTECT),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_ENO),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_FAULT),
+  INIT_RISMDReference(&lcmd_var_ESSSTATE1_FAULTCOUNTER),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_PRECHARGEOK),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_PRECHARGEON),
   INIT_RISMDReference(&lcmd_var_ESSSTATE1_PREVSTATE),
@@ -125,4 +131,4 @@ static RISMDReference const lcmd_var_list_ESSSTATE1[] =
 };
 
 static char const lcmd_type_name_ESSSTATE1[] = "ESSSTATE1";
-RISMDPOUType const lcmd_type_ESSSTATE1 = INIT_RISMDPOUType(lcmd_type_name_ESSSTATE1, sizeof(LC_TD_FunctionBlock_ESSSTATE1), 23, lcmd_var_list_ESSSTATE1);
+RISMDPOUType const lcmd_type_ESSSTATE1 = INIT_RISMDPOUType(lcmd_type_name_ESSSTATE1, sizeof(LC_TD_FunctionBlock_ESSSTATE1), 24, lcmd_var_list_ESSSTATE1);
