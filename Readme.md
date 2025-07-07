@@ -1,0 +1,1 @@
+[07.07.2025] SIMERLIFT tarafından istenen, sistemde 2 kontaktör bulunmasına rağmen 2 kontaktörü de sürekli açık tuttuğumuz yazılım SIMERLIFT\CCS\SIMERLIFT\Debug kısmında HEMAbattery.bin kısmındadır. Böyle bir şeyi neden yaptığımız hakkında en ufak fikrim yok. 

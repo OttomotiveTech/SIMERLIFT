@@ -960,17 +960,6 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
   /* Network 48 */
   {
     {
-      LC_TD_Function_AND__BOOL lFunction_AND;
-      LC_INIT_Function_AND__BOOL(&lFunction_AND);
-      lFunction_AND.LC_VD_ENO = LC_EL_true;
-      lcfu_iec61131__AND__BOOL__2(&lFunction_AND, LC_this->LC_VD_SLAVEMODE, LC_this->LC_VD_CAN_FAULT_07, pEPDB);
-      LC_this->LC_VD_FAULT_CAN_COMMUNICATION = lFunction_AND.LC_VD_AND;
-      LC_this->LC_VD___132_AND = lFunction_AND.LC_VD_AND;
-    }
-  }
-  /* Network 49 */
-  {
-    {
       LC_this->LC_VD_ISABELINIT1.LC_VD_ENO = LC_EL_true;
       LC_this->LC_VD_ISABELINIT1.LC_VD_CH = LC_this->LC_VD_PDUCAN;
       LC_this->LC_VD_ISABELINIT1.LC_VD_ENB = LC_EL_true;
@@ -1025,7 +1014,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___43_DIV = lFunction_DIV.LC_VD_DIV;
     }
   }
-  /* Network 50 */
+  /* Network 49 */
   {
     {
       LC_TD_Function_GE lFunction_GE;
@@ -1056,7 +1045,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_BATTERYCHARGING = LC_this->LC_VD_TBUFFER20.LC_VD_O;
     }
   }
-  /* Network 51 */
+  /* Network 50 */
   {
     {
       LC_TD_Function_LT lFunction_LT;
@@ -1092,7 +1081,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_BATTERYINCHARGE = LC_this->LC_VD_SR5.LC_VD_Q1;
     }
   }
-  /* Network 52 */
+  /* Network 51 */
   {
     {
       LC_TD_Function_ABS__REAL lFunction_ABS;
@@ -1130,7 +1119,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_OC_FAULT = LC_this->LC_VD_TBUFFER4.LC_VD_O;
     }
   }
-  /* Network 53 */
+  /* Network 52 */
   {
     {
       LC_TD_Function_TO_TIME lFunction_TO_TIME;
@@ -1231,7 +1220,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___3234_AND = lFunction_AND.LC_VD_AND;
     }
   }
-  /* Network 54 */
+  /* Network 53 */
   {
     {
       LC_TD_Function_ABS__REAL lFunction_ABS;
@@ -1249,6 +1238,16 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1259_LT = lFunction_LT.LC_VD_LT;
     }
   }
+  /* Network 54 */
+  {
+    {
+      LC_this->LC_VD_IOWR24.LC_VD_ENO = LC_EL_true;
+      LC_this->LC_VD_IOWR24.LC_VD_PORT = LC_ED__TMS570_GIO__HET1;
+      LC_this->LC_VD_IOWR24.LC_VD_PIN = (LC_TD_UINT)2;
+      LC_this->LC_VD_IOWR24.LC_VD_VAL = LC_this->LC_VD_NEW_DCHG_CONTACT;
+      lcfu___IOWR(&(LC_this->LC_VD_IOWR24), pEPDB);
+    }
+  }
   /* Network 55 */
   {
     {
@@ -1262,6 +1261,16 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
   /* Network 56 */
   {
     {
+      LC_this->LC_VD_IOWR10.LC_VD_ENO = LC_EL_true;
+      LC_this->LC_VD_IOWR10.LC_VD_PORT = LC_ED__TMS570_GIO__HET1;
+      LC_this->LC_VD_IOWR10.LC_VD_PIN = (LC_TD_UINT)0;
+      LC_this->LC_VD_IOWR10.LC_VD_VAL = LC_this->LC_VD_NEW_CHG_CONTACT;
+      lcfu___IOWR(&(LC_this->LC_VD_IOWR10), pEPDB);
+    }
+  }
+  /* Network 57 */
+  {
+    {
       LC_this->LC_VD_ANLG8.LC_VD_ENO = LC_EL_true;
       LC_this->LC_VD_ANLG8.LC_VD_ADC = LC_ED__TMSADC__A1;
       LC_this->LC_VD_ANLG8.LC_VD_GRP = LC_ED__TMSADCGRP__G1;
@@ -1269,7 +1278,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___ANLG(&(LC_this->LC_VD_ANLG8), pEPDB);
     }
   }
-  /* Network 57 */
+  /* Network 58 */
   {
     {
       LC_this->LC_VD_IOWR22.LC_VD_ENO = LC_EL_true;
@@ -1278,7 +1287,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR22), pEPDB);
     }
   }
-  /* Network 58 */
+  /* Network 59 */
   {
     {
       LC_this->LC_VD_IOWR23.LC_VD_ENO = LC_EL_true;
@@ -1287,7 +1296,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR23), pEPDB);
     }
   }
-  /* Network 59 */
+  /* Network 60 */
   {
     {
       LC_this->LC_VD_IOWR7.LC_VD_ENO = LC_EL_true;
@@ -1296,7 +1305,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR7), pEPDB);
     }
   }
-  /* Network 60 */
+  /* Network 61 */
   {
     {
       LC_this->LC_VD_IOWR9.LC_VD_ENO = LC_EL_true;
@@ -1305,7 +1314,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR9), pEPDB);
     }
   }
-  /* Network 61 */
+  /* Network 62 */
   {
     {
       LC_this->LC_VD_DGTIN4.LC_VD_ENO = LC_EL_true;
@@ -1334,7 +1343,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___175_EQ = lFunction_EQ.LC_VD_EQ;
     }
   }
-  /* Network 62 */
+  /* Network 63 */
   {
     {
       LC_TD_Function_EQ lFunction_EQ;
@@ -1358,7 +1367,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR19), pEPDB);
     }
   }
-  /* Network 63 */
+  /* Network 64 */
   {
     {
       LC_this->LC_VD_DGTIN8.LC_VD_ENO = LC_EL_true;
@@ -1366,7 +1375,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___DGTIN(&(LC_this->LC_VD_DGTIN8), pEPDB);
     }
   }
-  /* Network 64 */
+  /* Network 65 */
   {
     {
       LC_this->LC_VD_IORD1.LC_VD_ENO = LC_EL_true;
@@ -1375,7 +1384,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IORD(&(LC_this->LC_VD_IORD1), pEPDB);
     }
   }
-  /* Network 65 */
+  /* Network 66 */
   {
     {
       LC_this->LC_VD_IORD4.LC_VD_ENO = LC_EL_true;
@@ -1384,7 +1393,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IORD(&(LC_this->LC_VD_IORD4), pEPDB);
     }
   }
-  /* Network 66 */
+  /* Network 67 */
   {
     {
       LC_this->LC_VD_IORD5.LC_VD_ENO = LC_EL_true;
@@ -1393,7 +1402,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IORD(&(LC_this->LC_VD_IORD5), pEPDB);
     }
   }
-  /* Network 67 */
+  /* Network 68 */
   {
     {
       LC_this->LC_VD_IORD2.LC_VD_ENO = LC_EL_true;
@@ -1402,11 +1411,11 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IORD(&(LC_this->LC_VD_IORD2), pEPDB);
     }
   }
-  /* Network 68 */
+  /* Network 69 */
   {
     LC_this->LC_VD_HVIL1_STATUS = LC_EL_true;
   }
-  /* Network 69 */
+  /* Network 70 */
   {
     {
       LC_TD_Function_NOT__BOOL lFunction_NOT;
@@ -1428,11 +1437,11 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_PACK_HVIL_1 = LC_this->LC_VD_TOF6.LC_VD_Q;
     }
   }
-  /* Network 70 */
+  /* Network 71 */
   {
     LC_this->LC_VD_HVIL2_STATUS = LC_EL_true;
   }
-  /* Network 71 */
+  /* Network 72 */
   {
     {
       LC_TD_Function_NOT__BOOL lFunction_NOT;
@@ -1454,7 +1463,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_PACK_HVIL_2 = LC_this->LC_VD_TOF10.LC_VD_Q;
     }
   }
-  /* Network 72 */
+  /* Network 73 */
   {
     {
       LC_this->LC_VD_IORD3.LC_VD_ENO = LC_EL_true;
@@ -1463,7 +1472,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IORD(&(LC_this->LC_VD_IORD3), pEPDB);
     }
   }
-  /* Network 73 */
+  /* Network 74 */
   {
     {
       LC_this->LC_VD_ANLG1.LC_VD_ENO = LC_EL_true;
@@ -1484,7 +1493,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_PACK_TEMPERATURE = LC_this->LC_VD_NTC2.LC_VD_TEMP;
     }
   }
-  /* Network 74 */
+  /* Network 75 */
   {
     {
       LC_this->LC_VD_IOWR18.LC_VD_ENO = LC_EL_true;
@@ -1494,7 +1503,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR18), pEPDB);
     }
   }
-  /* Network 75 */
+  /* Network 76 */
   {
     {
       LC_this->LC_VD_ANLG2.LC_VD_ENO = LC_EL_true;
@@ -1504,7 +1513,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___ANLG(&(LC_this->LC_VD_ANLG2), pEPDB);
     }
   }
-  /* Network 76 */
+  /* Network 77 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -1515,7 +1524,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___833_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 77 */
+  /* Network 78 */
   {
     {
       LC_this->LC_VD_IOWR20.LC_VD_ENO = LC_EL_true;
@@ -1525,7 +1534,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR20), pEPDB);
     }
   }
-  /* Network 78 */
+  /* Network 79 */
   {
     {
       LC_this->LC_VD_ANLG3.LC_VD_ENO = LC_EL_true;
@@ -1535,7 +1544,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___ANLG(&(LC_this->LC_VD_ANLG3), pEPDB);
     }
   }
-  /* Network 79 */
+  /* Network 80 */
   {
     {
       LC_this->LC_VD_FLASH4.LC_VD_ENO = LC_EL_true;
@@ -1551,7 +1560,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___IOWR(&(LC_this->LC_VD_IOWR21), pEPDB);
     }
   }
-  /* Network 80 */
+  /* Network 81 */
   {
     {
       LC_this->LC_VD_ANLG4.LC_VD_ENO = LC_EL_true;
@@ -1561,7 +1570,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___ANLG(&(LC_this->LC_VD_ANLG4), pEPDB);
     }
   }
-  /* Network 81 */
+  /* Network 82 */
   {
     {
       LC_this->LC_VD_BCU_STATE_MESSAGE1.LC_VD_ENO = LC_EL_true;
@@ -1636,7 +1645,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_CAN_FAULT_06 = LC_this->LC_VD_BCU_BATTERY_STATUS1.LC_VD_CAN_ERROR;
     }
   }
-  /* Network 82 */
+  /* Network 83 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -1695,7 +1704,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1300_AND = lFunction_AND.LC_VD_AND;
     }
   }
-  /* Network 83 */
+  /* Network 84 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -1754,7 +1763,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2618_AND = lFunction_AND.LC_VD_AND;
     }
   }
-  /* Network 84 */
+  /* Network 85 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -1765,7 +1774,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2624_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 85 */
+  /* Network 86 */
   {
     {
       LC_TD_Function_SEL__BOOL lFunction_SEL;
@@ -1798,7 +1807,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2630_AND = lFunction_AND.LC_VD_AND;
     }
   }
-  /* Network 86 */
+  /* Network 87 */
   {
     {
       LC_TD_Function_TO_REAL lFunction_TO_REAL;
@@ -1850,7 +1859,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_BOARD_ERROR_MESSAGES = LC_this->LC_VD_BATTSTACK1.LC_VD_ERR;
     }
   }
-  /* Network 87 */
+  /* Network 88 */
   {
     {
       LC_TD_Function_LT lFunction_LT;
@@ -1917,7 +1926,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1706_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 88 */
+  /* Network 89 */
   {
     {
       LC_TD_Function_GE lFunction_GE;
@@ -1948,7 +1957,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_OV_DANGER = LC_this->LC_VD_TON8.LC_VD_Q;
     }
   }
-  /* Network 89 */
+  /* Network 90 */
   {
     {
       LC_TD_Function_LE lFunction_LE;
@@ -1979,7 +1988,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_UV_DANGER = LC_this->LC_VD_TON9.LC_VD_Q;
     }
   }
-  /* Network 90 */
+  /* Network 91 */
   {
     {
       LC_TD_Function_SUB__REAL lFunction_SUB;
@@ -2017,7 +2026,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_OT_DANGER = LC_this->LC_VD_TON12.LC_VD_Q;
     }
   }
-  /* Network 91 */
+  /* Network 92 */
   {
     {
       LC_TD_Function_ADD__REAL lFunction_ADD;
@@ -2055,7 +2064,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_UT_DANGER = LC_this->LC_VD_TON13.LC_VD_Q;
     }
   }
-  /* Network 92 */
+  /* Network 93 */
   {
     {
       LC_this->LC_VD_BUFFER12.LC_VD_ENO = LC_EL_true;
@@ -2070,7 +2079,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_OVER_VOLTAGE_WARNING = LC_this->LC_VD_TOF1.LC_VD_Q;
     }
   }
-  /* Network 93 */
+  /* Network 94 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -2087,7 +2096,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_OVER_VOLTAGE_DANGER = LC_this->LC_VD_TOF12.LC_VD_Q;
     }
   }
-  /* Network 94 */
+  /* Network 95 */
   {
     {
       LC_this->LC_VD_BUFFER19.LC_VD_ENO = LC_EL_true;
@@ -2102,7 +2111,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_UNDER_VOLTAGE_WARNING = LC_this->LC_VD_TOF14.LC_VD_Q;
     }
   }
-  /* Network 95 */
+  /* Network 96 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -2119,7 +2128,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_UNDER_VOLTAGE_DANGER = LC_this->LC_VD_TOF13.LC_VD_Q;
     }
   }
-  /* Network 96 */
+  /* Network 97 */
   {
     {
       LC_TD_Function_GE lFunction_GE;
@@ -2141,7 +2150,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_OVER_TEMP_WARNING = LC_this->LC_VD_TOF3.LC_VD_Q;
     }
   }
-  /* Network 97 */
+  /* Network 98 */
   {
     {
       LC_this->LC_VD_TOF2.LC_VD_ENO = LC_EL_true;
@@ -2151,7 +2160,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_OVER_TEMP_DANGER = LC_this->LC_VD_TOF2.LC_VD_Q;
     }
   }
-  /* Network 98 */
+  /* Network 99 */
   {
     {
       LC_TD_Function_LE lFunction_LE;
@@ -2173,7 +2182,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_UNDER_TEMP_WARNING = LC_this->LC_VD_TOF5.LC_VD_Q;
     }
   }
-  /* Network 99 */
+  /* Network 100 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -2184,7 +2193,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2011_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 100 */
+  /* Network 101 */
   {
     {
       LC_TD_Function_NE lFunction_NE;
@@ -2270,7 +2279,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1226_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 101 */
+  /* Network 102 */
   {
     {
       LC_this->LC_VD_TOF4.LC_VD_ENO = LC_EL_true;
@@ -2280,7 +2289,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_CELL_UNDER_TEMP_DANGER = LC_this->LC_VD_TOF4.LC_VD_Q;
     }
   }
-  /* Network 102 */
+  /* Network 103 */
   {
     {
       LC_this->LC_VD_AMPMULTTEMP1.LC_VD_ENO = LC_EL_true;
@@ -2314,7 +2323,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1016_MUL = lFunction_MUL.LC_VD_MUL;
     }
   }
-  /* Network 103 */
+  /* Network 104 */
   {
     {
       LC_this->LC_VD_AMPMULTTEMPDIS1.LC_VD_ENO = LC_EL_true;
@@ -2348,7 +2357,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1201_MUL = lFunction_MUL.LC_VD_MUL;
     }
   }
-  /* Network 104 */
+  /* Network 105 */
   {
     {
       LC_TD_Function_MUL__REAL lFunction_MUL;
@@ -2359,7 +2368,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1872_MUL = lFunction_MUL.LC_VD_MUL;
     }
   }
-  /* Network 105 */
+  /* Network 106 */
   {
     {
       LC_TD_Function_MUL__REAL lFunction_MUL;
@@ -2370,7 +2379,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1889_MUL = lFunction_MUL.LC_VD_MUL;
     }
   }
-  /* Network 106 */
+  /* Network 107 */
   {
     {
       LC_TD_Function_GT lFunction_GT;
@@ -2411,7 +2420,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___543_SEL = lFunction_SEL.LC_VD_SEL;
     }
   }
-  /* Network 107 */
+  /* Network 108 */
   {
     {
       LC_TD_Function_NE lFunction_NE;
@@ -2433,7 +2442,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_PACK_DISCHARGE_CONTACTOR = LC_this->LC_VD_TOF7.LC_VD_Q;
     }
   }
-  /* Network 108 */
+  /* Network 109 */
   {
     {
       LC_TD_Function_NE lFunction_NE;
@@ -2455,7 +2464,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_PACK_NEGATIVE_CONTACTOR = LC_this->LC_VD_TOF8.LC_VD_Q;
     }
   }
-  /* Network 109 */
+  /* Network 110 */
   {
     {
       LC_TD_Function_NE lFunction_NE;
@@ -2477,7 +2486,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULT_PACK_CHARGE_CONTACTOR = LC_this->LC_VD_TOF9.LC_VD_Q;
     }
   }
-  /* Network 110 */
+  /* Network 111 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -2488,7 +2497,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2030_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 111 */
+  /* Network 112 */
   {
     {
       LC_this->LC_VD_BCU_FAULT_CODES1.LC_VD_ENO = LC_EL_true;
@@ -2524,7 +2533,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_FAULTSWORD = LC_this->LC_VD_BCU_FAULT_CODES1.LC_VD_SUM;
     }
   }
-  /* Network 112 */
+  /* Network 113 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -2535,7 +2544,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2056_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 113 */
+  /* Network 114 */
   {
     {
       LC_this->LC_VD_GUI1.LC_VD_ENO = LC_EL_true;
@@ -2553,7 +2562,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       lcfu___GUI(&(LC_this->LC_VD_GUI1), pEPDB);
     }
   }
-  /* Network 114 */
+  /* Network 115 */
   {
     {
       LC_TD_Function_MUL__UDINT lFunction_MUL;
@@ -2593,7 +2602,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2077_DIV = lFunction_DIV.LC_VD_DIV;
     }
   }
-  /* Network 115 */
+  /* Network 116 */
   {
     {
       LC_TD_Function_MUL__REAL lFunction_MUL;
@@ -2612,7 +2621,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___77_MUL = lFunction_MUL.LC_VD_MUL;
     }
   }
-  /* Network 116 */
+  /* Network 117 */
   {
     {
       LC_TD_Function_DIV__LREAL lFunction_DIV;
@@ -2630,7 +2639,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1981_TO_USINT = lFunction_TO_USINT.LC_VD_TO_USINT;
     }
   }
-  /* Network 117 */
+  /* Network 118 */
   {
     {
       LC_TD_Function_DIV__UINT lFunction_DIV;
@@ -2662,7 +2671,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1995_TO_USINT = lFunction_TO_USINT.LC_VD_TO_USINT;
     }
   }
-  /* Network 118 */
+  /* Network 119 */
   {
     {
       LC_this->LC_VD_ARR2VAL2.LC_VD_ENO = LC_EL_true;
@@ -2675,7 +2684,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_NEWBMU_RESET = LC_this->LC_VD_ARR2VAL2.LC_VD_RESET;
     }
   }
-  /* Network 119 */
+  /* Network 120 */
   {
     {
       LC_this->LC_VD_FLASH1.LC_VD_ENO = LC_EL_true;
@@ -2722,7 +2731,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___766_TO_USINT = lFunction_TO_USINT.LC_VD_TO_USINT;
     }
   }
-  /* Network 120 */
+  /* Network 121 */
   {
     {
       LC_TD_Function_GE lFunction_GE;
@@ -2787,7 +2796,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_MAINCHARGECOMPLETE = LC_this->LC_VD_SR1.LC_VD_Q1;
     }
   }
-  /* Network 121 */
+  /* Network 122 */
   {
     {
       LC_this->LC_VD_F_TRIG1.LC_VD_ENO = LC_EL_true;
@@ -2834,7 +2843,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___816_DIV = lFunction_DIV.LC_VD_DIV;
     }
   }
-  /* Network 122 */
+  /* Network 123 */
   {
     {
       LC_this->LC_VD_R_TRIG2.LC_VD_ENO = LC_EL_true;
@@ -2850,7 +2859,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___435_SEL = lFunction_SEL.LC_VD_SEL;
     }
   }
-  /* Network 123 */
+  /* Network 124 */
   {
     {
       LC_TD_Function_LT lFunction_LT;
@@ -2915,7 +2924,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_DISCHARGECOMPLETE = LC_this->LC_VD_SR2.LC_VD_Q1;
     }
   }
-  /* Network 124 */
+  /* Network 125 */
   {
     {
       LC_this->LC_VD_R_TRIG3.LC_VD_ENO = LC_EL_true;
@@ -2931,7 +2940,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___861_SEL = lFunction_SEL.LC_VD_SEL;
     }
   }
-  /* Network 125 */
+  /* Network 126 */
   {
     {
       LC_TD_Function_EQ lFunction_EQ;
@@ -2957,7 +2966,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_BALCHARGEST = LC_this->LC_VD_CHARGESTATE1.LC_VD_CHSTATE;
     }
   }
-  /* Network 126 */
+  /* Network 127 */
   {
     {
       LC_this->LC_VD_BALANCE_ISZ1.LC_VD_ENO = LC_EL_true;
@@ -2975,7 +2984,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_BALANCE_VOLTAGE = LC_this->LC_VD_BALANCE_ISZ1.LC_VD_BALLANCE_VOLTAGE;
     }
   }
-  /* Network 127 */
+  /* Network 128 */
   {
     {
       LC_TD_Function_TO_UINT lFunction_TO_UINT;
@@ -2986,7 +2995,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1788_TO_UINT = lFunction_TO_UINT.LC_VD_TO_UINT;
     }
   }
-  /* Network 128 */
+  /* Network 129 */
   {
     {
       LC_TD_Function_AND__BOOL lFunction_AND;
@@ -3004,7 +3013,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_PRECHARGEBOARDERR = LC_this->LC_VD_PRECHARGECAN1.LC_VD_CANERR;
     }
   }
-  /* Network 129 */
+  /* Network 130 */
   {
     {
       LC_this->LC_VD_ESSSTATE11.LC_VD_ENO = LC_EL_true;
@@ -3025,7 +3034,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_CONTACTNEGENABLE_BATT = LC_this->LC_VD_ESSSTATE11.LC_VD_CONTACTNEG;
     }
   }
-  /* Network 130 */
+  /* Network 131 */
   {
     {
       LC_TD_Function_OR__BOOL lFunction_OR;
@@ -3036,39 +3045,11 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___908_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 131 */
-  {
-    LC_this->LC_VD_NEW_CHG_CONTACT = LC_this->LC_VD_CONTACTENABLE_BATT;
-  }
   /* Network 132 */
-  {
-    LC_this->LC_VD_NEW_DCHG_CONTACT = LC_this->LC_VD_CONTACTNEGENABLE_BATT;
-  }
-  /* Network 133 */
   {
     LC_this->LC_VD_PRECHARGECOMPLETE = LC_this->LC_VD_PRECHARGEENABLE;
   }
-  /* Network 134 */
-  {
-    {
-      LC_this->LC_VD_IOWR24.LC_VD_ENO = LC_EL_true;
-      LC_this->LC_VD_IOWR24.LC_VD_PORT = LC_ED__TMS570_GIO__HET1;
-      LC_this->LC_VD_IOWR24.LC_VD_PIN = (LC_TD_UINT)2;
-      LC_this->LC_VD_IOWR24.LC_VD_VAL = LC_this->LC_VD_NEW_DCHG_CONTACT;
-      lcfu___IOWR(&(LC_this->LC_VD_IOWR24), pEPDB);
-    }
-  }
-  /* Network 135 */
-  {
-    {
-      LC_this->LC_VD_IOWR10.LC_VD_ENO = LC_EL_true;
-      LC_this->LC_VD_IOWR10.LC_VD_PORT = LC_ED__TMS570_GIO__HET1;
-      LC_this->LC_VD_IOWR10.LC_VD_PIN = (LC_TD_UINT)0;
-      LC_this->LC_VD_IOWR10.LC_VD_VAL = LC_this->LC_VD_NEW_CHG_CONTACT;
-      lcfu___IOWR(&(LC_this->LC_VD_IOWR10), pEPDB);
-    }
-  }
-  /* Network 136 */
+  /* Network 133 */
   {
     {
       LC_TD_Function_EQ lFunction_EQ;
@@ -3085,7 +3066,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_DISCHARGEAMPENB = LC_this->LC_VD_TON21.LC_VD_Q;
     }
   }
-  /* Network 137 */
+  /* Network 134 */
   {
     {
       LC_TD_Function_EQ lFunction_EQ;
@@ -3102,7 +3083,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD_CHARGEAMPENB = LC_this->LC_VD_TON22.LC_VD_Q;
     }
   }
-  /* Network 138 */
+  /* Network 135 */
   {
     {
       LC_TD_Function_GE lFunction_GE;
@@ -3120,7 +3101,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___904_AND = lFunction_AND.LC_VD_AND;
     }
   }
-  /* Network 139 */
+  /* Network 136 */
   {
     {
       LC_TD_Function_LE lFunction_LE;
@@ -3138,7 +3119,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1864_AND = lFunction_AND.LC_VD_AND;
     }
   }
-  /* Network 140 */
+  /* Network 137 */
   {
     {
       LC_TD_Function_LT lFunction_LT;
@@ -3177,7 +3158,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1709_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 141 */
+  /* Network 138 */
   {
     {
       LC_TD_Function_GT lFunction_GT;
@@ -3216,7 +3197,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___2101_OR = lFunction_OR.LC_VD_OR;
     }
   }
-  /* Network 142 */
+  /* Network 139 */
   {
     {
       LC_TD_Function_DIV__REAL lFunction_DIV;
@@ -3289,7 +3270,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1790_SEL = lFunction_SEL.LC_VD_SEL;
     }
   }
-  /* Network 143 */
+  /* Network 140 */
   {
     {
       LC_TD_Function_DIV__REAL lFunction_DIV;
@@ -3362,7 +3343,7 @@ void  lcpu___HEMABATTERY(LC_TD_Program_HEMABATTERY* LC_this, struct _lcoplck_epd
       LC_this->LC_VD___1787_SEL = lFunction_SEL.LC_VD_SEL;
     }
   }
-  /* Network 144 */
+  /* Network 141 */
   {
     {
       LC_TD_Function_TO_UINT lFunction_TO_UINT;

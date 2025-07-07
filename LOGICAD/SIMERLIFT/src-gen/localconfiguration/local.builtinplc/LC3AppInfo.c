@@ -4,9 +4,9 @@
 
 void const* lc_get_application_info(LcApplicationInfoType infoType)
 {
-  static uint32_t const lc_fingerprint = 1915587686;
-  static char const* const lc_code_image_info = "\"AAAAAAAAAAEABkFSR0UxMwAAAZdaERRR\"";
-  static char const* const lc_project_name = "HEMAbattery";
+  static uint32_t const lc_fingerprint = 2545919795;
+  static char const* const lc_code_image_info = "\"AAAAAAAAAAEABkFSR0UxMwAAAZfj/FpJ\"";
+  static char const* const lc_project_name = "SIMERLIFT";
   static char const* const lc_configuration_name = "LocalConfiguration";
   static char const* const lc_resource_name = "local";
   static void const* const lc_oem_data = LC_OEM_DATA;
